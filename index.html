@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMO AI Innovation Tool</title>
+<style>
+:root {
+  --bts-pink: #CA1C68;
+  --bts-dark: #24282B;
+  --bts-teal: #1D7279;
+  --bts-purple: #4C3480;
+  --bts-red: #E63F4F;
+  --bts-blue: #1C4C86;
+  --bts-grey: #EAEEF1;
+  --bts-pink-light: #FAEEF4;
+  --bts-blue-light: #E6F1FB;
+  --bts-teal-light: #E1F5EE;
+  --bts-purple-light: #F3F0FA;
+  --font: 'Calibri', 'Segoe UI', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); min-height: 100vh; }
+
+/* ---- LAYOUT ---- */
+.screen { display: none; min-height: 100vh; flex-direction: column; }
+.screen.active { display: flex; }
+.main { flex: 1; padding: 24px 20px; max-width: 880px; width: 100%; margin: 0 auto; }
+
+/* ---- TOPBAR ---- */
+.topbar { background: var(--bts-dark); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 50px; flex-shrink: 0; }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.bts-dots { display: flex; gap: 4px; }
+.bts-dot { width: 9px; height: 9px; border-radius: 50%; }
+.d1 { background: var(--bts-pink); }
+.d2 { background: var(--bts-pink); opacity: 0.55; }
+.d3 { background: var(--bts-pink); opacity: 0.3; }
+.topbar-brand { color: white; font-size: 13px; font-weight: 700; letter-spacing: 1px; }
+.topbar-title { color: rgba(255,255,255,0.55); font-size: 11px; letter-spacing: 0.3px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.user-chip { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+.user-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--bts-pink); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; }
+.user-name { color: rgba(255,255,255,0.75); font-size: 11px; }
+.accent-bar { height: 3px; background: var(--bts-pink); flex-shrink: 0; }
+
+/* ---- NAV ---- */
+.nav-bar { background: white; border-bottom: 1px solid #E0E4E8; display: flex; padding: 0 20px; overflow-x: auto; }
+.nav-item { padding: 12px 16px; font-size: 12px; font-weight: 600; color: #888; cursor: pointer; border-bottom: 2.5px solid transparent; white-space: nowrap; transition: all 0.15s; }
+.nav-item.active { color: var(--bts-pink); border-bottom-color: var(--bts-pink); }
+.nav-item:hover:not(.active) { color: var(--bts-dark); }
+
+/* ---- LOGIN ---- */
+.login-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; background: linear-gradient(135deg, #F0F2F5 0%, #E8EBF0 100%); }
+.login-card { background: white; border-radius: 14px; border: 0.5px solid #DDE1E6; padding: 44px 40px; width: 100%; max-width: 420px; }
+.login-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+.login-logo-dots { display: flex; gap: 4px; }
+.login-logo-dot { width: 11px; height: 11px; border-radius: 50%; }
+.login-card h1 { font-size: 21px; font-weight: 700; color: var(--bts-dark); margin-bottom: 4px; }
+.login-card h1 span { color: var(--bts-pink); }
+.login-card .sub { font-size: 13px; color: #888; margin-bottom: 28px; line-height: 1.5; }
+.field { margin-bottom: 16px; }
+.field label { font-size: 11px; font-weight: 700; color: var(--bts-dark); display: block; margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+.field input, .field select { width: 100%; padding: 10px 13px; border: 1px solid #DDE1E6; border-radius: 8px; font-size: 14px; font-family: var(--font); color: var(--bts-dark); background: white; transition: border-color 0.15s; }
+.field input:focus, .field select:focus { outline: none; border-color: var(--bts-pink); }
+.btn-primary { width: 100%; background: var(--bts-pink); color: white; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.3px; transition: background 0.15s; font-family: var(--font); }
+.btn-primary:hover { background: #b01659; }
+.login-note { font-size: 11px; color: #999; text-align: center; margin-top: 16px; }
+
+/* ---- HOME ---- */
+.greet { margin-bottom: 24px; }
+.greet h2 { font-size: 19px; font-weight: 700; color: var(--bts-dark); }
+.greet p { font-size: 12px; color: #888; margin-top: 3px; }
+
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 10px; }
+.action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 28px; }
+.action-card { background: white; border-radius: 10px; border: 1px solid #E8EBF0; padding: 18px 14px; cursor: pointer; transition: all 0.15s; }
+.action-card:hover { border-color: var(--bts-pink); box-shadow: 0 2px 8px rgba(202,28,104,0.08); }
+.ac-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 15px; }
+.ac-pink { background: var(--bts-pink-light); }
+.ac-blue { background: var(--bts-blue-light); }
+.ac-teal { background: var(--bts-teal-light); }
+.ac-purple { background: var(--bts-purple-light); }
+.action-card h3 { font-size: 12px; font-weight: 700; color: var(--bts-dark); margin-bottom: 3px; }
+.action-card p { font-size: 11px; color: #999; line-height: 1.5; }
+
+/* ---- PILOT CARDS ---- */
+.pilot-list { display: flex; flex-direction: column; gap: 8px; }
+.pilot-card { background: white; border-radius: 10px; border: 1px solid #E8EBF0; padding: 13px 15px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: border-color 0.15s; }
+.pilot-card:hover { border-color: var(--bts-blue); }
+.pc-indicator { width: 4px; height: 40px; border-radius: 3px; flex-shrink: 0; }
+.ind-green { background: #1D9E75; }
+.ind-amber { background: #EF9F27; }
+.ind-red { background: #E24B4A; }
+.pc-info { flex: 1; }
+.pc-name { font-size: 13px; font-weight: 600; color: var(--bts-dark); }
+.pc-meta { font-size: 11px; color: #999; margin-top: 2px; }
+.pc-badge { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 10px; white-space: nowrap; }
+.badge-blue { background: var(--bts-blue-light); color: var(--bts-blue); }
+.badge-green { background: var(--bts-teal-light); color: var(--bts-teal); }
+.badge-amber { background: #FAEEDA; color: #854F0B; }
+.badge-red { background: #FCEBEB; color: #A32D2D; }
+.pc-day { font-size: 11px; color: #999; white-space: nowrap; }
+
+/* ---- CHECK-IN SELECTOR ---- */
+.checkin-header { margin-bottom: 18px; }
+.checkin-header h2 { font-size: 17px; font-weight: 700; color: var(--bts-dark); }
+.checkin-header p { font-size: 12px; color: #888; margin-top: 3px; }
+.checkin-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
+.checkin-btn { background: white; border: 1px solid #E8EBF0; border-radius: 10px; padding: 14px 8px; cursor: pointer; text-align: center; transition: all 0.15s; }
+.checkin-btn:hover { border-color: var(--bts-pink); background: var(--bts-pink-light); }
+.checkin-btn.written { border-top: 3px solid var(--bts-blue); }
+.checkin-btn.verbal { border-top: 3px solid var(--bts-pink); }
+.cb-day { font-size: 17px; font-weight: 700; color: var(--bts-dark); }
+.cb-type { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; margin-top: 3px; text-transform: uppercase; }
+.written .cb-type { color: var(--bts-blue); }
+.verbal .cb-type { color: var(--bts-pink); }
+.cb-label { font-size: 10px; color: #bbb; margin-top: 2px; }
+.legend-row { display: flex; gap: 16px; margin-bottom: 20px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #888; }
+.legend-bar { width: 20px; height: 3px; border-radius: 2px; }
+.lb-blue { background: var(--bts-blue); }
+.lb-pink { background: var(--bts-pink); }
+
+/* ---- FORMS ---- */
+.form-card { background: white; border-radius: 10px; border: 1px solid #E8EBF0; padding: 22px; margin-bottom: 16px; }
+.form-card h3 { font-size: 14px; font-weight: 700; color: var(--bts-dark); margin-bottom: 3px; }
+.form-sub { font-size: 11px; color: #999; margin-bottom: 18px; line-height: 1.5; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field textarea { width: 100%; padding: 10px 12px; border: 1px solid #DDE1E6; border-radius: 8px; font-size: 13px; font-family: var(--font); resize: vertical; min-height: 76px; color: var(--bts-dark); background: white; }
+.field textarea:focus { outline: none; border-color: var(--bts-pink); }
+.status-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.status-pill { padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; }
+.sp-green { background: #E1F5EE; color: #0F6E56; }
+.sp-amber { background: #FAEEDA; color: #854F0B; }
+.sp-red { background: #FCEBEB; color: #A32D2D; }
+.status-pill.selected.sp-green { border-color: #1D9E75; }
+.status-pill.selected.sp-amber { border-color: #EF9F27; }
+.status-pill.selected.sp-red { border-color: #E24B4A; }
+.btn-row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.btn-sec { background: transparent; border: 1px solid #DDE1E6; border-radius: 8px; padding: 9px 18px; font-size: 12px; cursor: pointer; color: var(--bts-dark); font-family: var(--font); font-weight: 600; }
+.btn-sec:hover { background: var(--bts-grey); }
+.btn-submit { background: var(--bts-pink); color: white; border: none; border-radius: 8px; padding: 9px 20px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: var(--font); transition: background 0.15s; }
+.btn-submit:hover { background: #b01659; }
+.success-toast { background: var(--bts-teal-light); border: 1px solid #9FE1CB; border-radius: 8px; padding: 12px 15px; font-size: 12px; color: #0F6E56; font-weight: 600; margin-bottom: 14px; display: none; }
+.info-box { background: var(--bts-blue-light); border-left: 3px solid var(--bts-blue); border-radius: 0 8px 8px 0; padding: 11px 14px; font-size: 12px; color: var(--bts-blue); margin-bottom: 16px; line-height: 1.6; }
+.note-box { background: var(--bts-purple-light); border-left: 3px solid var(--bts-purple); border-radius: 0 8px 8px 0; padding: 11px 14px; font-size: 12px; color: var(--bts-purple); margin-bottom: 16px; line-height: 1.6; }
+.warn-box { background: #FAEEDA; border-left: 3px solid #EF9F27; border-radius: 0 8px 8px 0; padding: 11px 14px; font-size: 12px; color: #854F0B; margin-bottom: 16px; line-height: 1.6; }
+.link-btn { color: var(--bts-pink); text-decoration: none; font-weight: 600; font-size: 12px; }
+.link-btn:hover { text-decoration: underline; }
+.back-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--bts-pink); cursor: pointer; background: none; border: none; font-family: var(--font); font-weight: 600; margin-bottom: 16px; padding: 0; }
+.page-title { font-size: 17px; font-weight: 700; color: var(--bts-dark); margin-bottom: 3px; }
+.page-sub { font-size: 12px; color: #888; margin-bottom: 20px; }
+.checklist { display: flex; flex-direction: column; gap: 7px; }
+.check-item { display: flex; align-items: flex-start; gap: 9px; padding: 9px 12px; border: 1px solid #E8EBF0; border-radius: 8px; cursor: pointer; transition: background 0.1s; }
+.check-item:hover { background: #FAFAFA; }
+.check-item input[type=checkbox] { margin-top: 1px; accent-color: var(--bts-pink); flex-shrink: 0; width: 14px; height: 14px; }
+.check-item label { font-size: 12px; color: var(--bts-dark); cursor: pointer; line-height: 1.5; }
+
+/* ---- WORKFLOW MAPPER ---- */
+.mapper-container { background: white; border-radius: 10px; border: 1px solid #E8EBF0; overflow: hidden; }
+.mapper-toolbar { display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid #E8EBF0; flex-wrap: wrap; align-items: center; background: #FAFBFC; }
+.mapper-btn { background: white; border: 1px solid #DDE1E6; border-radius: 7px; padding: 6px 12px; font-size: 11px; font-weight: 600; cursor: pointer; color: var(--bts-dark); font-family: var(--font); transition: all 0.15s; }
+.mapper-btn:hover { background: var(--bts-grey); }
+.mapper-btn.active { background: var(--bts-pink-light); border-color: var(--bts-pink); color: var(--bts-pink); }
+.mapper-sep { width: 1px; height: 20px; background: #E0E4E8; }
+.swim-lane { display: flex; min-height: 90px; border-bottom: 1px solid #E8EBF0; }
+.swim-lane:last-child { border-bottom: none; }
+.lane-label { width: 80px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); border-right: 1px solid #E8EBF0; }
+.lane-pmo .lane-label          { background: #FAEEF4; color: #CA1C68; }
+.lane-pmo .lane-body           { background: #FEF8FB; }
+.lane-finance .lane-label      { background: #E6F1FB; color: #1C4C86; }
+.lane-finance .lane-body       { background: #F5F9FE; }
+.lane-ops .lane-label          { background: #E1F5EE; color: #1D7279; }
+.lane-ops .lane-body           { background: #F2FBF7; }
+.lane-act .lane-label          { background: #F3F0FA; color: #4C3480; }
+.lane-act .lane-body           { background: #F9F8FE; }
+.lane-cwm .lane-label          { background: #FFF0D0; color: #8B5E00; }
+.lane-cwm .lane-body           { background: #FFFBF0; }
+.lane-digital .lane-label      { background: #E8F6F0; color: #0F6E56; }
+.lane-digital .lane-body       { background: #F4FBF8; }
+.lane-ea .lane-label           { background: #FDE8ED; color: #993355; }
+.lane-ea .lane-body            { background: #FEF5F7; }
+.lane-graphic .lane-label      { background: #E6F4FF; color: #0055AA; }
+.lane-graphic .lane-body       { background: #F0F8FF; }
+.lane-helpdesk .lane-label     { background: #FFF4E0; color: #7A4B00; }
+.lane-helpdesk .lane-body      { background: #FFFBF2; }
+.lane-logistics .lane-label    { background: #E8F8F8; color: #006B6B; }
+.lane-logistics .lane-body     { background: #F2FBFB; }
+.lane-marketing .lane-label    { background: #FDE8F5; color: #8B006B; }
+.lane-marketing .lane-body     { background: #FEF4FC; }
+.lane-momenta .lane-label      { background: #E8F0FF; color: #1A3A8B; }
+.lane-momenta .lane-body       { background: #F2F6FF; }
+.lane-pro .lane-label          { background: #F0FAE8; color: #3A6B00; }
+.lane-pro .lane-body           { background: #F7FCF2; }
+.lane-prod .lane-label         { background: #FFF0F0; color: #8B0000; }
+.lane-prod .lane-body          { background: #FFF8F8; }
+.lane-px .lane-label           { background: #F5F0FF; color: #5A2DB0; }
+.lane-px .lane-body            { background: #FAF8FF; }
+.lane-set .lane-label          { background: #E8FAF0; color: #006633; }
+.lane-set .lane-body           { background: #F2FCF6; }
+.lane-talent .lane-label       { background: #FEF0E0; color: #804000; }
+.lane-talent .lane-body        { background: #FFF8F0; }
+.lane-virtual .lane-label      { background: #E0F0FF; color: #003B7A; }
+.lane-virtual .lane-body       { background: #EEF7FF; }
+.lane-consultants .lane-label  { background: #F0F8E8; color: #2D6B00; }
+.lane-consultants .lane-body   { background: #F6FCF0; }
+.lane-projectlead .lane-label  { background: #FDE8FF; color: #6B0080; }
+.lane-projectlead .lane-body   { background: #FEF2FF; }
+.lane-am .lane-label           { background: #FFF8E0; color: #6B4E00; }
+.lane-am .lane-body            { background: #FFFDF0; }
+.lane-sme .lane-label          { background: #E8F8FF; color: #005A80; }
+.lane-sme .lane-body           { background: #F2FBFF; }
+.lane-saba .lane-label         { background: #F8E8FF; color: #5A006B; }
+.lane-saba .lane-body          { background: #FCF2FF; }
+.lane-innovation .lane-label   { background: #E8FFF0; color: #005533; }
+.lane-innovation .lane-body    { background: #F2FFF6; }
+.lane-leadership .lane-label   { background: #FFF0E8; color: #7A3000; }
+.lane-leadership .lane-body    { background: #FFF8F4; }
+.lane-other .lane-label        { background: #F2F2F2; color: #555555; }
+.lane-other .lane-body         { background: #FAFAFA; }
+.lane-body { flex: 1; padding: 10px 12px; display: flex; align-items: flex-start; gap: 7px; flex-wrap: wrap; }
+.step-node { border: 1px solid #DDE1E6; border-radius: 8px; padding: 7px 10px; font-size: 11px; color: var(--bts-dark); cursor: grab; display: flex; align-items: center; justify-content: space-between; gap: 5px; background: white; max-width: 140px; transition: border-color 0.15s; }
+.step-node.friction { border-left: 3px solid var(--bts-red); }
+.step-node.star { border-left: 3px solid var(--bts-teal); }
+.step-node span { font-size: 11px; line-height: 1.4; }
+.node-del { background: none; border: none; color: #CCC; cursor: pointer; font-size: 13px; padding: 0 0 0 3px; line-height: 1; flex-shrink: 0; }
+.node-del:hover { color: var(--bts-red); }
+.add-node-btn { border: 1.5px dashed #CCC; border-radius: 8px; padding: 7px 10px; font-size: 11px; color: #BBB; cursor: pointer; background: transparent; display: flex; align-items: center; gap: 4px; font-family: var(--font); white-space: nowrap; }
+.add-node-btn:hover { border-color: var(--bts-pink); color: var(--bts-pink); }
+.node-input-wrap { display: flex; align-items: center; gap: 5px; }
+.node-input { border: 1px solid var(--bts-pink); border-radius: 6px; padding: 5px 8px; font-size: 11px; width: 110px; font-family: var(--font); outline: none; color: var(--bts-dark); }
+.mapper-legend { display: flex; gap: 16px; padding: 10px 14px; border-top: 1px solid #E8EBF0; background: #FAFBFC; flex-wrap: wrap; }
+.ml-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #888; }
+.ml-bar { width: 3px; height: 16px; border-radius: 2px; }
+
+/* ---- DASHBOARD ---- */
+.dash-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+.dash-metric { background: white; border-radius: 10px; border: 1px solid #E8EBF0; padding: 16px; }
+.dm-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+.dm-value { font-size: 26px; font-weight: 700; color: var(--bts-dark); line-height: 1; }
+.dm-sub { font-size: 11px; color: #BBB; margin-top: 4px; }
+.dash-table-wrap { background: white; border-radius: 10px; border: 1px solid #E8EBF0; overflow: hidden; }
+.dt-head { display: grid; grid-template-columns: 2fr 1fr 0.8fr 1fr 1.2fr; background: var(--bts-dark); }
+.dt-head span { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.8); padding: 10px 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+.dt-row { display: grid; grid-template-columns: 2fr 1fr 0.8fr 1fr 1.2fr; border-bottom: 1px solid #F0F2F5; transition: background 0.1s; }
+.dt-row:last-child { border-bottom: none; }
+.dt-row:hover { background: #FAFBFC; }
+.dt-row span { font-size: 12px; color: var(--bts-dark); padding: 11px 12px; display: flex; align-items: center; gap: 6px; }
+.status-badge { padding: 3px 9px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.3px; white-space: nowrap; }
+.sb-green { background: var(--bts-teal-light); color: #0F6E56; }
+.sb-amber { background: #FAEEDA; color: #854F0B; }
+.sb-red { background: #FCEBEB; color: #A32D2D; }
+.progress-wrap { width: 70px; }
+.prog-bar { height: 5px; border-radius: 3px; background: #EEE; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--bts-teal); border-radius: 3px; transition: width 0.3s; }
+.prog-label { font-size: 10px; color: #999; margin-top: 2px; }
+
+.empty-state { text-align: center; padding: 36px 20px; color: #BBB; }
+.empty-state p { font-size: 13px; margin-top: 8px; }
+
+/* ---- IDEA FORM ---- */
+.sm-embed-note { background: var(--bts-pink-light); border: 1px solid #EDAACB; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
+.sm-embed-note p { font-size: 12px; color: var(--bts-pink); line-height: 1.6; }
+.sm-embed-note a { color: var(--bts-pink); font-weight: 700; }
+.sm-form-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: var(--bts-pink); color: white; border: none; border-radius: 9px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: var(--font); text-decoration: none; transition: background 0.15s; }
+.sm-form-btn:hover { background: #b01659; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 580px) {
+  .action-grid { grid-template-columns: 1fr 1fr; }
+  .checkin-grid { grid-template-columns: repeat(4, 1fr); }
+  .form-row { grid-template-columns: 1fr; }
+  .dash-metrics { grid-template-columns: 1fr 1fr; }
+  .dt-head, .dt-row { grid-template-columns: 1.8fr 1fr 1fr; }
+  .dt-head span:nth-child(4), .dt-head span:nth-child(5),
+  .dt-row span:nth-child(4), .dt-row span:nth-child(5) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SETUP ===================== -->
+<div class="screen" id="screen-setup">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="bts-dots"><div class="bts-dot d1"></div><div class="bts-dot d2"></div><div class="bts-dot d3"></div></div>
+      <span class="topbar-brand">bts</span>
+    </div>
+    <span class="topbar-title">Strategy made personal</span>
+    <span></span>
+  </div>
+  <div class="accent-bar"></div>
+  <div class="login-wrap">
+    <div class="login-card" style="max-width:480px">
+      <div class="login-logo">
+        <div class="login-logo-dots">
+          <div class="login-logo-dot" style="background:var(--bts-pink)"></div>
+          <div class="login-logo-dot" style="background:var(--bts-pink);opacity:.55"></div>
+          <div class="login-logo-dot" style="background:var(--bts-pink);opacity:.3"></div>
+        </div>
+        <span style="font-size:13px;font-weight:700;letter-spacing:1px;color:var(--bts-dark)">bts</span>
+      </div>
+      <h1>One-time <span>Setup</span></h1>
+      <p class="sub">This tool connects directly to Smartsheet. An AI Champion or admin needs to enter a Smartsheet API token once on this device. Regular team members will never see this screen.</p>
+      <div style="background:#FAEEDA;border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:#854F0B;margin-bottom:20px;line-height:1.6">
+        <strong>AI Champion / Admin only.</strong> This is a one-time step per device. The token is saved in this browser only &mdash; no Claude license required.
+      </div>
+      <div class="field">
+        <label>How to get your Smartsheet API token</label>
+        <div style="background:#F5F5F5;border-radius:8px;padding:12px 14px;font-size:12px;color:#555;line-height:1.9;margin-bottom:4px">
+          1. Open Smartsheet &rarr; click your <strong>avatar</strong> (top right)<br>
+          2. Go to <strong>Account &rarr; Apps &amp; Integrations &rarr; API Access</strong><br>
+          3. Click <strong>Generate new access token</strong><br>
+          4. Name it <em>PMO AI Innovation Tool</em> and copy the full token<br>
+          5. Paste it below and click Activate
+        </div>
+      </div>
+      <div class="field">
+        <label>Smartsheet API Token</label>
+        <input type="password" id="setup-token" placeholder="Paste your token here..." style="font-family:monospace;font-size:12px;letter-spacing:1px" />
+        <p style="font-size:11px;color:#999;margin-top:5px">Saved to this browser only. Never sent anywhere except Smartsheet.</p>
+      </div>
+      <div id="setup-error" style="display:none;background:#FCEBEB;border:1px solid #F7C1C1;border-radius:7px;padding:9px 12px;font-size:12px;color:#A32D2D;margin-bottom:14px;"></div>
+      <div id="setup-loading" style="display:none;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:9px 12px;font-size:12px;color:var(--bts-blue);margin-bottom:14px;">Verifying with Smartsheet&hellip;</div>
+      <button class="btn-primary" onclick="activateToken()">Activate Tool</button>
+      <p class="login-note" style="margin-top:12px">Token saved in browser only &bull; Revoke anytime in Smartsheet &rarr; API Access</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LOGIN ===================== -->
+<div class="screen active" id="screen-login">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="bts-dots"><div class="bts-dot d1"></div><div class="bts-dot d2"></div><div class="bts-dot d3"></div></div>
+      <span class="topbar-brand">bts</span>
+    </div>
+    <span class="topbar-title">Strategy made personal</span>
+    <span></span>
+  </div>
+  <div class="accent-bar"></div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="login-logo-dots">
+          <div class="login-logo-dot" style="background:var(--bts-pink)"></div>
+          <div class="login-logo-dot" style="background:var(--bts-pink);opacity:.55"></div>
+          <div class="login-logo-dot" style="background:var(--bts-pink);opacity:.3"></div>
+        </div>
+        <span style="font-size:13px;font-weight:700;letter-spacing:1px;color:var(--bts-dark)">bts</span>
+      </div>
+      <h1>PMO <span>AI Innovation</span> Tool</h1>
+      <p class="sub" id="login-sub">Sign in with your email and PIN, or register for the first time.</p>
+
+      <!-- AUTH MODE TOGGLE -->
+      <div style="display:flex;gap:0;margin-bottom:22px;border:1px solid #DDE1E6;border-radius:8px;overflow:hidden;">
+        <button id="tab-signin" onclick="setAuthMode('signin')" style="flex:1;padding:9px;font-size:12px;font-weight:700;border:none;cursor:pointer;background:var(--bts-pink);color:white;font-family:var(--font);transition:all 0.15s;">Sign In</button>
+        <button id="tab-register" onclick="setAuthMode('register')" style="flex:1;padding:9px;font-size:12px;font-weight:700;border:none;cursor:pointer;background:white;color:#888;font-family:var(--font);transition:all 0.15s;">First Time? Register</button>
+      </div>
+
+      <!-- SIGN IN PANEL -->
+      <div id="panel-signin">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="si-email" placeholder="your@bts.com" />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="si-pin" placeholder="Enter your password" style="letter-spacing:1px;font-size:14px;" />
+        </div>
+        <div id="si-error" style="display:none;background:#FCEBEB;border:1px solid #F7C1C1;border-radius:7px;padding:9px 12px;font-size:12px;color:#A32D2D;margin-bottom:14px;"></div>
+        <div id="si-loading" style="display:none;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:9px 12px;font-size:12px;color:var(--bts-blue);margin-bottom:14px;">Checking your credentials…</div>
+        <button class="btn-primary" onclick="doSignIn()">Sign In</button>
+      </div>
+
+      <!-- REGISTER PANEL -->
+      <div id="panel-register" style="display:none">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" id="reg-name" placeholder="Your full name" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="your@bts.com" />
+        </div>
+        <div class="field">
+          <label>Role</label>
+          <select id="reg-role">
+            <option value="PMO">PMO</option>
+            <option value="Pilot Lead">Pilot Lead</option>
+            <option value="Pilot Partner">Pilot Partner</option>
+            <option value="Level 5 / Team Leadership">Level 5 / Team Leadership</option>
+            <option value="AI Champion">AI Champion</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Choose a Password</label>
+          <input type="password" id="reg-pin" placeholder="Minimum 6 characters" style="letter-spacing:1px;font-size:14px;" />
+          <p style="font-size:11px;color:#999;margin-top:5px;">You will use this password every time you sign in. Choose something memorable — it cannot be recovered.</p>
+        </div>
+        <div class="field">
+          <label>Confirm Password</label>
+          <input type="password" id="reg-pin2" placeholder="Re-enter your password" style="letter-spacing:1px;font-size:14px;" />
+        </div>
+        <div id="reg-error" style="display:none;background:#FCEBEB;border:1px solid #F7C1C1;border-radius:7px;padding:9px 12px;font-size:12px;color:#A32D2D;margin-bottom:14px;"></div>
+        <div id="reg-loading" style="display:none;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:9px 12px;font-size:12px;color:var(--bts-blue);margin-bottom:14px;">Registering your account...</div>
+        <button class="btn-primary" onclick="doRegister()">Create Account</button>
+      </div>
+
+      <p class="login-note">BTS PMO team members only &bull; Version 1.0</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MAIN APP ===================== -->
+<div class="screen" id="screen-app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="bts-dots"><div class="bts-dot d1"></div><div class="bts-dot d2"></div><div class="bts-dot d3"></div></div>
+      <span class="topbar-brand">bts</span>
+      <span class="topbar-title">PMO AI Innovation Tool</span>
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip" onclick="logout()" title="Sign out (Shift+click to reset Smartsheet connection)">
+        <div class="user-avatar" id="user-avatar-top">EB</div>
+        <span class="user-name" id="user-name-top">Elya Bottiger</span>
+      </div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+  <div class="nav-bar">
+    <div class="nav-item active" id="nav-home" onclick="showTab('home')">Home</div>
+    <div class="nav-item" id="nav-idea" onclick="showTab('idea')">Log an Idea</div>
+    <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Check-In</div>
+    <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Workflow Mapper</div>
+    <div class="nav-item" id="nav-dashboard" onclick="showTab('dashboard')">Pilot Dashboard</div>
+  </div>
+
+  <!-- ======= HOME TAB ======= -->
+  <div class="main" id="tab-home">
+    <div class="greet">
+      <h2 id="home-greeting">Good morning, Elya</h2>
+      <p id="home-date">Thursday, April 16, 2026</p>
+    </div>
+
+    <div class="section-label">Where would you like to go?</div>
+    <div class="action-grid">
+      <div class="action-card" onclick="showTab('idea')">
+        <div class="ac-icon ac-pink" style="font-size:17px">&#128161;</div>
+        <h3>Log a New Idea</h3>
+        <p>Submit an AI or automation idea to the intake form</p>
+      </div>
+      <div class="action-card" onclick="showTab('checkin')">
+        <div class="ac-icon ac-blue" style="font-size:17px">&#9989;</div>
+        <h3>Submit a Check-In</h3>
+        <p>Day 1, 15, 30, 45, 60, 75, or 90 pilot update</p>
+      </div>
+      <div class="action-card" onclick="showTab('mapper')">
+        <div class="ac-icon ac-teal" style="font-size:17px">&#128195;</div>
+        <h3>Map a Workflow</h3>
+        <p>Brainstorm and map process flows with swim lanes</p>
+      </div>
+      <div class="action-card" onclick="showTab('dashboard')">
+        <div class="ac-icon ac-purple" style="font-size:17px">&#128202;</div>
+        <h3>Pilot Dashboard</h3>
+        <p>View health status of all active pilots</p>
+      </div>
+    </div>
+
+    <div class="section-label">Active pilots</div>
+    <div class="pilot-list" id="home-pilots"></div>
+  </div>
+
+  <!-- ======= IDEA TAB ======= -->
+  <div class="main" id="tab-idea" style="display:none">
+    <div class="page-title">Log a New AI Idea</div>
+    <p class="page-sub">Every idea starts here. Submit via the PMO AI Idea Intake Form in Smartsheet — it takes less than five minutes.</p>
+
+    <div class="info-box">
+      The <strong>AI Idea Intake Form</strong> is the official entry point for all AI and automation ideas — whether you thought of it independently, it came up in an AI Innovation Lab session, or it was assigned top-down. Unlogged ideas do not exist in the pipeline.
+    </div>
+
+    <div class="form-card">
+      <h3>Before you submit — quick classification</h3>
+      <p class="form-sub">Answer these two questions so you can classify your idea correctly in the form.</p>
+
+      <div class="field">
+        <label>Is this tied to a current business priority?</label>
+        <select id="q-priority">
+          <option value="">Select...</option>
+          <option value="yes">Yes — clearly aligned</option>
+          <option value="maybe">Possibly — not yet confirmed</option>
+          <option value="no">Not yet — more of an exploration</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Does it meaningfully improve how we work?</label>
+        <select id="q-improves">
+          <option value="">Select...</option>
+          <option value="yes">Yes — I can describe how</option>
+          <option value="maybe">Possibly — needs more testing</option>
+          <option value="no">Unclear</option>
+        </select>
+      </div>
+      <div id="classification-result" style="display:none;margin-top:14px"></div>
+    </div>
+
+    <div class="sm-embed-note">
+      <p>&#128279; Your idea will be logged in <strong>Smartsheet</strong> and reviewed at the next planning cycle. The AI Champion reviews all submissions and will follow up within one week.</p>
+    </div>
+    <a href="https://app.smartsheet.com/b/form/53fc168f1a8943a0aadbd9de79caf67b" target="_blank" class="sm-form-btn">
+      &#x1F4CB;&nbsp; Open AI Idea Intake Form in Smartsheet
+    </a>
+    <p style="font-size:11px;color:#BBB;text-align:center;margin-top:10px">Opens in a new tab &bull; Smartsheet form powered by BTS PMO</p>
+  </div>
+
+  <!-- ======= CHECK-IN TAB ======= -->
+  <div class="main" id="tab-checkin" style="display:none">
+    <div id="checkin-selector">
+      <div class="checkin-header">
+        <h2>Submit a Pilot Check-In</h2>
+        <p>Select your current pilot day to open the right check-in form</p>
+      </div>
+      <div class="legend-row">
+        <div class="legend-item"><div class="legend-bar lb-blue"></div> Written update to Level 5</div>
+        <div class="legend-item"><div class="legend-bar lb-pink"></div> Verbal check-in with Level 5</div>
+      </div>
+      <div class="checkin-grid">
+        <div class="checkin-btn written" onclick="openCheckin(1)"><div class="cb-day">1</div><div class="cb-type">Written</div><div class="cb-label">Kick-off</div></div>
+        <div class="checkin-btn written" onclick="openCheckin(15)"><div class="cb-day">15</div><div class="cb-type">Written</div><div class="cb-label">Early signal</div></div>
+        <div class="checkin-btn written" onclick="openCheckin(30)"><div class="cb-day">30</div><div class="cb-type">Written</div><div class="cb-label">Mid-check</div></div>
+        <div class="checkin-btn written" onclick="openCheckin(45)"><div class="cb-day">45</div><div class="cb-type">Written</div><div class="cb-label">Peer review</div></div>
+        <div class="checkin-btn verbal" onclick="openCheckin(60)"><div class="cb-day">60</div><div class="cb-type">Verbal</div><div class="cb-label">Live check-in</div></div>
+        <div class="checkin-btn written" onclick="openCheckin(75)"><div class="cb-day">75</div><div class="cb-type">Written</div><div class="cb-label">Final review</div></div>
+        <div class="checkin-btn verbal" onclick="openCheckin(90)"><div class="cb-day">90</div><div class="cb-type">Verbal</div><div class="cb-label">Decision day</div></div>
+      </div>
+      <div class="note-box">* <strong>Exception — Starting at Day 30:</strong> If your experiment phase already produced strong evidence and Level 5 has explicitly approved early entry, you may begin your pilot at Day 30. This must be documented in writing before proceeding.</div>
+    </div>
+
+    <div id="checkin-form" style="display:none"></div>
+  </div>
+
+  <!-- ======= WORKFLOW MAPPER TAB ======= -->
+  <div class="main" id="tab-mapper" style="display:none">
+    <div class="page-title">Workflow Mapper</div>
+    <p class="page-sub">Map your current workflow before adding a tool. Use swim lanes to show where different teams are involved. This is your brainstorm space — not yet a pilot.</p>
+
+    <div class="info-box" style="margin-bottom:14px">
+      <strong>How to use:</strong> Click a lane to add a step. Mark steps as friction points (where the process slows down) or star steps (where the tool will live). At Day 30, return here to add star annotations showing how the tool changed the flow.
+    </div>
+
+    <div class="form-card" style="margin-bottom:14px">
+      <h3>Workflow name</h3>
+      <div class="form-row" style="margin-top:12px">
+        <div class="field">
+          <label>Workflow title</label>
+          <input type="text" id="workflow-title" placeholder="e.g. Digital Operator Resourcing" />
+        </div>
+        <div class="field">
+          <label>Tool being explored</label>
+          <input type="text" id="workflow-tool" placeholder="e.g. AI scheduling assistant" />
+        </div>
+      </div>
+    </div>
+
+    <div class="mapper-container">
+      <div class="mapper-toolbar">
+        <button class="mapper-btn" onclick="setAddMode('step')">+ Add Step</button>
+        <button class="mapper-btn" id="btn-friction" onclick="setAddMode('friction')">+ Friction Point</button>
+        <button class="mapper-btn" id="btn-star" onclick="setAddMode('star')">&#9733; Tool Lives Here</button>
+        <div class="mapper-sep"></div>
+        <button class="mapper-btn" onclick="showAddLanePanel()">+ Add Lane</button>
+        <div class="mapper-sep"></div>
+        <button class="mapper-btn" onclick="clearMapper()" style="color:#E63F4F">Clear All</button>
+      </div>
+
+      <!-- Lane picker panel -->
+      <div id="lane-picker" style="display:none;padding:12px 14px;border-bottom:1px solid #E8EBF0;background:#FAFBFC;">
+        <div style="font-size:11px;font-weight:700;color:#888;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Select a team to add as a lane</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;" id="lane-picker-chips"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+          <input type="text" id="other-lane-input" placeholder="Other — type team name..." style="padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);width:220px;outline:none;" onfocus="this.style.borderColor='var(--bts-pink)'" onblur="this.style.borderColor='#DDE1E6'" />
+          <button class="mapper-btn" onclick="addOtherLane()">Add</button>
+          <button class="mapper-btn" onclick="hideLanePicker()" style="color:#999">Cancel</button>
+        </div>
+      </div>
+
+      <div id="swim-lanes">
+        <div class="swim-lane lane-pmo" data-lane="pmo">
+          <div class="lane-label">PMO</div>
+          <div class="lane-body" id="lane-pmo" onclick="handleLaneClick(event,'pmo')"></div>
+        </div>
+      </div>
+      <div class="mapper-legend">
+        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-red)"></div> Friction point</div>
+        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-teal)"></div> Tool lives here (&#9733;)</div>
+        <div class="ml-item" style="margin-left:4px;color:#BBB">Click a lane to add a step &bull; Click step X to remove</div>
+      </div>
+    </div>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn-submit" onclick="saveMapper()">Save Workflow Map</button>
+    </div>
+    <div class="success-toast" id="mapper-toast">Workflow map saved. You can return to add Day 30 annotations.</div>
+  </div>
+
+  <!-- ======= DASHBOARD TAB ======= -->
+  <div class="main" id="tab-dashboard" style="display:none">
+    <div class="page-title">Pilot Health Dashboard</div>
+    <p class="page-sub">Real-time view of all active PMO pilots &bull; Accessible to AI Champion and Level 5 leadership</p>
+
+    <div class="dash-metrics">
+      <div class="dash-metric">
+        <div class="dm-label">Active Pilots</div>
+        <div class="dm-value" id="dash-active">0</div>
+        <div class="dm-sub">this month's cohort</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dm-label">On Track</div>
+        <div class="dm-value" id="dash-green" style="color:#1D9E75">0</div>
+        <div class="dm-sub">no intervention needed</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dm-label">Needs Attention</div>
+        <div class="dm-value" id="dash-attn" style="color:#EF9F27">0</div>
+        <div class="dm-sub">at risk or blocked</div>
+      </div>
+    </div>
+
+    <div class="dash-table-wrap">
+      <div class="dt-head">
+        <span>Pilot</span>
+        <span>Co-Owners</span>
+        <span>Day</span>
+        <span>Status</span>
+        <span>Progress</span>
+      </div>
+      <div id="dash-rows"></div>
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-sec" onclick="openAddPilot()">+ Add Pilot</button>
+      <button class="btn-sec" onclick="loadFromSmartsheet()" id="btn-load-sm" style="color:var(--bts-teal);border-color:var(--bts-teal)">&#8635; Load from Smartsheet</button>
+    </div>
+    <div class="success-toast" id="sm-load-toast" style="margin-top:12px"></div>
+    <div id="add-pilot-form" style="display:none;margin-top:14px">
+      <div class="form-card">
+        <h3>Add pilot to dashboard</h3>
+        <p class="form-sub">For demonstration — in production this populates from submitted check-ins</p>
+        <div class="form-row">
+          <div class="field"><label>Pilot name</label><input type="text" id="dp-name" placeholder="e.g. Digital Operator Tool" /></div>
+          <div class="field"><label>Pilot Lead</label><input type="text" id="dp-lead" placeholder="e.g. Elya Bottiger" /></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Pilot Partner</label><input type="text" id="dp-partner" placeholder="e.g. Arthur Chen" /></div>
+          <div class="field"><label>Current day</label>
+            <select id="dp-day">
+              <option value="1">Day 1</option><option value="15">Day 15</option><option value="30">Day 30</option>
+              <option value="45">Day 45</option><option value="60">Day 60</option><option value="75">Day 75</option><option value="90">Day 90</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Health Status</label>
+          <div class="status-row">
+            <div class="status-pill sp-green" id="ps-green" onclick="selectPilotStatus('green')">On Track</div>
+            <div class="status-pill sp-amber" id="ps-amber" onclick="selectPilotStatus('amber')">At Risk</div>
+            <div class="status-pill sp-red" id="ps-red" onclick="selectPilotStatus('red')">Blocked</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-sec" onclick="closeAddPilot()">Cancel</button>
+          <button class="btn-submit" onclick="savePilot()">Add to Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SMARTSHEET_FORM = 'https://app.smartsheet.com/b/form/53fc168f1a8943a0aadbd9de79caf67b';
+const SMARTSHEET_SHEET = 'https://app.smartsheet.com/sheets/MXwX9Rx4J2xxGv9vf5w2WW4cCGqRc6hgf69VVq31';
+
+let state = {
+  user: null,
+  pilots: [],
+  addMode: 'step',
+  pilotStatus: 'green',
+  laneCount: 3
+};
+
+
+// ============ SMARTSHEET BACKEND ============
+let SM_TOKEN = localStorage.getItem('sm_token') || '';
+
+const SM = {
+  USER_REGISTRY_SHEET:   '82762976415620',
+  PILOT_REGISTRY_SHEET:  '5262356096438148',
+  CHECKIN_SHEET:         '3292924612661124',
+  WORKFLOW_SHEET:        '363688197312388',
+  IDEA_FORM_URL:         'https://app.smartsheet.com/b/form/53fc168f1a8943a0aadbd9de79caf67b',
+
+  // User Registry column IDs
+  UR: {
+    email:          2538227966971780,
+    fullName:       7041827594342276,
+    password:        7001950702047108,
+    role:           1372451167833988,
+    registeredAt:   5876050795204484,
+    lastLogin:      3624250981519236,
+  },
+
+  // Pilot Registry column IDs
+  PR: {
+    pilotName:        6926667709976452,
+    pilotLead:        1297168175763332,
+    pilotPartner:     5800767803133828,
+    leadEmail:        3548967989448580,
+    startDate:        8052567616819076,
+    currentDay:       734218222342020,
+    healthStatus:     5237817849712516,
+    entryPoint:       2986018036027268,
+    hypothesis:       7489617663397764,
+    baseline:         1860118129184644,
+    day90Outcome:     6363717756555140,
+  },
+
+  // Check-In Submissions column IDs
+  CI: {
+    pilotName:        8438203066650500,  // primary "Submission" col renamed via add
+    pilotLead:        8744633682399108,
+    pilotPartner:     159646892724100,
+    submitterEmail:   4663246520094596,
+    checkInDay:       2411446706409348,
+    checkInType:      6915046333779844,
+    role:             1285546799566724,
+    response1:        5789146426937220,
+    response2:        3537346613251972,
+    response3:        8040946240622468,
+    response4:        722596846145412,
+    healthStatus:     5226196473515908,
+    xfNotes:          2974396659830660,
+    day90Rec:         7477996287201156,
+    submittedAt:      1848496752988036,
+  },
+
+  // Workflow Maps column IDs
+  WF: {
+    title:            1396675051818884,
+    notes:            5900274679189380,
+    tool:             2680990532407172,
+    savedBy:          7184590159777668,
+    savedByEmail:     1555090625564548,
+    lanesUsed:        6058690252935044,
+    mapJSON:          3806890439249796,
+    savedAt:          8310490066620292,
+  }
+};
+
+async function smPost(sheetId, cells) {
+  const url = `https://api.anthropic.com/v1/messages`;
+  // We route through the Anthropic API using Claude to call Smartsheet
+  // via the BTS MCP server which has Smartsheet credentials
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: `Add a row to Smartsheet sheet ID ${sheetId} with these cell values (column ID : value pairs): ${JSON.stringify(cells)}. Use the Smartsheet MCP add_rows tool. Respond with just "OK" if successful or "ERROR: [reason]" if not.` }],
+        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
+      })
+    });
+    const data = await resp.json();
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    return text.includes('ERROR') ? { ok: false, msg: text } : { ok: true };
+  } catch(e) {
+    return { ok: false, msg: e.message };
+  }
+}
+
+async function smGetRows(sheetId) {
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content: `Read all rows from Smartsheet sheet ID ${sheetId} using the get_sheet_summary tool. Return ONLY a JSON array of row objects with column titles as keys. No markdown, no explanation.` }],
+        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
+      })
+    });
+    const data = await resp.json();
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    try { return JSON.parse(text.replace(/```json|```/g,'')); }
+    catch { return []; }
+  } catch { return []; }
+}
+
+// Direct Smartsheet REST calls via Anthropic proxy
+async function addSmartsheetRow(sheetId, columnMap) {
+  const cells = Object.entries(columnMap).map(([colId, value]) => ({
+    columnId: parseInt(colId), value: value ?? ''
+  }));
+  const result = await smPost(sheetId, cells);
+  return result;
+}
+
+// ============ PILOT REGISTRY FUNCTIONS ============
+async function savePilotToSmartsheet(pilot) {
+  const now = new Date();
+  const cells = {
+    [SM.PR.pilotName]:    pilot.name,
+    [SM.PR.pilotLead]:    pilot.lead,
+    [SM.PR.pilotPartner]: pilot.partner || '',
+    [SM.PR.leadEmail]:    state.user?.email || '',
+    [SM.PR.startDate]:    now.toISOString().split('T')[0],
+    [SM.PR.currentDay]:   String(pilot.day),
+    [SM.PR.healthStatus]: pilot.status === 'green' ? 'On Track' : pilot.status === 'amber' ? 'At Risk' : 'Blocked',
+    [SM.PR.entryPoint]:   pilot.entryPoint || 'Day 1 Standard',
+    [SM.PR.hypothesis]:   pilot.hypothesis || '',
+    [SM.PR.baseline]:     pilot.baseline || '',
+    [SM.PR.day90Outcome]: 'Pending',
+  };
+  return addSmartsheetRow(SM.PILOT_REGISTRY_SHEET, cells);
+}
+
+async function saveCheckinToSmartsheet(day, pilotName, role, responses, healthStatus, xfNotes, day90Rec) {
+  const isVerbal = day === 60 || day === 90;
+  const cells = {
+    [SM.CI.pilotName]:     pilotName,
+    [SM.CI.pilotLead]:     state.user?.name || '',
+    [SM.CI.submitterEmail]: state.user?.email || '',
+    [SM.CI.checkInDay]:    'Day ' + day,
+    [SM.CI.checkInType]:   isVerbal ? 'Verbal' : 'Written',
+    [SM.CI.role]:          role,
+    [SM.CI.response1]:     responses[0] || '',
+    [SM.CI.response2]:     responses[1] || '',
+    [SM.CI.response3]:     responses[2] || '',
+    [SM.CI.response4]:     responses[3] || '',
+    [SM.CI.healthStatus]:  healthStatus,
+    [SM.CI.xfNotes]:       xfNotes || '',
+    [SM.CI.day90Rec]:      day90Rec || 'N/A',
+    [SM.CI.submittedAt]:   new Date().toISOString(),
+  };
+  return addSmartsheetRow(SM.CHECKIN_SHEET, cells);
+}
+
+async function saveWorkflowToSmartsheet(title, tool, lanesUsed, mapJSON) {
+  const cells = {
+    [SM.WF.title]:        title,
+    [SM.WF.tool]:         tool,
+    [SM.WF.savedBy]:      state.user?.name || '',
+    [SM.WF.savedByEmail]: state.user?.email || '',
+    [SM.WF.lanesUsed]:    lanesUsed,
+    [SM.WF.mapJSON]:      mapJSON,
+    [SM.WF.savedAt]:      new Date().toISOString(),
+  };
+  return addSmartsheetRow(SM.WORKFLOW_SHEET, cells);
+}
+
+async function loadPilotsFromSmartsheet() {
+  return smGetRows(SM.PILOT_REGISTRY_SHEET);
+}
+
+// ── AUTH HELPERS ──────────────────────────────────────────────────────────
+
+function setAuthMode(mode) {
+  const isSignIn = mode === 'signin';
+  document.getElementById('panel-signin').style.display = isSignIn ? '' : 'none';
+  document.getElementById('panel-register').style.display = isSignIn ? 'none' : '';
+  document.getElementById('tab-signin').style.background = isSignIn ? 'var(--bts-pink)' : 'white';
+  document.getElementById('tab-signin').style.color = isSignIn ? 'white' : '#888';
+  document.getElementById('tab-register').style.background = isSignIn ? 'white' : 'var(--bts-pink)';
+  document.getElementById('tab-register').style.color = isSignIn ? '#888' : 'white';
+  document.getElementById('si-error').style.display = 'none';
+  document.getElementById('reg-error').style.display = 'none';
+}
+
+function showAuthError(panelPrefix, msg) {
+  const el = document.getElementById(panelPrefix + '-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function showAuthLoading(panelPrefix, visible) {
+  document.getElementById(panelPrefix + '-loading').style.display = visible ? '' : 'none';
+}
+
+async function lookupUser(email) {
+  // Ask Claude via Anthropic API to search the User Registry sheet for this email
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        messages: [{
+          role: 'user',
+          content: `Search Smartsheet sheet ID ${SM.USER_REGISTRY_SHEET} for a row where the "Email" column exactly matches "${email}" (case-insensitive). Use get_sheet_summary. Return ONLY a JSON object with these fields (or null if not found): {"found": true/false, "rowId": <row id number or null>, "email": "", "fullName": "", "password": "", "role": ""}. No markdown, no explanation, just JSON.`
+        }],
+        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
+      })
+    });
+    const data = await resp.json();
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
+  } catch(e) {
+    return null;
+  }
+}
+
+async function registerUser(name, email, password, role) {
+  const cells = {
+    [SM.UR.email]:        email,
+    [SM.UR.fullName]:     name,
+    [SM.UR.password]:     password,
+    [SM.UR.role]:         role,
+    [SM.UR.registeredAt]: new Date().toISOString(),
+    [SM.UR.lastLogin]:    new Date().toISOString(),
+  };
+  return addSmartsheetRow(SM.USER_REGISTRY_SHEET, cells);
+}
+
+async function updateLastLogin(rowId) {
+  try {
+    await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{
+          role: 'user',
+          content: `Update row ID ${rowId} in Smartsheet sheet ID ${SM.USER_REGISTRY_SHEET}. Set column ID ${SM.UR.lastLogin} to "${new Date().toISOString()}". Use update_rows. Reply "OK".`
+        }],
+        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
+      })
+    });
+  } catch(e) { /* silent fail — not critical */ }
+}
+
+function launchApp(user) {
+  state.user = user;
+  const initials = user.name.split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('user-avatar-top').textContent = initials;
+  document.getElementById('user-name-top').textContent = user.name;
+  document.getElementById('home-greeting').textContent = getGreeting(user.name);
+  document.getElementById('home-date').textContent = formatDate(new Date());
+  show('screen-login', false);
+  show('screen-app', true);
+  // Elevate dashboard nav for Level 5 and Champion
+  if (user.role === 'Level 5 / Team Leadership' || user.role === 'AI Champion') {
+    document.getElementById('nav-dashboard').style.fontWeight = '800';
+    document.getElementById('nav-dashboard').style.color = 'var(--bts-pink)';
+  }
+  renderDashboard();
+  renderHomePilots();
+}
+
+async function doSignIn() {
+  const email = document.getElementById('si-email').value.trim().toLowerCase();
+  const password = document.getElementById('si-pin').value.trim();
+  document.getElementById('si-error').style.display = 'none';
+  if (!email || !password) { showAuthError('si', 'Please enter your email and password.'); return; }
+  if (password.length < 6) { showAuthError('si', 'Password must be at least 6 characters.'); return; }
+  showAuthLoading('si', true);
+  const result = await lookupUser(email);
+  showAuthLoading('si', false);
+  if (!result || !result.found) {
+    showAuthError('si', 'No account found for that email. Please register first.');
+    return;
+  }
+  if (String(result.password).trim() !== String(password).trim()) {
+    showAuthError('si', 'Incorrect PIN. Please try again.');
+    return;
+  }
+  if (result.rowId) updateLastLogin(result.rowId);
+  launchApp({ name: result.fullName, email: result.email, role: result.role, rowId: result.rowId });
+}
+
+async function doRegister() {
+  const name  = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim().toLowerCase();
+  const role  = document.getElementById('reg-role').value;
+  const password  = document.getElementById('reg-pin').value.trim();
+  const password2 = document.getElementById('reg-pin2').value.trim();
+  document.getElementById('reg-error').style.display = 'none';
+  if (!name || !email || !password) { showAuthError('reg', 'Please fill in all fields.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAuthError('reg', 'Please enter a valid email address.'); return; }
+  if (password.length < 6) { showAuthError('reg', 'Password must be at least 6 characters.'); return; }
+  if (password !== password2) { showAuthError('reg', 'Passwords do not match. Please re-enter.'); return; }
+  showAuthLoading('reg', true);
+  // Check if email already registered
+  const existing = await lookupUser(email);
+  if (existing && existing.found) {
+    showAuthLoading('reg', false);
+    showAuthError('reg', 'An account with that email already exists. Please sign in instead.');
+    return;
+  }
+  const result = await registerUser(name, email, password, role);
+  showAuthLoading('reg', false);
+  if (result && result.ok) {
+    launchApp({ name, email, role });
+  } else {
+    showAuthError('reg', 'Registration failed — Smartsheet may be unavailable. Please try again or contact the AI Champion.');
+  }
+}
+
+// Keep doLogin as alias for backward compat (not used in new UI)
+function doLogin() { doSignIn(); }
+
+function logout() {
+  if (!confirm('Sign out?')) return;
+  show('screen-app', false);
+  state.user = null;
+  if (state._shiftHeld) {
+    if (confirm('Also reset the Smartsheet connection? You will need to re-enter the API token.')) {
+      localStorage.removeItem('sm_token');
+      SM_TOKEN = '';
+      show('screen-setup', true);
+      return;
+    }
+  }
+  show('screen-login', true);
+}
+
+function getGreeting(name) {
+  const h = new Date().getHours();
+  const first = name.split(' ')[0];
+  if (h < 12) return 'Good morning, ' + first;
+  if (h < 17) return 'Good afternoon, ' + first;
+  return 'Good evening, ' + first;
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+}
+
+function show(id, visible) {
+  const el = document.getElementById(id);
+  if (visible) { el.classList.add('active'); }
+  else { el.classList.remove('active'); }
+}
+
+function showTab(tab) {
+  ['home','idea','checkin','mapper','dashboard'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = (t === tab) ? '' : 'none';
+    document.getElementById('nav-' + t).classList.toggle('active', t === tab);
+  });
+  if (tab === 'checkin') { document.getElementById('checkin-selector').style.display = ''; document.getElementById('checkin-form').style.display = 'none'; }
+  if (tab === 'dashboard') renderDashboard();
+  if (tab === 'idea') setupIdeaClassifier();
+}
+
+function setupIdeaClassifier() {
+  document.getElementById('q-priority').addEventListener('change', classifyIdea);
+  document.getElementById('q-improves').addEventListener('change', classifyIdea);
+}
+
+function classifyIdea() {
+  const p = document.getElementById('q-priority').value;
+  const i = document.getElementById('q-improves').value;
+  const box = document.getElementById('classification-result');
+  if (!p || !i) { box.style.display = 'none'; return; }
+  let bucket = '', stage = '', color = '', note = '';
+  if (p === 'yes' && i === 'yes') {
+    bucket = 'Priority Now'; stage = 'Experiment → Pilot'; color = '#E1F5EE'; note = 'This idea is a strong candidate. Submit the form and bring it to the next AI Innovation Lab to find two co-owners.';
+  } else if (p === 'no' && i === 'no') {
+    bucket = 'Not Now'; stage = 'Park it'; color = '#F0F2F5'; note = 'Park this idea for now. Log it anyway — conditions may change.';
+  } else {
+    bucket = 'Experiment'; stage = 'Light Experiment'; color = '#FAEEDA'; note = 'Worth exploring individually or discussing in a session. No team capacity commitment yet.';
+  }
+  box.style.display = '';
+  box.innerHTML = `<div style="background:${color};border-radius:8px;padding:12px 14px;font-size:12px;color:var(--bts-dark);line-height:1.6"><strong>Work Bucket:</strong> ${bucket} &nbsp;&bull;&nbsp; <strong>Starting Stage:</strong> ${stage}<br><span style="color:#666;margin-top:4px;display:block">${note}</span></div>`;
+}
+
+function openCheckin(day) {
+  document.getElementById('checkin-selector').style.display = 'none';
+  const form = document.getElementById('checkin-form');
+  form.style.display = '';
+  const isVerbal = (day === 60 || day === 90);
+  const labels = {
+    1: 'Kick-off written update to Level 5',
+    15: 'Day 15 written update — early impressions',
+    30: 'Day 30 written update — hypothesis check',
+    45: 'Day 45 peer review written summary',
+    60: 'Day 60 verbal check-in with Level 5',
+    75: 'Day 75 written update — final review prep',
+    90: 'Day 90 verbal presentation — decision day'
+  };
+  const prompts = {
+    1: ['What is your pilot hypothesis? ("We believe this tool will...")', 'What is your baseline measurement? (How long does this task take today without the tool?)', 'Who are your testers, and what did you share with Level 5?', 'What are your milestone calendar dates? (Note any weekend adjustments)'],
+    15: ['Is the tool behaving as expected? Any early surprises or blockers?', 'What is each co-owner observing independently so far?', 'Do you need to adjust scope, testers, or timeline?'],
+    30: ["What's working so far?", "What isn't working or is harder than expected?", 'Is your original hypothesis holding? If not, how has it shifted?', 'Should we continue, adjust, or pause?'],
+    45: ['What did the peer review surface? (2-3 fresh perspectives invited by Pilot Partner)', 'What blind spots or concerns were identified?', 'What refinements will be made before Day 60?'],
+    60: ['Progress since Day 45 and cross-functional review findings?', 'Have all cross-functional approvals been obtained? Any outstanding concerns?', 'Are you on track for a Day 90 decision?'],
+    75: ['Are the same reviewers (including cross-functional approvers) completing final review and practice use?', 'What is the current overall readiness level for Day 90?', 'Any last changes or concerns to surface before the presentation?'],
+    90: ['Summary of pilot outcomes: what did we prove?', 'What does the data show vs. your original baseline?', 'Recommendation: Standardize, Reevaluate, or Table — and why?']
+  };
+
+  let fieldsHTML = prompts[day].map((q,i) => `
+    <div class="field">
+      <label>${q}</label>
+      <textarea placeholder="Your response..." rows="3"></textarea>
+    </div>
+  `).join('');
+
+  let statusHTML = '';
+  if (!isVerbal) {
+    statusHTML = `
+      <div class="field">
+        <label>Health status update</label>
+        <div class="status-row" id="ci-status-row">
+          <div class="status-pill sp-green selected" onclick="selectStatus(this,'green')">On Track</div>
+          <div class="status-pill sp-amber" onclick="selectStatus(this,'amber')">At Risk</div>
+          <div class="status-pill sp-red" onclick="selectStatus(this,'red')">Blocked</div>
+        </div>
+      </div>`;
+  }
+
+  let d90HTML = '';
+  if (day === 90) {
+    d90HTML = `
+      <div class="field">
+        <label>Day 90 recommendation</label>
+        <select id="ci-outcome">
+          <option value="">Select outcome...</option>
+          <option value="standardize">Standardize — roll out as team expectation</option>
+          <option value="reevaluate">Reevaluate — continue with refined hypothesis</option>
+          <option value="table">Table — pause and log learnings</option>
+        </select>
+      </div>`;
+  }
+
+  let xfHTML = '';
+  if (day === 60) {
+    xfHTML = `
+      <div class="field" style="margin-top:4px">
+        <label>Cross-functional approvals (formal step)</label>
+        <div class="checklist">
+          <div class="check-item"><input type="checkbox" id="xf-finance"><label for="xf-finance">Finance — no workflow conflicts or blockers confirmed</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-ops"><label for="xf-ops">Operators — no dependency concerns confirmed</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-na"><label for="xf-na">N/A — no other departments affected (documented)</label></div>
+        </div>
+      </div>`;
+  }
+
+  form.innerHTML = `
+    <button class="back-btn" onclick="backToCheckinSelector()">&#8592; Back to check-in selector</button>
+    <div class="form-card">
+      <h3>Day ${day} &mdash; ${labels[day]}</h3>
+      <p class="form-sub">${isVerbal ? 'This is a verbal check-in with Level 5. Use this form to prepare your talking points and document key takeaways after the meeting.' : 'Complete this written update via the AI Innovation Tool. Pilot Lead drafts; Pilot Partner reviews before submitting.'}</p>
+      ${isVerbal ? '<div class="warn-box">This is a <strong>verbal check-in</strong> — meet with Level 5 in person or on a call. Use this form to prepare talking points and record key takeaways immediately after.</div>' : ''}
+      <div class="form-row">
+        <div class="field"><label>Pilot name</label><input type="text" placeholder="e.g. Digital Operator Tool Pilot" /></div>
+        <div class="field"><label>Your role on this pilot</label><select><option>Pilot Lead</option><option>Pilot Partner</option></select></div>
+      </div>
+      ${fieldsHTML}
+      ${xfHTML}
+      ${statusHTML}
+      ${d90HTML}
+      <div class="success-toast" id="ci-toast">Check-in submitted. Level 5 will respond within one week.</div>
+      <div class="btn-row">
+        <button class="btn-sec" onclick="backToCheckinSelector()">Cancel</button>
+        <button class="btn-submit" onclick="submitCheckin(${day})">Submit Day ${day} Update</button>
+      </div>
+    </div>`;
+}
+
+function selectStatus(el, status) {
+  document.querySelectorAll('#ci-status-row .status-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function backToCheckinSelector() {
+  document.getElementById('checkin-selector').style.display = '';
+  document.getElementById('checkin-form').style.display = 'none';
+}
+
+async function submitCheckin(day) {
+  const toast = document.getElementById('ci-toast');
+  const formCard = document.querySelector('#checkin-form .form-card');
+  const textareas = formCard ? Array.from(formCard.querySelectorAll('textarea')) : [];
+  const pilotNameEl = formCard ? formCard.querySelector('input[type=text]') : null;
+  const roleEl = formCard ? formCard.querySelector('select') : null;
+  const responses = textareas.map(t => t.value.trim());
+  const pilotName = pilotNameEl ? pilotNameEl.value.trim() : '';
+  const role = roleEl ? roleEl.value : 'Pilot Lead';
+  const statusPill = formCard ? formCard.querySelector('.status-pill.selected') : null;
+  const statusMap = {'On Track': 'On Track', 'At Risk': 'At Risk', 'Blocked': 'Blocked'};
+  const healthStatus = statusPill ? (statusPill.textContent.trim()) : 'On Track';
+  const xfNotes = formCard ? (formCard.querySelector('#xf-finance')?.checked ? 'Finance: approved; ' : '') + (formCard.querySelector('#xf-ops')?.checked ? 'Operators: approved; ' : '') + (formCard.querySelector('#xf-na')?.checked ? 'N/A' : '') : '';
+  const outcomeEl = formCard ? formCard.querySelector('#ci-outcome') : null;
+  const day90Rec = outcomeEl ? outcomeEl.value : 'N/A';
+
+  toast.style.display = 'block';
+  toast.textContent = 'Submitting to Smartsheet...';
+  toast.style.background = '#E6F1FB';
+  toast.style.borderColor = '#B5D4F4';
+  toast.style.color = '#1C4C86';
+
+  const result = await saveCheckinToSmartsheet(day, pilotName, role, responses, healthStatus, xfNotes, day90Rec);
+
+  if (result.ok) {
+    toast.style.background = '';
+    toast.style.borderColor = '';
+    toast.style.color = '';
+    toast.textContent = day === 90
+      ? 'Day 90 update saved to Smartsheet. Level 5 will review and communicate the standardization decision.'
+      : 'Check-in saved to Smartsheet. Level 5 will respond within one week.';
+    setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 3500);
+  } else {
+    toast.style.background = '#FCEBEB';
+    toast.style.borderColor = '#F7C1C1';
+    toast.style.color = '#A32D2D';
+    toast.textContent = 'Smartsheet save failed — your responses are saved locally. Try again or contact the AI Champion.';
+    setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 5000);
+  }
+}
+
+/* ---- MAPPER ---- */
+function setAddMode(mode) {
+  state.addMode = mode;
+  document.querySelectorAll('.mapper-btn').forEach(b => b.classList.remove('active'));
+  if (mode === 'friction') document.getElementById('btn-friction').classList.add('active');
+  if (mode === 'star') document.getElementById('btn-star').classList.add('active');
+}
+
+function handleLaneClick(e, lane) {
+  if (e.target.classList.contains('node-del') || e.target.classList.contains('node-input') || e.target.classList.contains('mapper-btn')) return;
+  if (e.target.classList.contains('add-node-btn') || e.target.closest('.add-node-btn')) {
+    startNodeEntry(lane);
+    return;
+  }
+  startNodeEntry(lane);
+}
+
+function startNodeEntry(lane) {
+  const laneBody = document.getElementById('lane-' + lane);
+  const existing = laneBody.querySelector('.node-input-wrap');
+  if (existing) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'node-input-wrap';
+  const input = document.createElement('input');
+  input.className = 'node-input';
+  input.placeholder = 'Step name...';
+  input.onkeydown = (e) => {
+    if (e.key === 'Enter') confirmNode(lane, input.value, wrap);
+    if (e.key === 'Escape') { wrap.remove(); }
+  };
+  const btn = document.createElement('button');
+  btn.textContent = 'Add';
+  btn.className = 'mapper-btn';
+  btn.style.padding = '5px 10px';
+  btn.onclick = () => confirmNode(lane, input.value, wrap);
+  wrap.appendChild(input);
+  wrap.appendChild(btn);
+  laneBody.appendChild(wrap);
+  input.focus();
+}
+
+function confirmNode(lane, text, wrap) {
+  if (!text.trim()) { wrap.remove(); return; }
+  wrap.remove();
+  addNodeToLane(lane, text.trim(), state.addMode);
+  state.addMode = 'step';
+  document.querySelectorAll('.mapper-btn').forEach(b => b.classList.remove('active'));
+}
+
+function addNodeToLane(lane, text, type) {
+  const laneBody = document.getElementById('lane-' + lane);
+  const node = document.createElement('div');
+  node.className = 'step-node' + (type === 'friction' ? ' friction' : '') + (type === 'star' ? ' star' : '');
+  const prefix = type === 'star' ? '★ ' : '';
+  node.innerHTML = `<span>${prefix}${text}</span><button class="node-del" onclick="this.parentElement.remove()">&#x2715;</button>`;
+  laneBody.appendChild(node);
+}
+
+const LANE_TEAMS = [
+  { id: 'act',         label: 'ACT',                         cls: 'lane-act' },
+  { id: 'cwm',         label: 'Contingent Workforce Mgmt',   cls: 'lane-cwm' },
+  { id: 'digital',     label: 'Digital',                     cls: 'lane-digital' },
+  { id: 'ea',          label: 'EA / Office Managers',        cls: 'lane-ea' },
+  { id: 'finance',     label: 'Finance',                     cls: 'lane-finance' },
+  { id: 'graphic',     label: 'Graphic Design',              cls: 'lane-graphic' },
+  { id: 'helpdesk',    label: 'Help Desk',                   cls: 'lane-helpdesk' },
+  { id: 'logistics',   label: 'Logistics',                   cls: 'lane-logistics' },
+  { id: 'marketing',   label: 'Marketing',                   cls: 'lane-marketing' },
+  { id: 'momenta',     label: 'Momenta',                     cls: 'lane-momenta' },
+  { id: 'ops',         label: 'Virtual Operators',           cls: 'lane-ops' },
+  { id: 'pmo',         label: 'PMO',                         cls: 'lane-pmo' },
+  { id: 'pro',         label: 'PRO',                         cls: 'lane-pro' },
+  { id: 'prod',        label: 'Prod',                        cls: 'lane-prod' },
+  { id: 'px',          label: 'PX',                          cls: 'lane-px' },
+  { id: 'set',         label: 'SET',                         cls: 'lane-set' },
+  { id: 'talent',      label: 'Talent Acquisition',          cls: 'lane-talent' },
+  { id: 'consultants', label: 'Consultants',                 cls: 'lane-consultants' },
+  { id: 'projectlead', label: 'Project Lead',                cls: 'lane-projectlead' },
+  { id: 'am',          label: 'AM',                          cls: 'lane-am' },
+  { id: 'sme',         label: 'SME',                         cls: 'lane-sme' },
+  { id: 'saba',        label: 'SABA',                        cls: 'lane-saba' },
+  { id: 'innovation',  label: 'Innovation',                  cls: 'lane-innovation' },
+  { id: 'leadership',  label: 'Leadership',                  cls: 'lane-leadership' },
+];
+
+function showAddLanePanel() {
+  const panel = document.getElementById('lane-picker');
+  panel.style.display = '';
+  const existing = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => l.getAttribute('data-lane'));
+  const chips = document.getElementById('lane-picker-chips');
+  chips.innerHTML = LANE_TEAMS
+    .filter(t => !existing.includes(t.id))
+    .map(t => `<button class="mapper-btn" style="font-size:11px;padding:5px 10px;" onclick="addTeamLane('${t.id}','${t.label}','${t.cls}')">${t.label}</button>`)
+    .join('');
+}
+
+function hideLanePicker() {
+  document.getElementById('lane-picker').style.display = 'none';
+  document.getElementById('other-lane-input').value = '';
+}
+
+function addTeamLane(id, label, cls) {
+  const lanesEl = document.getElementById('swim-lanes');
+  const lane = document.createElement('div');
+  lane.className = 'swim-lane ' + cls;
+  lane.setAttribute('data-lane', id);
+  lane.innerHTML = `<div class="lane-label">${label}</div><div class="lane-body" id="lane-${id}" onclick="handleLaneClick(event,'${id}')"></div>`;
+  lanesEl.appendChild(lane);
+  hideLanePicker();
+}
+
+function addOtherLane() {
+  const name = document.getElementById('other-lane-input').value.trim();
+  if (!name) return;
+  state.laneCount++;
+  const id = 'other-' + state.laneCount;
+  const lanesEl = document.getElementById('swim-lanes');
+  const lane = document.createElement('div');
+  lane.className = 'swim-lane lane-other';
+  lane.setAttribute('data-lane', id);
+  lane.innerHTML = `<div class="lane-label">${name}</div><div class="lane-body" id="lane-${id}" onclick="handleLaneClick(event,'${id}')"></div>`;
+  lanesEl.appendChild(lane);
+  hideLanePicker();
+}
+
+function clearMapper() {
+  if (!confirm('Clear all steps from the workflow map?')) return;
+  document.querySelectorAll('.lane-body').forEach(lb => lb.innerHTML = '');
+}
+
+async function saveMapper() {
+  const title = document.getElementById('workflow-title').value.trim() || 'Untitled workflow';
+  const tool = document.getElementById('workflow-tool').value.trim();
+  const toast = document.getElementById('mapper-toast');
+  toast.style.display = 'block';
+  toast.textContent = 'Saving to Smartsheet...';
+
+  // Collect lanes and nodes
+  const lanes = [];
+  document.querySelectorAll('#swim-lanes .swim-lane').forEach(lane => {
+    const laneId = lane.getAttribute('data-lane');
+    const laneLabel = lane.querySelector('.lane-label').textContent.trim();
+    const nodes = Array.from(lane.querySelectorAll('.step-node')).map(n => ({
+      text: n.querySelector('span').textContent.trim(),
+      type: n.classList.contains('friction') ? 'friction' : n.classList.contains('star') ? 'star' : 'step'
+    }));
+    lanes.push({ id: laneId, label: laneLabel, nodes });
+  });
+  const lanesUsed = lanes.map(l => l.label).join(', ');
+  const mapJSON = JSON.stringify(lanes);
+
+  const result = await saveWorkflowToSmartsheet(title, tool, lanesUsed, mapJSON);
+
+  if (result.ok) {
+    toast.textContent = `"${title}" saved to Smartsheet. Return at Day 30 to add ★ annotations.`;
+  } else {
+    toast.textContent = `"${title}" saved locally (Smartsheet unavailable). Contact AI Champion if needed.`;
+  }
+  setTimeout(() => toast.style.display = 'none', 4500);
+}
+
+/* ---- DASHBOARD ---- */
+function selectPilotStatus(status) {
+  state.pilotStatus = status;
+  ['green','amber','red'].forEach(s => {
+    document.getElementById('ps-' + s).classList.toggle('selected', s === status);
+  });
+}
+
+function openAddPilot() {
+  document.getElementById('add-pilot-form').style.display = '';
+  state.pilotStatus = 'green';
+  selectPilotStatus('green');
+}
+
+function closeAddPilot() {
+  document.getElementById('add-pilot-form').style.display = 'none';
+}
+
+async function savePilot() {
+  const name = document.getElementById('dp-name').value.trim();
+  const lead = document.getElementById('dp-lead').value.trim();
+  const partner = document.getElementById('dp-partner').value.trim();
+  const day = parseInt(document.getElementById('dp-day').value);
+  if (!name || !lead) { alert('Please enter at least a pilot name and Pilot Lead.'); return; }
+  const pilot = { name, lead, partner, day, status: state.pilotStatus, startDate: new Date() };
+  state.pilots.push(pilot);
+  closeAddPilot();
+  document.getElementById('dp-name').value = '';
+  document.getElementById('dp-lead').value = '';
+  document.getElementById('dp-partner').value = '';
+  renderDashboard();
+  renderHomePilots();
+  // Save to Smartsheet in background
+  savePilotToSmartsheet(pilot).then(result => {
+    if (result.ok) {
+      const toast = document.createElement('div');
+      toast.className = 'success-toast';
+      toast.style.cssText = 'display:block;position:fixed;bottom:20px;right:20px;z-index:999;max-width:300px';
+      toast.textContent = `"${name}" saved to Smartsheet Pilot Registry.`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+  });
+}
+
+function renderDashboard() {
+  const pilots = state.pilots;
+  document.getElementById('dash-active').textContent = pilots.length;
+  document.getElementById('dash-green').textContent = pilots.filter(p => p.status === 'green').length;
+  document.getElementById('dash-attn').textContent = pilots.filter(p => p.status !== 'green').length;
+
+  const rows = document.getElementById('dash-rows');
+  if (!pilots.length) {
+    rows.innerHTML = '<div class="empty-state"><p>No active pilots yet. Click "Add Demo Pilot" below to add one.</p></div>';
+    return;
+  }
+
+  rows.innerHTML = pilots.map(p => {
+    const pct = Math.round((p.day / 90) * 100);
+    const badgeClass = p.status === 'green' ? 'sb-green' : p.status === 'amber' ? 'sb-amber' : 'sb-red';
+    const badgeText = p.status === 'green' ? 'On Track' : p.status === 'amber' ? 'At Risk' : 'Blocked';
+    const indClass = p.status === 'green' ? 'ind-green' : p.status === 'amber' ? 'ind-amber' : 'ind-red';
+    const nextDay = [1,15,30,45,60,75,90].find(d => d > p.day) || 90;
+    return `<div class="dt-row">
+      <span style="gap:8px"><div class="pc-indicator ${indClass}" style="width:3px;height:20px;border-radius:2px"></div>${p.name}</span>
+      <span style="font-size:11px;flex-direction:column;align-items:flex-start;gap:1px"><span style="font-weight:600">${p.lead}</span><span style="color:#BBB">${p.partner || '—'}</span></span>
+      <span><span class="pc-badge badge-blue">Day ${p.day}</span></span>
+      <span><span class="status-badge ${badgeClass}">${badgeText}</span></span>
+      <span>
+        <div class="progress-wrap">
+          <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+          <div class="prog-label">${pct}% &bull; Next: Day ${nextDay}</div>
+        </div>
+      </span>
+    </div>`;
+  }).join('');
+}
+
+function renderHomePilots() {
+  const el = document.getElementById('home-pilots');
+  if (!state.pilots.length) {
+    el.innerHTML = '<div style="font-size:12px;color:#BBB;padding:16px 0">No active pilots yet. Start by logging an idea or submitting a pilot launch.</div>';
+    return;
+  }
+  el.innerHTML = state.pilots.map(p => {
+    const indClass = p.status === 'green' ? 'ind-green' : p.status === 'amber' ? 'ind-amber' : 'ind-red';
+    return `<div class="pilot-card" onclick="showTab('checkin')">
+      <div class="pc-indicator ${indClass}"></div>
+      <div class="pc-info">
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-meta">${p.lead}${p.partner ? ' &bull; ' + p.partner : ''}</div>
+      </div>
+      <span class="pc-badge badge-blue">Day ${p.day}</span>
+    </div>`;
+  }).join('');
+}
+
+// Auto-classify on idea tab
+document.addEventListener('change', function(e) {
+  if (e.target.id === 'q-priority' || e.target.id === 'q-improves') classifyIdea();
+});
+
+async function loadFromSmartsheet() {
+  const btn = document.getElementById('btn-load-sm');
+  const toast = document.getElementById('sm-load-toast');
+  btn.textContent = 'Loading...';
+  btn.disabled = true;
+  toast.style.display = 'block';
+  toast.style.background = '#E6F1FB';
+  toast.style.borderColor = '#B5D4F4';
+  toast.style.color = '#1C4C86';
+
+  const isElevated = state.user && (state.user.role === 'Level 5 / Team Leadership' || state.user.role === 'AI Champion');
+  const userEmail = state.user ? state.user.email.toLowerCase() : '';
+  toast.textContent = isElevated ? 'Loading all pilots...' : 'Loading your pilots...';
+
+  const rows = await loadPilotsFromSmartsheet();
+  btn.textContent = '↻ Load from Smartsheet';
+  btn.disabled = false;
+
+  if (rows && rows.length > 0) {
+    // Filter by user unless elevated role
+    const filtered = isElevated
+      ? rows
+      : rows.filter(r => {
+          const lead    = (r['Lead Email'] || '').toLowerCase();
+          const partner = (r['Pilot Partner'] || '').toLowerCase();
+          const leadName = (r['Pilot Lead'] || '').toLowerCase();
+          return lead === userEmail || partner === userEmail || leadName.includes(userEmail.split('@')[0]);
+        });
+
+    filtered.forEach(row => {
+      const exists = state.pilots.find(p => p.name === row['Pilot Name']);
+      if (!exists && row['Pilot Name']) {
+        state.pilots.push({
+          name:      row['Pilot Name'] || '',
+          lead:      row['Pilot Lead'] || '',
+          partner:   row['Pilot Partner'] || '',
+          day:       parseInt(row['Current Day']) || 1,
+          status:    row['Health Status'] === 'On Track' ? 'green' : row['Health Status'] === 'At Risk' ? 'amber' : 'red',
+          startDate: row['Start Date'] ? new Date(row['Start Date']) : new Date(),
+        });
+      }
+    });
+
+    toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
+    const label = isElevated ? `${filtered.length} pilot(s) loaded (all teams).` : `${filtered.length} pilot(s) loaded for ${state.user.name}.`;
+    toast.textContent = label;
+    renderDashboard();
+    renderHomePilots();
+  } else {
+    toast.style.background = '#FAEEDA';
+    toast.style.borderColor = '#FAC775';
+    toast.style.color = '#854F0B';
+    toast.textContent = 'No pilots found, or Smartsheet unavailable. Using local data.';
+  }
+  setTimeout(() => { toast.style.display = 'none'; }, 4500);
+}
+
+// ── SETUP / TOKEN MANAGEMENT ───────────────────────────────────────────────
+
+async function verifyToken(token) {
+  try {
+    const resp = await fetch('https://api.smartsheet.com/2.0/users/me', {
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }
+    });
+    return resp.status === 200;
+  } catch(e) { return false; }
+}
+
+async function activateToken() {
+  const token = document.getElementById('setup-token').value.trim();
+  const errEl  = document.getElementById('setup-error');
+  const loadEl = document.getElementById('setup-loading');
+  errEl.style.display = 'none';
+  if (!token) { errEl.textContent = 'Please paste your Smartsheet API token.'; errEl.style.display = 'block'; return; }
+  loadEl.style.display = 'block';
+  const valid = await verifyToken(token);
+  loadEl.style.display = 'none';
+  if (!valid) {
+    errEl.textContent = 'Token could not be verified. Check that you copied the full token from Smartsheet and try again.';
+    errEl.style.display = 'block';
+    return;
+  }
+  localStorage.setItem('sm_token', token);
+  SM_TOKEN = token;
+  show('screen-setup', false);
+  show('screen-login', true);
+}
+
+function checkSetup() {
+  if (!SM_TOKEN) {
+    show('screen-setup', true);
+  } else {
+    show('screen-login', true);
+  }
+}
+
+window.addEventListener('load', checkSetup);
+
+document.addEventListener('keydown', e => { if (state) state._shiftHeld = e.shiftKey; });
+document.addEventListener('keyup',   e => { if (state) state._shiftHeld = false; });
+
+</script>
+</body>
+</html>
