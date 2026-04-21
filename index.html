@@ -163,9 +163,11 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .mapper-btn:hover { background: var(--bts-grey); }
 .mapper-btn.active { background: var(--bts-pink-light); border-color: var(--bts-pink); color: var(--bts-pink); }
 .mapper-sep { width: 1px; height: 20px; background: #E0E4E8; }
+.swim-lanes-scroll-outer { overflow-x: auto; overflow-y: visible; width: 100%; }
+.swim-lanes-scroll-inner { display: inline-block; min-width: 100%; }
 .swim-lane { display: flex; min-height: 90px; border-bottom: 1px solid #E8EBF0; }
 .swim-lane:last-child { border-bottom: none; }
-.lane-label { width: 80px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); border-right: 1px solid #E8EBF0; }
+.lane-label { width: 80px; min-width: 80px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); border-right: 1px solid #E8EBF0; position: sticky; left: 0; z-index: 2; }
 .lane-pmo .lane-label          { background: #FAEEF4; color: #CA1C68; }
 .lane-pmo .lane-body           { background: #FEF8FB; }
 .lane-finance .lane-label      { background: #E6F1FB; color: #1C4C86; }
@@ -218,8 +220,8 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .lane-leadership .lane-body    { background: #FFF8F4; }
 .lane-other .lane-label        { background: #F2F2F2; color: #555555; }
 .lane-other .lane-body         { background: #FAFAFA; }
-.lane-body { flex: 1; padding: 10px 12px; display: flex; align-items: flex-start; gap: 7px; flex-wrap: wrap; }
-.step-node { border: 1px solid #DDE1E6; border-radius: 8px; padding: 7px 10px; font-size: 11px; color: var(--bts-dark); cursor: grab; display: flex; align-items: center; justify-content: space-between; gap: 5px; background: white; max-width: 140px; transition: border-color 0.15s; }
+.lane-body { flex: 1; padding: 10px 12px; display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow: visible; min-width: max-content; }
+.step-node { border: 1px solid #DDE1E6; border-radius: 8px; padding: 7px 10px; font-size: 11px; color: var(--bts-dark); cursor: grab; display: flex; align-items: center; justify-content: space-between; gap: 5px; background: white; min-width: 120px; max-width: 160px; flex-shrink: 0; transition: border-color 0.15s; }
 .step-node.friction { border-left: 3px solid var(--bts-red); }
 .step-node.star { border-left: 3px solid var(--bts-teal); }
 .step-node span { font-size: 11px; line-height: 1.4; }
@@ -324,6 +326,10 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       <div id="setup-loading" style="display:none;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:9px 12px;font-size:12px;color:var(--bts-blue);margin-bottom:14px;">Verifying with Smartsheet&hellip;</div>
       <button class="btn-primary" onclick="activateToken()">Activate Tool</button>
       <p class="login-note" style="margin-top:12px">Token saved in browser only &bull; Revoke anytime in Smartsheet &rarr; API Access</p>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px dashed #EEE;text-align:center">
+        <p style="font-size:11px;color:#BBB;margin-bottom:8px">Still building? Skip setup entirely.</p>
+        <button onclick="document.getElementById('screen-setup').classList.remove('active');document.getElementById('screen-app').classList.add('active');var u={name:'Preview User',email:'preview@bts.com',role:'AI Champion'};state.user=u;document.getElementById('user-avatar-top').textContent='PV';document.getElementById('user-name-top').textContent='Preview User';var h=new Date().getHours();document.getElementById('home-greeting').textContent=(h<12?'Good morning, ':h<17?'Good afternoon, ':'Good evening, ')+'Preview';document.getElementById('home-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});renderDashboard();renderHomePilots();" style="background:transparent;border:1px solid #DDE1E6;border-radius:8px;padding:8px 18px;font-size:12px;color:#999;cursor:pointer;font-family:var(--font);" onmouseover="this.style.borderColor='var(--bts-pink)';this.style.color='var(--bts-pink)'" onmouseout="this.style.borderColor='#DDE1E6';this.style.color='#999'">&#128064; Preview Mode (dev only)</button>
+      </div>
     </div>
   </div>
 </div>
@@ -407,6 +413,10 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <button class="btn-primary" onclick="doRegister()">Create Account</button>
       </div>
 
+      <div style="margin-top:20px;padding-top:16px;border-top:1px dashed #EEE;text-align:center">
+        <p style="font-size:11px;color:#BBB;margin-bottom:8px">Building or testing? Skip login.</p>
+        <button onclick="launchPreview()" style="background:transparent;border:1px solid #DDE1E6;border-radius:8px;padding:8px 18px;font-size:12px;color:#999;cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.borderColor='var(--bts-pink)';this.style.color='var(--bts-pink)'" onmouseout="this.style.borderColor='#DDE1E6';this.style.color='#999'">&#128064; Preview Mode (dev only)</button>
+      </div>
       <p class="login-note">BTS PMO team members only &bull; Version 1.0</p>
     </div>
   </div>
@@ -432,7 +442,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     <div class="nav-item active" id="nav-home" onclick="showTab('home')">Home</div>
     <div class="nav-item" id="nav-idea" onclick="showTab('idea')">Log an Idea</div>
     <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Check-In</div>
-    <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Workflow Mapper</div>
+    <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Process Studio</div>
     <div class="nav-item" id="nav-dashboard" onclick="showTab('dashboard')">Pilot Dashboard</div>
   </div>
 
@@ -542,39 +552,78 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 
   <!-- ======= WORKFLOW MAPPER TAB ======= -->
   <div class="main" id="tab-mapper" style="display:none">
-    <div class="page-title">Workflow Mapper</div>
-    <p class="page-sub">Map your current workflow before adding a tool. Use swim lanes to show where different teams are involved. This is your brainstorm space — not yet a pilot.</p>
 
-    <div class="info-box" style="margin-bottom:14px">
-      <strong>How to use:</strong> Click a lane to add a step. Mark steps as friction points (where the process slows down) or star steps (where the tool will live). At Day 30, return here to add star annotations showing how the tool changed the flow.
-    </div>
-
-    <div class="form-card" style="margin-bottom:14px">
-      <h3>Workflow name</h3>
-      <div class="form-row" style="margin-top:12px">
-        <div class="field">
-          <label>Workflow title</label>
-          <input type="text" id="workflow-title" placeholder="e.g. Digital Operator Resourcing" />
-        </div>
-        <div class="field">
-          <label>Tool being explored</label>
-          <input type="text" id="workflow-tool" placeholder="e.g. AI scheduling assistant" />
-        </div>
+    <!-- ─── HEADER ─────────────────────────────────────────────── -->
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+      <div>
+        <div class="page-title">Process Studio</div>
+        <p class="page-sub" style="margin-bottom:0">Map any workflow collaboratively — capture structure for agent training</p>
+      </div>
+      <div style="text-align:right;">
+        <button id="btn-facilitator" onclick="toggleFacilitatorMode()" style="display:inline-flex;align-items:center;gap:6px;background:var(--bts-purple-light);border:1.5px solid var(--bts-purple);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.background='var(--bts-purple)';this.style.color='white'" onmouseout="if(!window.facilitatorOn){this.style.background='var(--bts-purple-light)';this.style.color='var(--bts-purple)'}">&#9654; Facilitator Mode</button>
+        <p style="font-size:10px;color:#BBB;margin-top:4px;max-width:260px;line-height:1.5;">Optional. Designed for screen share. Turns on guided phase prompts and a countdown timer to help your group stay focused and moving. One person drives — everyone talks.</p>
       </div>
     </div>
 
+    <!-- ─── FACILITATOR BANNER (hidden by default) ───────────────── -->
+    <div id="facilitator-banner" style="display:none;background:var(--bts-dark);border-radius:10px;padding:16px 20px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+        <div style="font-size:13px;font-weight:700;color:white;letter-spacing:0.2px;" id="fac-phase-label">Phase 1 of 4 — Current State</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.3px;">MINIMUM 2 PEOPLE &bull; SCREEN SHARED</div>
+      </div>
+      <div id="fac-prompt" style="font-size:13px;color:rgba(255,255,255,0.82);line-height:1.7;font-style:italic;margin-bottom:12px;border-left:2px solid var(--bts-pink);padding-left:12px;"></div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div id="fac-timer" style="font-size:26px;font-weight:700;color:var(--bts-pink);font-family:monospace;min-width:60px;letter-spacing:1px;">8:00</div>
+        <button onclick="startTimer()" id="btn-timer-start" style="background:var(--bts-pink);border:none;border-radius:7px;padding:7px 16px;font-size:12px;font-weight:700;color:white;cursor:pointer;font-family:var(--font);">&#9654; Start</button>
+        <button onclick="resetTimer()" style="background:transparent;border:1px solid rgba(255,255,255,0.25);border-radius:7px;padding:7px 14px;font-size:12px;color:rgba(255,255,255,0.6);cursor:pointer;font-family:var(--font);">Reset</button>
+        <span style="font-size:11px;color:rgba(255,255,255,0.4);">Timer is optional</span>
+      </div>
+    </div>
+
+    <!-- ─── PHASE STEPPER ─────────────────────────────────────────── -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:16px;border-radius:10px;overflow:hidden;border:1px solid #E0E4E8;" id="ps-stepper">
+      <div onclick="setPhase(1)" id="ps-p1" style="padding:11px 8px;text-align:center;cursor:pointer;background:var(--bts-pink);border-right:1px solid rgba(255,255,255,0.2);transition:all 0.2s;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:rgba(255,255,255,0.7);">Phase 1</div>
+        <div style="font-size:12px;font-weight:700;color:white;margin-top:2px;">Current State</div>
+      </div>
+      <div onclick="setPhase(2)" id="ps-p2" style="padding:11px 8px;text-align:center;cursor:pointer;background:white;border-right:1px solid #E0E4E8;transition:all 0.2s;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#CCC;">Phase 2</div>
+        <div style="font-size:12px;font-weight:700;color:#BBB;margin-top:2px;">Visualize</div>
+      </div>
+      <div onclick="setPhase(3)" id="ps-p3" style="padding:11px 8px;text-align:center;cursor:pointer;background:white;border-right:1px solid #E0E4E8;transition:all 0.2s;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#CCC;">Phase 3</div>
+        <div style="font-size:12px;font-weight:700;color:#BBB;margin-top:2px;">Simplify</div>
+      </div>
+      <div onclick="setPhase(4)" id="ps-p4" style="padding:11px 8px;text-align:center;cursor:pointer;background:white;transition:all 0.2s;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#CCC;">Phase 4</div>
+        <div style="font-size:12px;font-weight:700;color:#BBB;margin-top:2px;">Add a Tool</div>
+      </div>
+    </div>
+
+    <!-- ─── PHASE CONTEXT CARD ────────────────────────────────────── -->
+    <div id="ps-phase-card" style="border-left:3px solid var(--bts-blue);background:var(--bts-blue-light);border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:var(--bts-blue);margin-bottom:16px;line-height:1.6;"></div>
+
+    <!-- ─── WORKFLOW NAME ─────────────────────────────────────────── -->
+    <div class="form-card" style="margin-bottom:14px;">
+      <div class="form-row">
+        <div class="field"><label>Workflow name</label><input type="text" id="workflow-title" placeholder="e.g. Digital Operator Request" /></div>
+        <div class="field" id="ps-tool-field" style="display:none;"><label>Tool being explored</label><input type="text" id="workflow-tool" placeholder="e.g. AI scheduling assistant" /></div>
+      </div>
+    </div>
+
+    <!-- ─── VISUAL CANVAS ─────────────────────────────────────────── -->
     <div class="mapper-container">
       <div class="mapper-toolbar">
-        <button class="mapper-btn" onclick="setAddMode('step')">+ Add Step</button>
-        <button class="mapper-btn" id="btn-friction" onclick="setAddMode('friction')">+ Friction Point</button>
-        <button class="mapper-btn" id="btn-star" onclick="setAddMode('star')">&#9733; Tool Lives Here</button>
+        <button class="mapper-btn" id="btn-add-step" onclick="psAddMode('step')">+ Step</button>
+        <button class="mapper-btn" id="btn-friction" onclick="psAddMode('friction')">+ Friction</button>
+        <button class="mapper-btn" id="btn-star" onclick="psAddMode('star')" style="display:none;">&#9733; Tool Lives Here</button>
         <div class="mapper-sep"></div>
         <button class="mapper-btn" onclick="showAddLanePanel()">+ Add Lane</button>
         <div class="mapper-sep"></div>
-        <button class="mapper-btn" onclick="clearMapper()" style="color:#E63F4F">Clear All</button>
+        <button class="mapper-btn" onclick="clearMapper()" style="color:#E63F4F;">Clear All</button>
       </div>
 
-      <!-- Lane picker panel -->
+      <!-- Lane picker -->
       <div id="lane-picker" style="display:none;padding:12px 14px;border-bottom:1px solid #E8EBF0;background:#FAFBFC;">
         <div style="font-size:11px;font-weight:700;color:#888;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Select a team to add as a lane</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;" id="lane-picker-chips"></div>
@@ -585,22 +634,49 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         </div>
       </div>
 
-      <div id="swim-lanes">
-        <div class="swim-lane lane-pmo" data-lane="pmo">
-          <div class="lane-label">PMO</div>
-          <div class="lane-body" id="lane-pmo" onclick="handleLaneClick(event,'pmo')"></div>
+      <!-- Swim lanes — horizontally scrollable -->
+      <div class="swim-lanes-scroll-outer">
+        <div class="swim-lanes-scroll-inner">
+          <div id="swim-lanes">
+            <div class="swim-lane lane-pmo" data-lane="pmo">
+              <div class="lane-label">PMO</div>
+              <div class="lane-body" id="lane-pmo" onclick="handleLaneClick(event,'pmo')"></div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="mapper-legend">
         <div class="ml-item"><div class="ml-bar" style="background:var(--bts-red)"></div> Friction point</div>
         <div class="ml-item"><div class="ml-bar" style="background:var(--bts-teal)"></div> Tool lives here (&#9733;)</div>
-        <div class="ml-item" style="margin-left:4px;color:#BBB">Click a lane to add a step &bull; Click step X to remove</div>
+        <div class="ml-item"><div class="ml-bar" style="background:#EF9F27"></div> Stacked — same time</div>
+        <div class="ml-item" style="color:#BBB">Click a lane to add a step &bull; Hover a step to stack &bull; Click &times; to remove</div>
       </div>
     </div>
-    <div class="btn-row" style="margin-top:14px">
-      <button class="btn-submit" onclick="saveMapper()">Save Workflow Map</button>
+
+    <!-- ─── STRUCTURED STEP ENTRY (Phase 1 only, after canvas) ─── -->
+    <div id="ps-step-entry" style="display:none;margin-top:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--bts-dark);">Capture Step Details</div>
+          <p style="font-size:11px;color:#888;margin-top:2px;">Add structured data for each step — this powers the agent training layer</p>
+        </div>
+        <button onclick="addStructuredStep()" style="display:inline-flex;align-items:center;gap:6px;background:var(--bts-teal-light);border:1.5px solid var(--bts-teal);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-teal);cursor:pointer;font-family:var(--font);">+ Add Step Details</button>
+      </div>
+      <div id="ps-steps-list" style="display:flex;flex-direction:column;gap:10px;"></div>
     </div>
-    <div class="success-toast" id="mapper-toast">Workflow map saved. You can return to add Day 30 annotations.</div>
+
+    <!-- ─── FRICTION TOAST ────────────────────────────────────────── -->
+    <div id="friction-toast" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--bts-dark);color:white;padding:12px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;border-left:4px solid var(--bts-red);box-shadow:0 4px 20px rgba(0,0,0,0.25);">
+      That's the work. Thank you for naming it.
+    </div>
+
+    <!-- ─── SAVE ──────────────────────────────────────────────────── -->
+    <div class="btn-row" style="margin-top:20px;">
+      <button class="btn-sec" onclick="psExportSummary()">&#128196; Export Summary</button>
+      <button class="btn-submit" onclick="saveProcessStudio()">Save to Smartsheet</button>
+    </div>
+    <div class="success-toast" id="mapper-toast" style="margin-top:12px;"></div>
   </div>
 
   <!-- ======= DASHBOARD TAB ======= -->
@@ -615,7 +691,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div class="dm-sub">this month's cohort</div>
       </div>
       <div class="dash-metric">
-        <div class="dm-label">On Track</div>
+        <div class="dm-label">Moving Forward</div>
         <div class="dm-value" id="dash-green" style="color:#1D9E75">0</div>
         <div class="dm-sub">no intervention needed</div>
       </div>
@@ -662,9 +738,9 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div class="field">
           <label>Health Status</label>
           <div class="status-row">
-            <div class="status-pill sp-green" id="ps-green" onclick="selectPilotStatus('green')">On Track</div>
-            <div class="status-pill sp-amber" id="ps-amber" onclick="selectPilotStatus('amber')">At Risk</div>
-            <div class="status-pill sp-red" id="ps-red" onclick="selectPilotStatus('red')">Blocked</div>
+            <div class="status-pill sp-green" id="ps-green" onclick="selectPilotStatus('green')">Moving Forward</div>
+            <div class="status-pill sp-amber" id="ps-amber" onclick="selectPilotStatus('amber')">Needs Attention</div>
+            <div class="status-pill sp-red" id="ps-red" onclick="selectPilotStatus('red')">Asking for Help</div>
           </div>
         </div>
         <div class="btn-row">
@@ -756,55 +832,77 @@ const SM = {
   }
 };
 
-async function smPost(sheetId, cells) {
-  const url = `https://api.anthropic.com/v1/messages`;
-  // We route through the Anthropic API using Claude to call Smartsheet
-  // via the BTS MCP server which has Smartsheet credentials
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: `Add a row to Smartsheet sheet ID ${sheetId} with these cell values (column ID : value pairs): ${JSON.stringify(cells)}. Use the Smartsheet MCP add_rows tool. Respond with just "OK" if successful or "ERROR: [reason]" if not.` }],
-        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
-      })
-    });
-    const data = await resp.json();
-    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
-    return text.includes('ERROR') ? { ok: false, msg: text } : { ok: true };
-  } catch(e) {
-    return { ok: false, msg: e.message };
-  }
+// ── Core REST helpers ─────────────────────────────────────────────────────
+
+const SM_BASE = 'https://api.smartsheet.com/2.0';
+
+function smHeaders() {
+  return { 'Authorization': 'Bearer ' + SM_TOKEN, 'Content-Type': 'application/json' };
 }
 
-async function smGetRows(sheetId) {
+async function smAddRow(sheetId, columnMap) {
+  const cells = Object.entries(columnMap)
+    .filter(([, v]) => v !== undefined && v !== null)
+    .map(([colId, value]) => ({ columnId: parseInt(colId), value: String(value) }));
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 4000,
-        messages: [{ role: 'user', content: `Read all rows from Smartsheet sheet ID ${sheetId} using the get_sheet_summary tool. Return ONLY a JSON array of row objects with column titles as keys. No markdown, no explanation.` }],
-        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
-      })
+    const resp = await fetch(`${SM_BASE}/sheets/${sheetId}/rows`, {
+      method: 'POST', headers: smHeaders(), body: JSON.stringify({ cells }),
     });
     const data = await resp.json();
-    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
-    try { return JSON.parse(text.replace(/```json|```/g,'')); }
-    catch { return []; }
-  } catch { return []; }
+    return (data.resultCode === 0 || data.message === 'SUCCESS') ? { ok: true, result: data.result } : { ok: false, msg: data.message };
+  } catch(e) { return { ok: false, msg: e.message }; }
 }
 
-// Direct Smartsheet REST calls via Anthropic proxy
-async function addSmartsheetRow(sheetId, columnMap) {
-  const cells = Object.entries(columnMap).map(([colId, value]) => ({
-    columnId: parseInt(colId), value: value ?? ''
-  }));
-  const result = await smPost(sheetId, cells);
-  return result;
+async function smUpdateRow(sheetId, rowId, columnMap) {
+  const cells = Object.entries(columnMap)
+    .filter(([, v]) => v !== undefined && v !== null)
+    .map(([colId, value]) => ({ columnId: parseInt(colId), value: String(value) }));
+  try {
+    const resp = await fetch(`${SM_BASE}/sheets/${sheetId}/rows`, {
+      method: 'PUT', headers: smHeaders(), body: JSON.stringify([{ id: rowId, cells }]),
+    });
+    const data = await resp.json();
+    return { ok: data.message === 'SUCCESS', msg: data.message };
+  } catch(e) { return { ok: false, msg: e.message }; }
+}
+
+async function smGetSheet(sheetId) {
+  try {
+    const resp = await fetch(`${SM_BASE}/sheets/${sheetId}`, { headers: smHeaders() });
+    const data = await resp.json();
+    if (!data.columns || !data.rows) return [];
+    const colMap = {};
+    data.columns.forEach(c => { colMap[c.id] = c.title; });
+    return data.rows.map(row => {
+      const obj = { _rowId: row.id };
+      (row.cells || []).forEach(cell => { if (colMap[cell.columnId]) obj[colMap[cell.columnId]] = cell.value ?? ''; });
+      return obj;
+    });
+  } catch(e) { return []; }
+}
+
+// Alias for backward compat
+async function addSmartsheetRow(sheetId, columnMap) { return smAddRow(sheetId, columnMap); }
+
+// ── User Registry ──────────────────────────────────────────────────────────
+
+async function lookupUser(email) {
+  const rows = await smGetSheet(SM.USER_REGISTRY_SHEET);
+  if (!rows.length) return { found: false };
+  const found = rows.find(r => (r['Email'] || '').toLowerCase() === email.toLowerCase());
+  if (!found) return { found: false };
+  return { found: true, rowId: found._rowId, email: found['Email'], fullName: found['Full Name'], password: found['Password'], role: found['Role'] };
+}
+
+async function registerUser(name, email, password, role) {
+  return smAddRow(SM.USER_REGISTRY_SHEET, {
+    [SM.UR.email]: email, [SM.UR.fullName]: name, [SM.UR.password]: password,
+    [SM.UR.role]: role, [SM.UR.registeredAt]: new Date().toISOString(), [SM.UR.lastLogin]: new Date().toISOString(),
+  });
+}
+
+async function updateLastLogin(rowId) {
+  return smUpdateRow(SM.USER_REGISTRY_SHEET, rowId, { [SM.UR.lastLogin]: new Date().toISOString() });
 }
 
 // ============ PILOT REGISTRY FUNCTIONS ============
@@ -817,7 +915,7 @@ async function savePilotToSmartsheet(pilot) {
     [SM.PR.leadEmail]:    state.user?.email || '',
     [SM.PR.startDate]:    now.toISOString().split('T')[0],
     [SM.PR.currentDay]:   String(pilot.day),
-    [SM.PR.healthStatus]: pilot.status === 'green' ? 'On Track' : pilot.status === 'amber' ? 'At Risk' : 'Blocked',
+    [SM.PR.healthStatus]: pilot.status === 'green' ? 'Moving Forward' : pilot.status === 'amber' ? 'Needs Attention' : 'Asking for Help',
     [SM.PR.entryPoint]:   pilot.entryPoint || 'Day 1 Standard',
     [SM.PR.hypothesis]:   pilot.hypothesis || '',
     [SM.PR.baseline]:     pilot.baseline || '',
@@ -861,7 +959,7 @@ async function saveWorkflowToSmartsheet(title, tool, lanesUsed, mapJSON) {
 }
 
 async function loadPilotsFromSmartsheet() {
-  return smGetRows(SM.PILOT_REGISTRY_SHEET);
+  return smGetSheet(SM.PILOT_REGISTRY_SHEET);
 }
 
 // ── AUTH HELPERS ──────────────────────────────────────────────────────────
@@ -888,60 +986,7 @@ function showAuthLoading(panelPrefix, visible) {
   document.getElementById(panelPrefix + '-loading').style.display = visible ? '' : 'none';
 }
 
-async function lookupUser(email) {
-  // Ask Claude via Anthropic API to search the User Registry sheet for this email
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        messages: [{
-          role: 'user',
-          content: `Search Smartsheet sheet ID ${SM.USER_REGISTRY_SHEET} for a row where the "Email" column exactly matches "${email}" (case-insensitive). Use get_sheet_summary. Return ONLY a JSON object with these fields (or null if not found): {"found": true/false, "rowId": <row id number or null>, "email": "", "fullName": "", "password": "", "role": ""}. No markdown, no explanation, just JSON.`
-        }],
-        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
-      })
-    });
-    const data = await resp.json();
-    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
-    const clean = text.replace(/```json|```/g, '').trim();
-    return JSON.parse(clean);
-  } catch(e) {
-    return null;
-  }
-}
-
-async function registerUser(name, email, password, role) {
-  const cells = {
-    [SM.UR.email]:        email,
-    [SM.UR.fullName]:     name,
-    [SM.UR.password]:     password,
-    [SM.UR.role]:         role,
-    [SM.UR.registeredAt]: new Date().toISOString(),
-    [SM.UR.lastLogin]:    new Date().toISOString(),
-  };
-  return addSmartsheetRow(SM.USER_REGISTRY_SHEET, cells);
-}
-
-async function updateLastLogin(rowId) {
-  try {
-    await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        messages: [{
-          role: 'user',
-          content: `Update row ID ${rowId} in Smartsheet sheet ID ${SM.USER_REGISTRY_SHEET}. Set column ID ${SM.UR.lastLogin} to "${new Date().toISOString()}". Use update_rows. Reply "OK".`
-        }],
-        mcp_servers: [{ type: 'url', url: 'https://mcp.smartsheet.com', name: 'smartsheet-mcp' }]
-      })
-    });
-  } catch(e) { /* silent fail — not critical */ }
-}
+// (lookupUser, registerUser, updateLastLogin defined above using direct REST API)
 
 function launchApp(user) {
   state.user = user;
@@ -975,7 +1020,7 @@ async function doSignIn() {
     return;
   }
   if (String(result.password).trim() !== String(password).trim()) {
-    showAuthError('si', 'Incorrect PIN. Please try again.');
+    showAuthError('si', 'Incorrect password. Please try again.');
     return;
   }
   if (result.rowId) updateLastLogin(result.rowId);
@@ -1053,6 +1098,7 @@ function showTab(tab) {
   });
   if (tab === 'checkin') { document.getElementById('checkin-selector').style.display = ''; document.getElementById('checkin-form').style.display = 'none'; }
   if (tab === 'dashboard') renderDashboard();
+  if (tab === 'mapper') { initProcessStudio(); renderStructuredSteps(); }
   if (tab === 'idea') setupIdeaClassifier();
 }
 
@@ -1084,30 +1130,124 @@ function openCheckin(day) {
   form.style.display = '';
   const isVerbal = (day === 60 || day === 90);
   const labels = {
-    1: 'Kick-off written update to Level 5',
-    15: 'Day 15 written update — early impressions',
+    1: 'Kick-off written update — pilot officially begins',
+    15: 'Day 15 written update — early impressions from both co-owners',
     30: 'Day 30 written update — hypothesis check',
-    45: 'Day 45 peer review written summary',
-    60: 'Day 60 verbal check-in with Level 5',
-    75: 'Day 75 written update — final review prep',
-    90: 'Day 90 verbal presentation — decision day'
+    45: 'Day 45 written summary — Pilot Partner leads the third-eye review',
+    60: 'Day 60 verbal check-in — prepare for your meeting with Level 5',
+    75: 'Day 75 written update — final readiness for Day 90',
+    90: 'Day 90 verbal presentation — prepare to present your findings to Level 5'
   };
   const prompts = {
-    1: ['What is your pilot hypothesis? ("We believe this tool will...")', 'What is your baseline measurement? (How long does this task take today without the tool?)', 'Who are your testers, and what did you share with Level 5?', 'What are your milestone calendar dates? (Note any weekend adjustments)'],
-    15: ['Is the tool behaving as expected? Any early surprises or blockers?', 'What is each co-owner observing independently so far?', 'Do you need to adjust scope, testers, or timeline?'],
-    30: ["What's working so far?", "What isn't working or is harder than expected?", 'Is your original hypothesis holding? If not, how has it shifted?', 'Should we continue, adjust, or pause?'],
-    45: ['What did the peer review surface? (2-3 fresh perspectives invited by Pilot Partner)', 'What blind spots or concerns were identified?', 'What refinements will be made before Day 60?'],
-    60: ['Progress since Day 45 and cross-functional review findings?', 'Have all cross-functional approvals been obtained? Any outstanding concerns?', 'Are you on track for a Day 90 decision?'],
-    75: ['Are the same reviewers (including cross-functional approvers) completing final review and practice use?', 'What is the current overall readiness level for Day 90?', 'Any last changes or concerns to surface before the presentation?'],
-    90: ['Summary of pilot outcomes: what did we prove?', 'What does the data show vs. your original baseline?', 'Recommendation: Standardize, Reevaluate, or Table — and why?']
+    1: [],
+    15: [
+      'Is the tool behaving as expected? Any early surprises or blockers?',
+      'What have you observed in the first two weeks of testing?',
+      'Are there any adjustments needed to scope, testers, or timeline at this stage?'
+    ],
+    30: [
+      'What is working so far?',
+      'What is not working or harder than expected?',
+      'Is your original hypothesis holding? If not, how has it shifted?',
+      'Recommendation: Should we continue, adjust, or pause? Why?'
+    ],
+    45: [
+      'Which team members not previously involved did the Pilot Partner bring in for a fresh-eyes review?',
+      'What did those outside perspectives surface — blind spots, concerns, or new observations? Were you able to implement any updates?',
+    ],
+    60: [
+      'What is the headline you want Level 5 to walk away with from this meeting?',
+      'What progress will you share since Day 45, and what refinements were made?',
+       'Cross-functional review update: Which departments will you engage? What do you anticipate they will say? (Document N/A if no departments are affected.)',
+      'What questions do you anticipate from Level 5?'
+    ],
+    75: [
+      'Have the same reviewers from earlier — including cross-functional approvers — received the tool for final review and practice use?',
+      'What is the overall readiness level for the Day 90 presentation?',
+      'Are there any last changes or open concerns to resolve before Day 90?'
+    ],
+    90: [
+      'What is the core story you are presenting — what did this pilot prove?',
+      'What does the data show vs. your original baseline? Be specific.',
+      'What is your recommendation — Standardize, Reevaluate, or Table — and what is your strongest argument for it?',
+      'What questions do you expect from Level 5, and how will you respond?'
+    ]
   };
+  let fieldsHTML = '';
+  if (day === 1) {
+    fieldsHTML = `
+      <div style="background:var(--bts-blue-light);border-left:3px solid var(--bts-blue);border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:var(--bts-blue);margin-bottom:18px;line-height:1.6">
+        Completed by the <strong>Pilot Lead</strong>. This confirms the pilot is officially underway and establishes the shared record from Day 1.
+      </div>
 
-  let fieldsHTML = prompts[day].map((q,i) => `
-    <div class="field">
-      <label>${q}</label>
-      <textarea placeholder="Your response..." rows="3"></textarea>
-    </div>
-  `).join('');
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;">Pilot Lead</div>
+      <div class="form-row">
+        <div class="field"><label>Your name</label><input type="text" id="d1-lead-name" placeholder="Your full name" /></div>
+        <div class="field"><label>Your email</label><input type="email" id="d1-lead-email" placeholder="your@bts.com" /></div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Pilot Partner</div>
+      <div class="form-row">
+        <div class="field"><label>Partner name</label><input type="text" id="d1-partner-name" placeholder="Partner's full name" /></div>
+        <div class="field"><label>Partner email</label><input type="email" id="d1-partner-email" placeholder="partner@bts.com" /></div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Level 5 Reviewer</div>
+      <div class="field">
+        <label>Do you have a Level 5 in mind who would be appropriate to review this pilot?</label>
+        <input type="text" id="d1-level5" placeholder="Name and role (e.g. Jane Smith, L5 Sr. Program Manager)" />
+        <p style="font-size:11px;color:#999;margin-top:5px;">Level 5 will receive written updates and provide feedback — they are informed, not in the ownership seat. The AI Champion will help identify the right reviewer if needed.</p>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Pilot Hypothesis</div>
+      <div class="field">
+        <label>What is your pilot hypothesis?</label>
+        <textarea id="d1-hypothesis" placeholder='We believe this tool will... (e.g. reduce time spent on SOW drafting by automating the first-draft step)' rows="3"></textarea>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Baseline Measurement</div>
+      <div class="field">
+        <label>What is your baseline? How long does this task take today without the tool?</label>
+        <textarea id="d1-baseline" placeholder="Both Lead and Partner should document this independently. e.g. Approximately 2 hours per SOW draft." rows="3"></textarea>
+        <p style="font-size:11px;color:#999;margin-top:5px;">Both co-owners should document their baseline independently before the pilot begins.</p>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Test Group</div>
+      <div class="field">
+        <label>Who are your testers?</label>
+        <textarea id="d1-testers" placeholder="List names and roles. Size determined by co-owners and confirmed with Level 5." rows="3"></textarea>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Milestone Calendar</div>
+      <p style="font-size:12px;color:#888;margin-bottom:12px;">Enter your planned check-in dates. Adjust for weekends — move to the nearest business day and note the adjustment here.</p>
+      <div class="form-row">
+        <div class="field"><label>Day 15 check-in</label><input type="date" id="d1-date15" /></div>
+        <div class="field"><label>Day 30 check-in</label><input type="date" id="d1-date30" /></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Day 45 check-in</label><input type="date" id="d1-date45" /></div>
+        <div class="field"><label>Day 60 check-in</label><input type="date" id="d1-date60" /></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Day 75 check-in</label><input type="date" id="d1-date75" /></div>
+        <div class="field"><label>Day 90 check-in</label><input type="date" id="d1-date90" /></div>
+      </div>
+
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid #E8EBF0;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;">Need a New AI Tool License?</div>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;line-height:1.6;">If this pilot requires a tool your team does not currently have access to, request a license here. Uses information already entered above.</p>
+        <button type="button" onmousedown="event.preventDefault();event.stopPropagation();openLicenseRequest();" style="display:inline-flex;align-items:center;gap:7px;background:var(--bts-purple-light);border:1.5px solid var(--bts-purple);border-radius:8px;padding:10px 18px;font-size:12px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);">&#128274; Request New AI Tool License</button>
+        <p style="font-size:11px;color:#BBB;margin-top:8px;">Approval path: AI Champion &rarr; Level 5 &rarr; IT</p>
+      </div>
+    `;
+  } else {
+    fieldsHTML = prompts[day].map((q,i) => `
+      <div class="field">
+        <label>${q}</label>
+        <textarea placeholder="Your response..." rows="3"></textarea>
+      </div>
+    `).join('');
+  }
 
   let statusHTML = '';
   if (!isVerbal) {
@@ -1115,9 +1255,9 @@ function openCheckin(day) {
       <div class="field">
         <label>Health status update</label>
         <div class="status-row" id="ci-status-row">
-          <div class="status-pill sp-green selected" onclick="selectStatus(this,'green')">On Track</div>
-          <div class="status-pill sp-amber" onclick="selectStatus(this,'amber')">At Risk</div>
-          <div class="status-pill sp-red" onclick="selectStatus(this,'red')">Blocked</div>
+          <div class="status-pill sp-green selected" onclick="selectStatus(this,'green')">Moving Forward</div>
+          <div class="status-pill sp-amber" onclick="selectStatus(this,'amber')">Needs Attention</div>
+          <div class="status-pill sp-red" onclick="selectStatus(this,'red')">Asking for Help</div>
         </div>
       </div>`;
   }
@@ -1129,9 +1269,9 @@ function openCheckin(day) {
         <label>Day 90 recommendation</label>
         <select id="ci-outcome">
           <option value="">Select outcome...</option>
-          <option value="standardize">Standardize — roll out as team expectation</option>
-          <option value="reevaluate">Reevaluate — continue with refined hypothesis</option>
-          <option value="table">Table — pause and log learnings</option>
+          <option value="standardize">Standardize — roll out as a team expectation with communication and onboarding plan</option>
+          <option value="reevaluate">Reevaluate — continue piloting with a refined hypothesis and a new 30-day check-in</option>
+          <option value="table">Table — pause the pilot, log what was learned, return to the backlog</option>
         </select>
       </div>`;
   }
@@ -1140,12 +1280,33 @@ function openCheckin(day) {
   if (day === 60) {
     xfHTML = `
       <div class="field" style="margin-top:4px">
-        <label>Cross-functional approvals (formal step)</label>
-        <div class="checklist">
-          <div class="check-item"><input type="checkbox" id="xf-finance"><label for="xf-finance">Finance — no workflow conflicts or blockers confirmed</label></div>
-          <div class="check-item"><input type="checkbox" id="xf-ops"><label for="xf-ops">Operators — no dependency concerns confirmed</label></div>
-          <div class="check-item"><input type="checkbox" id="xf-na"><label for="xf-na">N/A — no other departments affected (documented)</label></div>
+        <label>Which teams does this pilot touch? Check all that apply.</label>
+        <p style="font-size:11px;color:#888;margin-bottom:8px;">Each checked team needs to confirm there are no workflow conflicts before Day 90.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <div class="check-item"><input type="checkbox" id="xf-act"><label for="xf-act">ACT</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-cwm"><label for="xf-cwm">Contingent Workforce Mgmt</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-digital"><label for="xf-digital">Digital</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-ea"><label for="xf-ea">EA / Office Managers</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-finance"><label for="xf-finance">Finance</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-graphic"><label for="xf-graphic">Graphic Design</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-helpdesk"><label for="xf-helpdesk">Help Desk</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-logistics"><label for="xf-logistics">Logistics</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-marketing"><label for="xf-marketing">Marketing</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-momenta"><label for="xf-momenta">Momenta</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-ops"><label for="xf-ops">Virtual Operators</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-pro"><label for="xf-pro">PRO</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-prod"><label for="xf-prod">Prod</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-px"><label for="xf-px">PX</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-set"><label for="xf-set">SET</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-talent"><label for="xf-talent">Talent Acquisition</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-consultants"><label for="xf-consultants">Consultants</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-am"><label for="xf-am">AM</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-sme"><label for="xf-sme">SME</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-saba"><label for="xf-saba">SABA</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-innovation"><label for="xf-innovation">Innovation</label></div>
+          <div class="check-item"><input type="checkbox" id="xf-leadership"><label for="xf-leadership">Leadership</label></div>
         </div>
+        <div class="check-item" style="margin-top:8px;"><input type="checkbox" id="xf-na"><label for="xf-na">N/A — no other teams affected (document this)</label></div>
       </div>`;
   }
 
@@ -1153,7 +1314,7 @@ function openCheckin(day) {
     <button class="back-btn" onclick="backToCheckinSelector()">&#8592; Back to check-in selector</button>
     <div class="form-card">
       <h3>Day ${day} &mdash; ${labels[day]}</h3>
-      <p class="form-sub">${isVerbal ? 'This is a verbal check-in with Level 5. Use this form to prepare your talking points and document key takeaways after the meeting.' : 'Complete this written update via the AI Innovation Tool. Pilot Lead drafts; Pilot Partner reviews before submitting.'}</p>
+      <p class="form-sub">${isVerbal ? 'Use this form to prepare your talking points before the meeting. After the meeting, return here to document key takeaways and Level 5 feedback.' : day === 45 ? 'The Pilot Partner owns bringing in fresh perspectives — team members who have not been involved yet. Use this form to capture what they surfaced.' : day === 30 ? 'Pilot Lead drafts this update. Pilot Partner reviews and adds their perspective before it is sent to Level 5.' : 'Complete this written update via the AI Innovation Tool.'}</p>
       ${isVerbal ? '<div class="warn-box">This is a <strong>verbal check-in</strong> — meet with Level 5 in person or on a call. Use this form to prepare talking points and record key takeaways immediately after.</div>' : ''}
       <div class="form-row">
         <div class="field"><label>Pilot name</label><input type="text" placeholder="e.g. Digital Operator Tool Pilot" /></div>
@@ -1184,6 +1345,48 @@ function backToCheckinSelector() {
 async function submitCheckin(day) {
   const toast = document.getElementById('ci-toast');
   const formCard = document.querySelector('#checkin-form .form-card');
+
+  // Day 1 collects structured fields
+  if (day === 1) {
+    const leadName   = document.getElementById('d1-lead-name')?.value.trim() || '';
+    const leadEmail  = document.getElementById('d1-lead-email')?.value.trim() || '';
+    const partName   = document.getElementById('d1-partner-name')?.value.trim() || '';
+    const partEmail  = document.getElementById('d1-partner-email')?.value.trim() || '';
+    const level5     = document.getElementById('d1-level5')?.value.trim() || 'Not yet identified';
+    const hypothesis = document.getElementById('d1-hypothesis')?.value.trim() || '';
+    const baseline   = document.getElementById('d1-baseline')?.value.trim() || '';
+    const testers    = document.getElementById('d1-testers')?.value.trim() || '';
+    const dateLabels = ['Day 15','Day 30','Day 45','Day 60','Day 75','Day 90'];
+    const dateIds    = ['d1-date15','d1-date30','d1-date45','d1-date60','d1-date75','d1-date90'];
+    const dates      = dateLabels.map((lbl,i) => lbl + ': ' + (document.getElementById(dateIds[i])?.value || 'TBD')).join(' | ');
+    const pilotName  = formCard ? formCard.querySelector('input[type=text]')?.value.trim() || '' : '';
+    toast.style.display = 'block';
+    toast.textContent = 'Submitting Day 1 kick-off to Smartsheet...';
+    toast.style.background = '#E6F1FB'; toast.style.borderColor = '#B5D4F4'; toast.style.color = '#1C4C86';
+    const result = await smAddRow(SM.CHECKIN_SHEET, {
+      [SM.CI.pilotName]: pilotName || 'Day 1 Kick-off',
+      [SM.CI.pilotLead]: leadName,
+      [SM.CI.submitterEmail]: leadEmail,
+      [SM.CI.checkInDay]: 'Day 1',
+      [SM.CI.checkInType]: 'Written',
+      [SM.CI.role]: 'Pilot Lead',
+      [SM.CI.response1]: 'Lead: ' + leadName + ' (' + leadEmail + ') | Partner: ' + partName + ' (' + partEmail + ')',
+      [SM.CI.response2]: 'Level 5 Reviewer: ' + level5,
+      [SM.CI.response3]: 'Hypothesis: ' + hypothesis + ' | Baseline: ' + baseline,
+      [SM.CI.response4]: 'Testers: ' + testers + ' | Milestone dates: ' + dates,
+      [SM.CI.healthStatus]: 'Moving Forward',
+      [SM.CI.submittedAt]: new Date().toISOString()
+    });
+    if (result.ok) {
+      toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
+      toast.textContent = 'Day 1 kick-off saved to Smartsheet. Level 5 has been notified.';
+    } else {
+      toast.style.background = '#FCEBEB'; toast.style.borderColor = '#F7C1C1'; toast.style.color = '#A32D2D';
+      toast.textContent = 'Smartsheet save failed. Try again or contact the AI Champion.';
+    }
+    setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 3500);
+    return;
+  }
   const textareas = formCard ? Array.from(formCard.querySelectorAll('textarea')) : [];
   const pilotNameEl = formCard ? formCard.querySelector('input[type=text]') : null;
   const roleEl = formCard ? formCard.querySelector('select') : null;
@@ -1191,9 +1394,9 @@ async function submitCheckin(day) {
   const pilotName = pilotNameEl ? pilotNameEl.value.trim() : '';
   const role = roleEl ? roleEl.value : 'Pilot Lead';
   const statusPill = formCard ? formCard.querySelector('.status-pill.selected') : null;
-  const statusMap = {'On Track': 'On Track', 'At Risk': 'At Risk', 'Blocked': 'Blocked'};
-  const healthStatus = statusPill ? (statusPill.textContent.trim()) : 'On Track';
-  const xfNotes = formCard ? (formCard.querySelector('#xf-finance')?.checked ? 'Finance: approved; ' : '') + (formCard.querySelector('#xf-ops')?.checked ? 'Operators: approved; ' : '') + (formCard.querySelector('#xf-na')?.checked ? 'N/A' : '') : '';
+  const statusMap = {'Moving Forward': 'Moving Forward', 'Needs Attention': 'Needs Attention', 'Asking for Help': 'Asking for Help'};
+  const healthStatus = statusPill ? (statusPill.textContent.trim()) : 'Moving Forward';
+  const xfNotes = formCard ? ((formCard.querySelector('#xf-act')?.checked ? 'ACT; ' : '') + (formCard.querySelector('#xf-cwm')?.checked ? 'CWM; ' : '') + (formCard.querySelector('#xf-digital')?.checked ? 'Digital; ' : '') + (formCard.querySelector('#xf-ea')?.checked ? 'EA; ' : '') + (formCard.querySelector('#xf-finance')?.checked ? 'Finance; ' : '') + (formCard.querySelector('#xf-graphic')?.checked ? 'Graphic Design; ' : '') + (formCard.querySelector('#xf-helpdesk')?.checked ? 'Help Desk; ' : '') + (formCard.querySelector('#xf-logistics')?.checked ? 'Logistics; ' : '') + (formCard.querySelector('#xf-marketing')?.checked ? 'Marketing; ' : '') + (formCard.querySelector('#xf-momenta')?.checked ? 'Momenta; ' : '') + (formCard.querySelector('#xf-ops')?.checked ? 'Virtual Operators; ' : '') + (formCard.querySelector('#xf-pro')?.checked ? 'PRO; ' : '') + (formCard.querySelector('#xf-prod')?.checked ? 'Prod; ' : '') + (formCard.querySelector('#xf-px')?.checked ? 'PX; ' : '') + (formCard.querySelector('#xf-set')?.checked ? 'SET; ' : '') + (formCard.querySelector('#xf-talent')?.checked ? 'Talent Acquisition; ' : '') + (formCard.querySelector('#xf-consultants')?.checked ? 'Consultants; ' : '') + (formCard.querySelector('#xf-am')?.checked ? 'AM; ' : '') + (formCard.querySelector('#xf-sme')?.checked ? 'SME; ' : '') + (formCard.querySelector('#xf-saba')?.checked ? 'SABA; ' : '') + (formCard.querySelector('#xf-innovation')?.checked ? 'Innovation; ' : '') + (formCard.querySelector('#xf-leadership')?.checked ? 'Leadership; ' : '') + (formCard.querySelector('#xf-na')?.checked ? 'N/A' : '')) : '';
   const outcomeEl = formCard ? formCard.querySelector('#ci-outcome') : null;
   const day90Rec = outcomeEl ? outcomeEl.value : 'N/A';
 
@@ -1223,88 +1426,553 @@ async function submitCheckin(day) {
 }
 
 /* ---- MAPPER ---- */
-function setAddMode(mode) {
-  state.addMode = mode;
-  document.querySelectorAll('.mapper-btn').forEach(b => b.classList.remove('active'));
-  if (mode === 'friction') document.getElementById('btn-friction').classList.add('active');
-  if (mode === 'star') document.getElementById('btn-star').classList.add('active');
+// ═══════════════════════════════════════════════════════════════
+// PROCESS STUDIO — State & Constants
+// ═══════════════════════════════════════════════════════════════
+
+const PS_SHEET_ID = '8451378574741380';
+const PS_COLS = {
+  stepName:     7489713847177092,
+  workflowName: 1860214312963972,
+  stepNum:      6363813940334468,
+  lane:         4112014126649220,
+  stepType:     8615613754019716,
+  input:        452839429410692,
+  output:       4956439056781188,
+  toolUsed:     2704639243095940,
+  frictionFlag: 7208238870466436,
+  frictionReason:1578739336253316,
+  timeEst:      6082338963623812,
+  notes:        3830539149938564,
+  phase:        8334138777309060,
+  submittedBy:  1015789382832004,
+  submittedByEmail:5519389010202500,
+  submittedAt:  3267589196517252
+};
+
+const PS_PHASES = {
+  1: {
+    label: "Current State",
+    time: 8,
+    context: "<strong>Phase 1 — Current State:</strong> Get the real process on screen. Do not edit yet — just map what actually happens today.",
+    prompt: "Here is where we start — not with what the process is supposed to look like, but with what it actually looks like. Someone talk us through it. Do not clean it up. The real version is the only one worth mapping.",
+    color: "var(--bts-blue)",
+    bg: "var(--bts-blue-light)"
+  },
+  2: {
+    label: "Visualize",
+    time: 5,
+    context: "<strong>Phase 2 — Visualize:</strong> Does what is on screen match reality? Fill gaps, check lanes, make it honest.",
+    prompt: "Look at what you just put up there. Does it feel true? Sometimes seeing it is the first time we really see it. What is missing? What surprised you? This is the moment to make it honest.",
+    color: "var(--bts-teal)",
+    bg: "var(--bts-teal-light)"
+  },
+  3: {
+    label: "Simplify",
+    time: 6,
+    context: "<strong>Phase 3 — Simplify:</strong> Where does this hurt? Flag every friction point. You are not solving anything yet — just being honest.",
+    prompt: "Now the real question — where does this hurt? Not where it is inconvenient. Where does it genuinely slow people down, create confusion, or fall through the cracks? Mark those places. That is not failure — that is data. That is where the work is.",
+    color: "#854F0B",
+    bg: "#FAEEDA"
+  },
+  4: {
+    label: "Add a Tool",
+    time: 7,
+    context: "<strong>Phase 4 — Add a Tool:</strong> Look at your friction points. Where could a tool help? Mark it with ★. You are not committing — you are imagining.",
+    prompt: "You have done the hard part. Now — if something could take one of those friction points off a person's plate, where would it go? Do not commit to anything. Just imagine what could be different.",
+    color: "var(--bts-purple)",
+    bg: "var(--bts-purple-light)"
+  }
+};
+
+let psCurrentPhase = 1;
+let psAddModeState = 'step';
+let psTimerInterval = null;
+let psTimerSeconds = 480;
+let facilitatorOn = false;
+window.facilitatorOn = false;
+let psStructuredSteps = [];
+
+// ── Phase navigation ──────────────────────────────────────────
+
+function setPhase(n) {
+  psCurrentPhase = n;
+  const ph = PS_PHASES[n];
+
+  // Update stepper UI
+  [1,2,3,4].forEach(i => {
+    const el = document.getElementById('ps-p' + i);
+    if (!el) return;
+    if (i === n) {
+      el.style.background = 'var(--bts-pink)';
+      el.querySelector('div:first-child').style.color = 'rgba(255,255,255,0.7)';
+      el.querySelector('div:last-child').style.color = 'white';
+    } else {
+      el.style.background = 'white';
+      el.querySelector('div:first-child').style.color = '#CCC';
+      el.querySelector('div:last-child').style.color = '#BBB';
+    }
+  });
+
+  // Update phase context card
+  const card = document.getElementById('ps-phase-card');
+  if (card) {
+    card.innerHTML = ph.context;
+    card.style.borderLeftColor = ph.color;
+    card.style.background = ph.bg;
+    card.style.color = ph.color;
+  }
+
+  // Show/hide Tool Lives Here button
+  const starBtn = document.getElementById('btn-star');
+  if (starBtn) starBtn.style.display = n === 4 ? '' : 'none';
+
+  // Show tool field in Phase 4
+  const toolField = document.getElementById('ps-tool-field');
+  if (toolField) toolField.style.display = n === 4 ? '' : 'none';
+
+  // Show structured step entry in Phase 1
+  const stepEntry = document.getElementById('ps-step-entry');
+  if (stepEntry) stepEntry.style.display = n === 1 ? '' : 'none';
+
+  // Update facilitator banner
+  if (facilitatorOn) {
+    const lbl = document.getElementById('fac-phase-label');
+    if (lbl) lbl.textContent = 'Phase ' + n + ' of 4 — ' + ph.label;
+    const prompt = document.getElementById('fac-prompt');
+    if (prompt) prompt.textContent = ph.prompt;
+    resetTimer();
+  }
 }
+
+// Initialize phase on tab open
+function initProcessStudio() {
+  setPhase(1);
+}
+
+// ── Facilitator Mode ──────────────────────────────────────────
+
+function toggleFacilitatorMode() {
+  facilitatorOn = !facilitatorOn;
+  window.facilitatorOn = facilitatorOn;
+  const banner = document.getElementById('facilitator-banner');
+  const btn = document.getElementById('btn-facilitator');
+  if (facilitatorOn) {
+    banner.style.display = '';
+    btn.style.background = 'var(--bts-purple)';
+    btn.style.color = 'white';
+    btn.textContent = '⏹ Exit Facilitator Mode';
+    // Set initial prompt
+    const ph = PS_PHASES[psCurrentPhase];
+    const lbl = document.getElementById('fac-phase-label');
+    if (lbl) lbl.textContent = 'Phase ' + psCurrentPhase + ' of 4 — ' + ph.label;
+    const prompt = document.getElementById('fac-prompt');
+    if (prompt) prompt.textContent = ph.prompt;
+    resetTimer();
+  } else {
+    banner.style.display = 'none';
+    btn.style.background = 'var(--bts-purple-light)';
+    btn.style.color = 'var(--bts-purple)';
+    btn.textContent = '▶ Facilitator Mode';
+    clearInterval(psTimerInterval);
+    psTimerInterval = null;
+  }
+}
+
+// ── Timer ─────────────────────────────────────────────────────
+
+function startTimer() {
+  clearInterval(psTimerInterval);
+  const startBtn = document.getElementById('btn-timer-start');
+  if (startBtn) { startBtn.textContent = '⏸ Pause'; startBtn.onclick = pauseTimer; }
+  psTimerInterval = setInterval(() => {
+    psTimerSeconds--;
+    updateTimerDisplay();
+    if (psTimerSeconds <= 0) {
+      clearInterval(psTimerInterval);
+      psTimerInterval = null;
+      const disp = document.getElementById('fac-timer');
+      if (disp) { disp.textContent = 'TIME'; disp.style.color = '#EF9F27'; }
+      if (startBtn) { startBtn.textContent = '▶ Start'; startBtn.onclick = startTimer; }
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(psTimerInterval);
+  psTimerInterval = null;
+  const startBtn = document.getElementById('btn-timer-start');
+  if (startBtn) { startBtn.textContent = '▶ Start'; startBtn.onclick = startTimer; }
+}
+
+function resetTimer() {
+  clearInterval(psTimerInterval);
+  psTimerInterval = null;
+  psTimerSeconds = PS_PHASES[psCurrentPhase].time * 60;
+  updateTimerDisplay();
+  const disp = document.getElementById('fac-timer');
+  if (disp) disp.style.color = 'var(--bts-pink)';
+  const startBtn = document.getElementById('btn-timer-start');
+  if (startBtn) { startBtn.textContent = '▶ Start'; startBtn.onclick = startTimer; }
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(Math.abs(psTimerSeconds) / 60);
+  const s = Math.abs(psTimerSeconds) % 60;
+  const disp = document.getElementById('fac-timer');
+  if (disp) disp.textContent = (psTimerSeconds < 0 ? '-' : '') + m + ':' + String(s).padStart(2,'0');
+}
+
+// ── Canvas / Lane functions ───────────────────────────────────
+
+function psAddMode(mode) {
+  psAddModeState = mode;
+  ['btn-add-step','btn-friction','btn-star'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  const map = { step: 'btn-add-step', friction: 'btn-friction', star: 'btn-star' };
+  const activeEl = document.getElementById(map[mode]);
+  if (activeEl) activeEl.classList.add('active');
+}
+
+// Keep old setAddMode as alias for compatibility
+function setAddMode(mode) { psAddMode(mode); }
+
+// ── Step entry — prompt-based (reliable from file://) ───────────────────
 
 function handleLaneClick(e, lane) {
-  if (e.target.classList.contains('node-del') || e.target.classList.contains('node-input') || e.target.classList.contains('mapper-btn')) return;
-  if (e.target.classList.contains('add-node-btn') || e.target.closest('.add-node-btn')) {
-    startNodeEntry(lane);
-    return;
-  }
-  startNodeEntry(lane);
+  if (e.target.classList.contains('node-del')) return;
+  if (e.target.closest('.step-node')) return;
+  if (e.target.closest('.ps-insert-panel')) return;
+  addStepToLane(lane);
 }
 
-function startNodeEntry(lane) {
-  const laneBody = document.getElementById('lane-' + lane);
-  const existing = laneBody.querySelector('.node-input-wrap');
-  if (existing) return;
-  const wrap = document.createElement('div');
-  wrap.className = 'node-input-wrap';
+function addStepToLane(lane) {
+  var laneEl = document.querySelector('#swim-lanes .swim-lane[data-lane="' + lane + '"] .lane-label');
+  var laneName = laneEl ? laneEl.textContent.trim() : lane.toUpperCase();
+  var mode = psAddModeState;
+  var label = mode === 'friction' ? 'friction point' : 'step';
+  var text = window.prompt('Add ' + label + ' to ' + laneName + ':', '');
+  if (text === null || text.trim() === '') return;
+  text = text.trim();
+  var type = mode === 'friction' ? 'friction' : mode === 'star' ? 'star' : 'step';
+  psCanvasNodes.push({ id: ++psNodeIdCounter, lane: lane, text: text, type: type, stackedWith: null });
+  renderCanvas();
+  if (type === 'friction') showFrictionToast();
+}
+
+function startNodeEntry(lane) { addStepToLane(lane); }
+function initEntryBar() {}
+function hideEntryBar() {}
+function showEntryBar(lane) { addStepToLane(lane); }
+function psEntryDoAdd() {}
+
+// ── Canvas node management ───────────────────────────────────
+// Central array tracks all canvas nodes in sequence order
+// Each entry: { id, lane, text, type } where type = 'step'|'friction'|'star'
+let psCanvasNodes = [];
+let psNodeIdCounter = 0;
+
+function renderCanvas() {
+  // ── Column-aligned grid rendering ──────────────────────────
+  // Every step occupies a global column position.
+  // Lanes that don't have a step at position N show an empty cell.
+  // This means step 3 in Logistics appears to the RIGHT of step 2 in PMO.
+
+  // Get all lane IDs in current DOM order
+  const laneIds = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => l.getAttribute('data-lane'));
+
+  // Clear all lane bodies
+  laneIds.forEach(lid => {
+    const lb = document.getElementById('lane-' + lid);
+    if (lb) lb.innerHTML = '';
+  });
+
+  if (!psCanvasNodes.length) return;
+
+  // Assign a global column index to each node (= its position in psCanvasNodes array)
+  // Number only step/parallel/shared types; friction/star are inline annotations
+  let stepCounter = 0;
+  const columnCount = psCanvasNodes.length;
+
+  // Build a map: colIdx -> node
+  const colMap = {};
+  psCanvasNodes.forEach((node, colIdx) => {
+    const isCountable = ['step','parallel','shared'].includes(node.type);
+    if (isCountable) stepCounter++;
+    colMap[colIdx] = { ...node, stepNum: isCountable ? stepCounter : null };
+  });
+
+  // For each lane, render all columns — node if it belongs here, empty cell otherwise
+  laneIds.forEach(lid => {
+    const lb = document.getElementById('lane-' + lid);
+    if (!lb) return;
+
+    for (let colIdx = 0; colIdx < columnCount; colIdx++) {
+      const node = colMap[colIdx];
+      const belongsHere = node.lane === lid;
+      const isShared = node.type === 'shared';
+      const showHere = belongsHere || isShared;
+
+      // Cell wrapper — fixed width to align columns
+      const cell = document.createElement('div');
+      cell.style.cssText = 'display:inline-flex;align-items:center;flex-shrink:0;';
+
+      if (!showHere) {
+        // Empty spacer — same width as a step node + arrow
+        const spacer = document.createElement('div');
+        spacer.style.cssText = 'width:158px;height:48px;flex-shrink:0;border:1.5px dashed transparent;border-radius:8px;';
+        cell.appendChild(spacer);
+      } else {
+        // Render the actual node
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = 'display:inline-flex;align-items:center;gap:0;position:relative;';
+        wrapper.setAttribute('data-node-id', node.id);
+
+        const isFriction = node.type === 'friction';
+        const isStar     = node.type === 'star';
+        const isStep     = node.type === 'step';
+        const num        = node.stepNum;
+
+        // Insert-before button + Stack button on hover
+        if (!isFriction && !isStar) {
+          const insertBtn = document.createElement('button');
+          insertBtn.title = 'Insert step before';
+          insertBtn.textContent = '+';
+          insertBtn.style.cssText = 'position:absolute;left:-9px;top:30%;transform:translateY(-50%);width:17px;height:17px;border-radius:50%;background:var(--bts-teal);color:white;border:none;font-size:11px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:10;padding:0;line-height:1;';
+          insertBtn.onclick = (e) => { e.stopPropagation(); openInsertPanel(colIdx, lb, wrapper); };
+          wrapper.appendChild(insertBtn);
+
+          const stackBtn = document.createElement('button');
+          stackBtn.title = 'Stack — happens at the same time';
+          stackBtn.textContent = '⊕';
+          stackBtn.style.cssText = 'position:absolute;left:-9px;top:70%;transform:translateY(-50%);width:17px;height:17px;border-radius:50%;background:#EF9F27;color:white;border:none;font-size:11px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:10;padding:0;line-height:1;';
+          stackBtn.onclick = (e) => { e.stopPropagation(); openStackPanel(colIdx, node, wrapper); };
+          wrapper.appendChild(stackBtn);
+
+          wrapper.onmouseenter = () => { insertBtn.style.display = 'flex'; stackBtn.style.display = 'flex'; };
+          wrapper.onmouseleave = () => {
+            if (!wrapper.querySelector('.ps-insert-input') && !wrapper.querySelector('.ps-stack-input')) {
+              insertBtn.style.display = 'none';
+              stackBtn.style.display = 'none';
+            }
+          };
+        }
+
+        const nodeEl = document.createElement('div');
+        nodeEl.className = 'step-node' + (isFriction ? ' friction' : '') + (isStar ? ' star' : '');
+
+        if (isFriction) {
+          nodeEl.innerHTML = `<span style="color:var(--bts-red);font-size:10px;margin-right:3px;">⚠</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+        } else if (isStar) {
+          nodeEl.innerHTML = `<span style="color:var(--bts-teal);margin-right:2px;">★</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+        } else if (isStacked) {
+          nodeEl.style.borderLeft = '3px solid #EF9F27';
+          nodeEl.style.background = '#FFFBF2';
+          nodeEl.innerHTML = `<span style="color:#EF9F27;font-size:10px;margin-right:3px;" title="Same time as Step ${node.stackedWith}">⊕</span><span class="step-badge" style="background:#EF9F27;color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">${num}</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+        } else {
+          nodeEl.innerHTML = `<span class="step-badge" style="background:var(--bts-pink);color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">${num}</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+        }
+
+        wrapper.appendChild(nodeEl);
+
+        // Arrow after every node
+        const arrow = document.createElement('span');
+        arrow.style.cssText = 'color:#DDD;font-size:13px;padding:0 2px;flex-shrink:0;';
+        arrow.textContent = '→';
+        wrapper.appendChild(arrow);
+        cell.appendChild(wrapper);
+      }
+
+      lb.appendChild(cell);
+    }
+  });
+}
+
+function openInsertPanel(insertBeforeIdx, lb, wrapper) {
+  // Close any open insert panels first
+  document.querySelectorAll('.ps-insert-input').forEach(el => el.closest('.ps-insert-panel')?.remove());
+
+  const panel = document.createElement('div');
+  panel.className = 'ps-insert-panel';
+  panel.style.cssText = 'position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:white;border:1.5px solid var(--bts-teal);border-radius:8px;padding:6px 8px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,0.12);white-space:nowrap;';
+
   const input = document.createElement('input');
-  input.className = 'node-input';
-  input.placeholder = 'Step name...';
-  input.onkeydown = (e) => {
-    if (e.key === 'Enter') confirmNode(lane, input.value, wrap);
-    if (e.key === 'Escape') { wrap.remove(); }
+  input.className = 'ps-insert-input node-input';
+  input.placeholder = 'New step name...';
+  input.style.cssText = 'width:130px;padding:5px 8px;border:1px solid var(--bts-teal);border-radius:6px;font-size:11px;font-family:var(--font);outline:none;';
+
+  const addBtn = document.createElement('button');
+  addBtn.textContent = 'Insert';
+  addBtn.style.cssText = 'background:var(--bts-teal);color:white;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = '✕';
+  cancelBtn.style.cssText = 'background:none;border:none;color:#999;cursor:pointer;font-size:13px;padding:0;';
+
+  const doInsert = () => {
+    const text = input.value.trim();
+    if (!text) { panel.remove(); return; }
+    const laneName = wrapper.closest('.swim-lane')?.getAttribute('data-lane') || 'pmo';
+    psInsertNode(insertBeforeIdx, text, 'step', laneName);
+    panel.remove();
   };
-  const btn = document.createElement('button');
-  btn.textContent = 'Add';
-  btn.className = 'mapper-btn';
-  btn.style.padding = '5px 10px';
-  btn.onclick = () => confirmNode(lane, input.value, wrap);
-  wrap.appendChild(input);
-  wrap.appendChild(btn);
-  laneBody.appendChild(wrap);
+
+  input.onkeydown = e => { if (e.key === 'Enter') doInsert(); if (e.key === 'Escape') panel.remove(); };
+  addBtn.onclick = doInsert;
+  cancelBtn.onclick = () => panel.remove();
+
+  panel.appendChild(input);
+  panel.appendChild(addBtn);
+  panel.appendChild(cancelBtn);
+  wrapper.style.position = 'relative';
+  wrapper.appendChild(panel);
   input.focus();
 }
 
-function confirmNode(lane, text, wrap) {
-  if (!text.trim()) { wrap.remove(); return; }
-  wrap.remove();
-  addNodeToLane(lane, text.trim(), state.addMode);
-  state.addMode = 'step';
-  document.querySelectorAll('.mapper-btn').forEach(b => b.classList.remove('active'));
+function psInsertNode(insertBeforeIdx, text, type, lane) {
+  const newNode = { id: ++psNodeIdCounter, lane, text, type, stackedWith: null };
+  psCanvasNodes.splice(insertBeforeIdx, 0, newNode);
+  renderCanvas();
 }
 
-function addNodeToLane(lane, text, type) {
-  const laneBody = document.getElementById('lane-' + lane);
-  const node = document.createElement('div');
-  node.className = 'step-node' + (type === 'friction' ? ' friction' : '') + (type === 'star' ? ' star' : '');
-  const prefix = type === 'star' ? '★ ' : '';
-  node.innerHTML = `<span>${prefix}${text}</span><button class="node-del" onclick="this.parentElement.remove()">&#x2715;</button>`;
-  laneBody.appendChild(node);
+function openStackPanel(colIdx, parentNode, wrapper) {
+  // Close any open panels first
+  document.querySelectorAll('.ps-stack-input').forEach(el => el.closest('.ps-insert-panel')?.remove());
+  document.querySelectorAll('.ps-insert-input').forEach(el => el.closest('.ps-insert-panel')?.remove());
+
+  const panel = document.createElement('div');
+  panel.className = 'ps-insert-panel';
+  panel.style.cssText = 'position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:white;border:1.5px solid #EF9F27;border-radius:8px;padding:6px 8px;display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,0.12);white-space:nowrap;min-width:200px;';
+
+  const label = document.createElement('div');
+  label.style.cssText = 'font-size:10px;font-weight:700;color:#EF9F27;letter-spacing:0.4px;text-transform:uppercase;';
+  label.textContent = '⊕ Stack — happens at same time';
+
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:6px;';
+
+  const laneSelect = document.createElement('select');
+  laneSelect.className = 'ps-stack-input';
+  laneSelect.style.cssText = 'padding:5px 8px;border:1px solid #EF9F27;border-radius:6px;font-size:11px;font-family:var(--font);outline:none;';
+  const lanes = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => ({
+    id: l.getAttribute('data-lane'),
+    label: l.querySelector('.lane-label').textContent.trim()
+  }));
+  lanes.forEach(l => {
+    const opt = document.createElement('option');
+    opt.value = l.id;
+    opt.textContent = l.label;
+    laneSelect.appendChild(opt);
+  });
+
+  const input = document.createElement('input');
+  input.className = 'ps-stack-input node-input';
+  input.placeholder = 'Step name...';
+  input.style.cssText = 'flex:1;padding:5px 8px;border:1px solid #EF9F27;border-radius:6px;font-size:11px;font-family:var(--font);outline:none;';
+
+  const addBtn = document.createElement('button');
+  addBtn.textContent = 'Add';
+  addBtn.style.cssText = 'background:#EF9F27;color:white;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = '✕';
+  cancelBtn.style.cssText = 'background:none;border:none;color:#999;cursor:pointer;font-size:13px;padding:0;';
+
+  const doStack = () => {
+    const text = input.value.trim();
+    if (!text) { panel.remove(); return; }
+    const lane = laneSelect.value;
+    // Insert the stacked node right after the parent node in psCanvasNodes
+    const parentStepNum = parentNode.stepNum;
+    const newNode = { id: ++psNodeIdCounter, lane, text, type: 'step', stackedWith: parentStepNum };
+    psCanvasNodes.splice(colIdx + 1, 0, newNode);
+    renderCanvas();
+    panel.remove();
+  };
+
+  input.onkeydown = e => { if (e.key === 'Enter') doStack(); if (e.key === 'Escape') panel.remove(); };
+  addBtn.onclick = doStack;
+  cancelBtn.onclick = () => panel.remove();
+
+  row.appendChild(laneSelect);
+  row.appendChild(input);
+  row.appendChild(addBtn);
+  row.appendChild(cancelBtn);
+  panel.appendChild(label);
+  panel.appendChild(row);
+  wrapper.style.position = 'relative';
+  wrapper.appendChild(panel);
+  input.focus();
+}
+
+function psRemoveCanvasNode(nodeId) {
+  psCanvasNodes = psCanvasNodes.filter(n => n.id !== nodeId);
+  renderCanvas();
+}
+
+function getNextStepNumber() {
+  return psCanvasNodes.filter(n => n.type === 'step').length + 1;
+}
+
+function renumberAllNodes() { renderCanvas(); }
+
+function confirmNode(lane, text, wrap) {
+  if (!text || !text.trim()) { if (wrap) wrap.remove(); return; }
+  if (wrap) wrap.remove();
+  // Remove any open quick-add panel
+  const qa = document.getElementById('ps-quick-add');
+  if (qa) qa.remove();
+
+  const mode = psAddModeState;
+  const type = mode === 'friction' ? 'friction' : mode === 'star' ? 'star' : 'step';
+  psCanvasNodes.push({ id: ++psNodeIdCounter, lane: lane, text: text, type: type, stackedWith: null });
+  renderCanvas();
+  if (type === 'friction') showFrictionToast();
+  psAddModeState = 'step';
+  ['btn-add-step','btn-friction','btn-star'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+}
+
+function showFrictionToast() {
+  const toast = document.getElementById('friction-toast');
+  if (!toast) return;
+  toast.style.display = 'block';
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.transition = 'opacity 0.6s';
+    toast.style.opacity = '0';
+    setTimeout(() => { toast.style.display = 'none'; toast.style.opacity = '1'; toast.style.transition = ''; }, 600);
+  }, 2400);
 }
 
 const LANE_TEAMS = [
-  { id: 'act',         label: 'ACT',                         cls: 'lane-act' },
-  { id: 'cwm',         label: 'Contingent Workforce Mgmt',   cls: 'lane-cwm' },
-  { id: 'digital',     label: 'Digital',                     cls: 'lane-digital' },
-  { id: 'ea',          label: 'EA / Office Managers',        cls: 'lane-ea' },
-  { id: 'finance',     label: 'Finance',                     cls: 'lane-finance' },
-  { id: 'graphic',     label: 'Graphic Design',              cls: 'lane-graphic' },
-  { id: 'helpdesk',    label: 'Help Desk',                   cls: 'lane-helpdesk' },
-  { id: 'logistics',   label: 'Logistics',                   cls: 'lane-logistics' },
-  { id: 'marketing',   label: 'Marketing',                   cls: 'lane-marketing' },
-  { id: 'momenta',     label: 'Momenta',                     cls: 'lane-momenta' },
-  { id: 'ops',         label: 'Virtual Operators',           cls: 'lane-ops' },
-  { id: 'pmo',         label: 'PMO',                         cls: 'lane-pmo' },
-  { id: 'pro',         label: 'PRO',                         cls: 'lane-pro' },
-  { id: 'prod',        label: 'Prod',                        cls: 'lane-prod' },
-  { id: 'px',          label: 'PX',                          cls: 'lane-px' },
-  { id: 'set',         label: 'SET',                         cls: 'lane-set' },
-  { id: 'talent',      label: 'Talent Acquisition',          cls: 'lane-talent' },
-  { id: 'consultants', label: 'Consultants',                 cls: 'lane-consultants' },
-  { id: 'projectlead', label: 'Project Lead',                cls: 'lane-projectlead' },
-  { id: 'am',          label: 'AM',                          cls: 'lane-am' },
-  { id: 'sme',         label: 'SME',                         cls: 'lane-sme' },
-  { id: 'saba',        label: 'SABA',                        cls: 'lane-saba' },
-  { id: 'innovation',  label: 'Innovation',                  cls: 'lane-innovation' },
-  { id: 'leadership',  label: 'Leadership',                  cls: 'lane-leadership' },
+  { id: 'act',         label: 'ACT',                       cls: 'lane-act' },
+  { id: 'cwm',         label: 'Contingent Workforce Mgmt', cls: 'lane-cwm' },
+  { id: 'digital',     label: 'Digital',                   cls: 'lane-digital' },
+  { id: 'ea',          label: 'EA / Office Managers',      cls: 'lane-ea' },
+  { id: 'finance',     label: 'Finance',                   cls: 'lane-finance' },
+  { id: 'graphic',     label: 'Graphic Design',            cls: 'lane-graphic' },
+  { id: 'helpdesk',    label: 'Help Desk',                 cls: 'lane-helpdesk' },
+  { id: 'logistics',   label: 'Logistics',                 cls: 'lane-logistics' },
+  { id: 'marketing',   label: 'Marketing',                 cls: 'lane-marketing' },
+  { id: 'momenta',     label: 'Momenta',                   cls: 'lane-momenta' },
+  { id: 'ops',         label: 'Virtual Operators',         cls: 'lane-ops' },
+  { id: 'pro',         label: 'PRO',                       cls: 'lane-pro' },
+  { id: 'prod',        label: 'Prod',                      cls: 'lane-prod' },
+  { id: 'px',          label: 'PX',                        cls: 'lane-px' },
+  { id: 'set',         label: 'SET',                       cls: 'lane-set' },
+  { id: 'talent',      label: 'Talent Acquisition',        cls: 'lane-talent' },
+  { id: 'consultants', label: 'Consultants',               cls: 'lane-consultants' },
+  { id: 'projectlead', label: 'Project Lead',              cls: 'lane-projectlead' },
+  { id: 'am',          label: 'AM',                        cls: 'lane-am' },
+  { id: 'sme',         label: 'SME',                       cls: 'lane-sme' },
+  { id: 'saba',        label: 'SABA',                      cls: 'lane-saba' },
+  { id: 'innovation',  label: 'Innovation',                cls: 'lane-innovation' },
+  { id: 'leadership',  label: 'Leadership',                cls: 'lane-leadership' },
 ];
 
 function showAddLanePanel() {
@@ -1348,142 +2016,206 @@ function addOtherLane() {
 }
 
 function clearMapper() {
-  if (!confirm('Clear all steps from the workflow map?')) return;
-  document.querySelectorAll('.lane-body').forEach(lb => lb.innerHTML = '');
+  if (!confirm('Clear all steps from the canvas?')) return;
+  psCanvasNodes = [];
+  psStructuredSteps = [];
+  renderCanvas();
+  renderStructuredSteps();
 }
 
-async function saveMapper() {
-  const title = document.getElementById('workflow-title').value.trim() || 'Untitled workflow';
-  const tool = document.getElementById('workflow-tool').value.trim();
-  const toast = document.getElementById('mapper-toast');
-  toast.style.display = 'block';
-  toast.textContent = 'Saving to Smartsheet...';
+// ── Structured Step Entry ─────────────────────────────────────
 
-  // Collect lanes and nodes
-  const lanes = [];
-  document.querySelectorAll('#swim-lanes .swim-lane').forEach(lane => {
-    const laneId = lane.getAttribute('data-lane');
-    const laneLabel = lane.querySelector('.lane-label').textContent.trim();
-    const nodes = Array.from(lane.querySelectorAll('.step-node')).map(n => ({
-      text: n.querySelector('span').textContent.trim(),
-      type: n.classList.contains('friction') ? 'friction' : n.classList.contains('star') ? 'star' : 'step'
-    }));
-    lanes.push({ id: laneId, label: laneLabel, nodes });
-  });
-  const lanesUsed = lanes.map(l => l.label).join(', ');
-  const mapJSON = JSON.stringify(lanes);
-
-  const result = await saveWorkflowToSmartsheet(title, tool, lanesUsed, mapJSON);
-
-  if (result.ok) {
-    toast.textContent = `"${title}" saved to Smartsheet. Return at Day 30 to add ★ annotations.`;
-  } else {
-    toast.textContent = `"${title}" saved locally (Smartsheet unavailable). Contact AI Champion if needed.`;
-  }
-  setTimeout(() => toast.style.display = 'none', 4500);
+function addStructuredStep() {
+  const stepNum = psStructuredSteps.length + 1;
+  // Get lane names from canvas for dropdown
+  const lanes = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => l.querySelector('.lane-label').textContent.trim());
+  psStructuredSteps.push({ num: stepNum, name: '', lane: lanes[0] || 'PMO', type: 'Task', input: '', output: '', tool: '', friction: 'No', frictionReason: '', timeEst: '', notes: '' });
+  renderStructuredSteps();
+  // Scroll to new step
+  setTimeout(() => {
+    const list = document.getElementById('ps-steps-list');
+    if (list) list.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
 }
 
-/* ---- DASHBOARD ---- */
-function selectPilotStatus(status) {
-  state.pilotStatus = status;
-  ['green','amber','red'].forEach(s => {
-    document.getElementById('ps-' + s).classList.toggle('selected', s === status);
-  });
-}
-
-function openAddPilot() {
-  document.getElementById('add-pilot-form').style.display = '';
-  state.pilotStatus = 'green';
-  selectPilotStatus('green');
-}
-
-function closeAddPilot() {
-  document.getElementById('add-pilot-form').style.display = 'none';
-}
-
-async function savePilot() {
-  const name = document.getElementById('dp-name').value.trim();
-  const lead = document.getElementById('dp-lead').value.trim();
-  const partner = document.getElementById('dp-partner').value.trim();
-  const day = parseInt(document.getElementById('dp-day').value);
-  if (!name || !lead) { alert('Please enter at least a pilot name and Pilot Lead.'); return; }
-  const pilot = { name, lead, partner, day, status: state.pilotStatus, startDate: new Date() };
-  state.pilots.push(pilot);
-  closeAddPilot();
-  document.getElementById('dp-name').value = '';
-  document.getElementById('dp-lead').value = '';
-  document.getElementById('dp-partner').value = '';
-  renderDashboard();
-  renderHomePilots();
-  // Save to Smartsheet in background
-  savePilotToSmartsheet(pilot).then(result => {
-    if (result.ok) {
-      const toast = document.createElement('div');
-      toast.className = 'success-toast';
-      toast.style.cssText = 'display:block;position:fixed;bottom:20px;right:20px;z-index:999;max-width:300px';
-      toast.textContent = `"${name}" saved to Smartsheet Pilot Registry.`;
-      document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 3500);
-    }
-  });
-}
-
-function renderDashboard() {
-  const pilots = state.pilots;
-  document.getElementById('dash-active').textContent = pilots.length;
-  document.getElementById('dash-green').textContent = pilots.filter(p => p.status === 'green').length;
-  document.getElementById('dash-attn').textContent = pilots.filter(p => p.status !== 'green').length;
-
-  const rows = document.getElementById('dash-rows');
-  if (!pilots.length) {
-    rows.innerHTML = '<div class="empty-state"><p>No active pilots yet. Click "Add Demo Pilot" below to add one.</p></div>';
+function renderStructuredSteps() {
+  const list = document.getElementById('ps-steps-list');
+  if (!list) return;
+  if (!psStructuredSteps.length) {
+    list.innerHTML = '<div style="font-size:12px;color:#BBB;padding:10px 0;">No steps added yet. Click "+ Add Step Details" above to capture structured data for each step.</div>';
     return;
   }
-
-  rows.innerHTML = pilots.map(p => {
-    const pct = Math.round((p.day / 90) * 100);
-    const badgeClass = p.status === 'green' ? 'sb-green' : p.status === 'amber' ? 'sb-amber' : 'sb-red';
-    const badgeText = p.status === 'green' ? 'On Track' : p.status === 'amber' ? 'At Risk' : 'Blocked';
-    const indClass = p.status === 'green' ? 'ind-green' : p.status === 'amber' ? 'ind-amber' : 'ind-red';
-    const nextDay = [1,15,30,45,60,75,90].find(d => d > p.day) || 90;
-    return `<div class="dt-row">
-      <span style="gap:8px"><div class="pc-indicator ${indClass}" style="width:3px;height:20px;border-radius:2px"></div>${p.name}</span>
-      <span style="font-size:11px;flex-direction:column;align-items:flex-start;gap:1px"><span style="font-weight:600">${p.lead}</span><span style="color:#BBB">${p.partner || '—'}</span></span>
-      <span><span class="pc-badge badge-blue">Day ${p.day}</span></span>
-      <span><span class="status-badge ${badgeClass}">${badgeText}</span></span>
-      <span>
-        <div class="progress-wrap">
-          <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-          <div class="prog-label">${pct}% &bull; Next: Day ${nextDay}</div>
-        </div>
-      </span>
-    </div>`;
-  }).join('');
-}
-
-function renderHomePilots() {
-  const el = document.getElementById('home-pilots');
-  if (!state.pilots.length) {
-    el.innerHTML = '<div style="font-size:12px;color:#BBB;padding:16px 0">No active pilots yet. Start by logging an idea or submitting a pilot launch.</div>';
-    return;
-  }
-  el.innerHTML = state.pilots.map(p => {
-    const indClass = p.status === 'green' ? 'ind-green' : p.status === 'amber' ? 'ind-amber' : 'ind-red';
-    return `<div class="pilot-card" onclick="showTab('checkin')">
-      <div class="pc-indicator ${indClass}"></div>
-      <div class="pc-info">
-        <div class="pc-name">${p.name}</div>
-        <div class="pc-meta">${p.lead}${p.partner ? ' &bull; ' + p.partner : ''}</div>
+  const lanes = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => l.querySelector('.lane-label').textContent.trim());
+  list.innerHTML = psStructuredSteps.map((s, i) => `
+    <div style="background:white;border:1px solid #E8EBF0;border-radius:10px;padding:16px;position:relative;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <div style="background:var(--bts-pink);color:white;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${s.num}</div>
+        <input type="text" value="${s.name}" placeholder="Step name..." onchange="psUpdateStep(${i},'name',this.value)" style="flex:1;min-width:140px;padding:6px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:13px;font-family:var(--font);font-weight:600;color:var(--bts-dark);" />
+        <button onclick="psRemoveStep(${i})" style="background:none;border:none;color:#CCC;cursor:pointer;font-size:14px;padding:0;flex-shrink:0;" onmouseover="this.style.color='var(--bts-red)'" onmouseout="this.style.color='#CCC'">&#x2715;</button>
       </div>
-      <span class="pc-badge badge-blue">Day ${p.day}</span>
-    </div>`;
-  }).join('');
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="field" style="margin-bottom:0;">
+          <label>Lane / Owner</label>
+          <select onchange="psUpdateStep(${i},'lane',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);">
+            ${lanes.map(l => `<option ${l===s.lane?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Step Type</label>
+          <select onchange="psUpdateStep(${i},'type',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);">
+            ${['Task','Decision','Handoff','Wait'].map(t => `<option ${t===s.type?'selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Input</label>
+          <input type="text" value="${s.input}" placeholder="What triggers this step?" onchange="psUpdateStep(${i},'input',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Output</label>
+          <input type="text" value="${s.output}" placeholder="What does this step produce?" onchange="psUpdateStep(${i},'output',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Tool Used</label>
+          <input type="text" value="${s.tool}" placeholder="e.g. Salesforce, email, Smartsheet" onchange="psUpdateStep(${i},'tool',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Time Estimate (mins)</label>
+          <input type="number" value="${s.timeEst}" placeholder="e.g. 15" onchange="psUpdateStep(${i},'timeEst',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
+        </div>
+      </div>
+      <div style="margin-top:10px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;">
+        <div class="field" style="margin-bottom:0;">
+          <label>Friction?</label>
+          <select onchange="psUpdateStep(${i},'friction',this.value)" style="padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);">
+            <option ${s.friction==='No'?'selected':''}>No</option>
+            <option ${s.friction==='Yes'?'selected':''}>Yes</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0;${s.friction==='Yes'?'':'opacity:0.4;pointer-events:none;'}">
+          <label>Friction reason</label>
+          <input type="text" value="${s.frictionReason}" placeholder="What makes this step hard or slow?" onchange="psUpdateStep(${i},'frictionReason',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
+        </div>
+      </div>
+      <div class="field" style="margin-top:10px;margin-bottom:0;">
+        <label>Notes / Tacit Knowledge <span style="font-weight:400;color:var(--bts-pink);">★ most important for agent training</span></label>
+        <textarea onchange="psUpdateStep(${i},'notes',this.value)" placeholder="What would a new person never know to ask about this step? What lives only in people's heads?" rows="2" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;">${s.notes}</textarea>
+      </div>
+    </div>
+  `).join('');
 }
 
-// Auto-classify on idea tab
-document.addEventListener('change', function(e) {
-  if (e.target.id === 'q-priority' || e.target.id === 'q-improves') classifyIdea();
-});
+function psUpdateStep(i, field, value) {
+  if (!psStructuredSteps[i]) return;
+  psStructuredSteps[i][field] = value;
+  // Re-render friction reason field visibility without full re-render
+  if (field === 'friction') renderStructuredSteps();
+}
+
+function psRemoveStep(i) {
+  psStructuredSteps.splice(i, 1);
+  psStructuredSteps.forEach((s, idx) => s.num = idx + 1);
+  renderStructuredSteps();
+}
+
+// ── Save to Smartsheet ────────────────────────────────────────
+
+async function saveProcessStudio() {
+  const toast = document.getElementById('mapper-toast');
+  const title = document.getElementById('workflow-title')?.value.trim() || 'Untitled Workflow';
+  const tool  = document.getElementById('workflow-tool')?.value.trim() || '';
+
+  if (!psStructuredSteps.length) {
+    toast.style.display = 'block';
+    toast.style.background = '#FAEEDA';
+    toast.style.borderColor = '#FAC775';
+    toast.style.color = '#854F0B';
+    toast.textContent = 'Add at least one structured step before saving to Smartsheet.';
+    setTimeout(() => toast.style.display = 'none', 4000);
+    return;
+  }
+
+  toast.style.display = 'block';
+  toast.style.background = 'var(--bts-blue-light)';
+  toast.style.borderColor = '#B5D4F4';
+  toast.style.color = 'var(--bts-blue)';
+  toast.textContent = 'Saving ' + psStructuredSteps.length + ' step(s) to Smartsheet...';
+
+  const now = new Date().toISOString();
+  const user = state.user?.name || 'Preview User';
+  const email = state.user?.email || '';
+  const phaseLabel = PS_PHASES[psCurrentPhase]?.label || 'Current State';
+
+  let successCount = 0;
+  for (const s of psStructuredSteps) {
+    const result = await smAddRow(PS_SHEET_ID, {
+      [PS_COLS.stepName]:       s.name || '(unnamed)',
+      [PS_COLS.workflowName]:   title,
+      [PS_COLS.stepNum]:        String(s.num),
+      [PS_COLS.lane]:           s.lane,
+      [PS_COLS.stepType]:       s.type === 'friction' ? 'Task' : s.type === 'star' ? 'Task' : 'Task',
+      [PS_COLS.input]:          s.input,
+      [PS_COLS.output]:         s.output,
+      [PS_COLS.toolUsed]:       s.tool,
+      [PS_COLS.frictionFlag]:   s.friction,
+      [PS_COLS.frictionReason]: s.frictionReason,
+      [PS_COLS.timeEst]:        s.timeEst,
+      [PS_COLS.notes]:          s.stackedWith ? (s.notes ? s.notes + ' | Runs at same time as Step ' + s.stackedWith : 'Runs at same time as Step ' + s.stackedWith) : s.notes,
+      [PS_COLS.phase]:          phaseLabel,
+      [PS_COLS.submittedBy]:    user,
+      [PS_COLS.submittedByEmail]: email,
+      [PS_COLS.submittedAt]:    now
+    });
+    if (result.ok) successCount++;
+  }
+
+  if (successCount === psStructuredSteps.length) {
+    toast.style.background = '';
+    toast.style.borderColor = '';
+    toast.style.color = '';
+    toast.textContent = '✓ ' + successCount + ' step(s) saved to PMO AI — Process Steps in Smartsheet.';
+  } else {
+    toast.style.background = '#FCEBEB';
+    toast.style.borderColor = '#F7C1C1';
+    toast.style.color = '#A32D2D';
+    toast.textContent = successCount + ' of ' + psStructuredSteps.length + ' steps saved. Check your Smartsheet API connection.';
+  }
+  setTimeout(() => toast.style.display = 'none', 5000);
+}
+
+// ── Export Summary ────────────────────────────────────────────
+
+function psExportSummary() {
+  const title = document.getElementById('workflow-title')?.value.trim() || 'Untitled Workflow';
+  const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+  const lines = [
+    'PROCESS STUDIO SUMMARY',
+    'Workflow: ' + title,
+    'Phase: ' + PS_PHASES[psCurrentPhase]?.label,
+    'Date: ' + date,
+    'Mapped by: ' + (state.user?.name || 'Preview User'),
+    '',
+    'STEPS (' + psStructuredSteps.length + ')',
+    '─────────────────────────────────────────',
+  ];
+  psStructuredSteps.forEach(s => {
+    lines.push('');
+    lines.push('Step ' + s.num + ': ' + (s.name || '(unnamed)'));
+    lines.push('  Lane: ' + s.lane + ' | Type: ' + s.type + (s.timeEst ? ' | Time: ' + s.timeEst + ' min' : ''));
+    if (s.input)          lines.push('  Input: ' + s.input);
+    if (s.output)         lines.push('  Output: ' + s.output);
+    if (s.tool)           lines.push('  Tool: ' + s.tool);
+    if (s.friction==='Yes') lines.push('  ⚠ Friction: ' + (s.frictionReason || 'flagged'));
+    if (s.notes)          lines.push('  ★ Notes: ' + s.notes);
+  });
+
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = title.replace(/\s+/g, '_') + '_process_summary.txt';
+  a.click();
+}
+
+async function saveMapper() { await saveProcessStudio(); }
 
 async function loadFromSmartsheet() {
   const btn = document.getElementById('btn-load-sm');
@@ -1522,7 +2254,7 @@ async function loadFromSmartsheet() {
           lead:      row['Pilot Lead'] || '',
           partner:   row['Pilot Partner'] || '',
           day:       parseInt(row['Current Day']) || 1,
-          status:    row['Health Status'] === 'On Track' ? 'green' : row['Health Status'] === 'At Risk' ? 'amber' : 'red',
+          status:    row['Health Status'] === 'Moving Forward' ? 'green' : row['Health Status'] === 'Needs Attention' ? 'amber' : 'red',
           startDate: row['Start Date'] ? new Date(row['Start Date']) : new Date(),
         });
       }
@@ -1581,7 +2313,147 @@ function checkSetup() {
   }
 }
 
+function launchPreview() {
+  launchApp({ name: 'Preview User', email: 'preview@bts.com', role: 'AI Champion' });
+}
+
 window.addEventListener('load', checkSetup);
+
+// ── LICENSE REQUEST ───────────────────────────────────────────────────────
+
+function openLicenseRequest() {
+  const existing = document.getElementById('license-modal');
+  if (existing) { existing.remove(); return; }
+
+  const leadName   = document.getElementById('d1-lead-name')?.value.trim() || (state.user?.name || '');
+  const leadEmail  = document.getElementById('d1-lead-email')?.value.trim() || (state.user?.email || '');
+  const hypothesis = document.getElementById('d1-hypothesis')?.value.trim() || '';
+  const baseline   = document.getElementById('d1-baseline')?.value.trim() || '';
+  const pilotName  = document.querySelector('#checkin-form .form-card input[type=text]')?.value.trim() || '';
+
+  const overlay = document.createElement('div');
+  overlay.id = 'license-modal';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(36,40,43,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+
+  overlay.innerHTML = `
+    <div style="background:white;border-radius:14px;padding:28px 32px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative;" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <h2 style="font-size:16px;font-weight:700;color:var(--bts-dark);">Request a New AI Tool License</h2>
+        <button onmousedown="document.getElementById('license-modal').remove()" style="background:none;border:none;font-size:18px;color:#999;cursor:pointer;padding:0;line-height:1;">&times;</button>
+      </div>
+      <p style="font-size:12px;color:#888;margin-bottom:6px;line-height:1.6;">Complete this form to request a license for a tool not yet approved. Your request goes to the AI Champion, who escalates to Level 5 and then IT.</p>
+      <div style="background:var(--bts-purple-light);border-left:3px solid var(--bts-purple);border-radius:0 8px 8px 0;padding:10px 13px;font-size:11px;color:var(--bts-purple);margin-bottom:20px;line-height:1.6;">
+        <strong>Approval path:</strong> You &rarr; AI Champion &rarr; Level 5 &rarr; IT &bull; <strong>1 license</strong> for Pilot Lead only
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;">Tool Details</div>
+      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">Name of the tool you are requesting</label><input type="text" id="lr-tool" placeholder="e.g. Otter.ai, Gamma, Fireflies.ai" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);outline:none;" /></div>
+      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">Tool website or brief description</label><input type="text" id="lr-tool-url" placeholder="e.g. otter.ai — AI meeting transcription" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);outline:none;" /></div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;margin-top:18px;">The Request</div>
+      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">The Pilot Lead will receive access to this tool for...</label><textarea id="lr-receive" rows="2" placeholder="e.g. a 90-day pilot to test AI-assisted meeting transcription for PMO check-ins" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);resize:vertical;outline:none;">${hypothesis ? 'a 90-day pilot: ' + hypothesis : ''}</textarea></div>
+      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">The Pilot Lead intends to use this tool for...</label><textarea id="lr-use" rows="2" placeholder="e.g. automatically transcribing and summarizing PMO check-in calls" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);resize:vertical;outline:none;"></textarea></div>
+      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">We will measure impact by...</label><textarea id="lr-measure" rows="2" placeholder="e.g. comparing time spent on meeting documentation before and after" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);resize:vertical;outline:none;">${baseline ? 'comparing against our Day 1 baseline: ' + baseline : ''}</textarea></div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;margin-top:18px;">Timing</div>
+      <div style="margin-bottom:20px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">Requested start date <span style="font-weight:400;color:#999;">(within a week if possible)</span></label><input type="date" id="lr-start-date" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);outline:none;" /></div>
+
+      <div id="lr-preview" style="display:none;margin-bottom:16px;background:#F7F9FC;border:1px solid #E0E4E8;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;">Email Preview</div>
+        <div id="lr-email-body" style="font-size:11px;color:var(--bts-dark);line-height:1.8;white-space:pre-wrap;font-family:monospace;"></div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button onmousedown="event.preventDefault();event.stopPropagation();document.getElementById('license-modal').remove();" style="background:transparent;border:1px solid #DDE1E6;border-radius:8px;padding:9px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--bts-dark);">Cancel</button>
+        <button onmousedown="event.preventDefault();event.stopPropagation();previewLicenseEmail();" style="background:var(--bts-blue-light);border:1px solid var(--bts-blue);border-radius:8px;padding:9px 18px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);color:var(--bts-blue);">Preview Email</button>
+        <button onmousedown="event.preventDefault();event.stopPropagation();copyLicenseEmail();" style="background:var(--bts-pink);border:none;border-radius:8px;padding:9px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);color:white;">Copy Email to Send</button>
+      </div>
+      <div id="lr-copy-confirm" style="display:none;text-align:center;font-size:12px;color:#1D9E75;font-weight:600;margin-top:10px;">&#10003; Email copied — paste into your email and send to the AI Champion.</div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+}
+
+function buildLicenseEmailText() {
+  const tool      = document.getElementById('lr-tool')?.value.trim() || '[Tool Name]';
+  const toolUrl   = document.getElementById('lr-tool-url')?.value.trim() || '';
+  const receive   = document.getElementById('lr-receive')?.value.trim() || '[describe purpose]';
+  const use       = document.getElementById('lr-use')?.value.trim() || '[describe intended use]';
+  const measure   = document.getElementById('lr-measure')?.value.trim() || '[describe success metric]';
+  const startDate = document.getElementById('lr-start-date')?.value || '[date TBD]';
+  const leadName  = document.getElementById('d1-lead-name')?.value.trim() || (state.user?.name || '[Pilot Lead Name]');
+  const leadEmail = document.getElementById('d1-lead-email')?.value.trim() || (state.user?.email || '[Pilot Lead Email]');
+  const pilotName = document.querySelector('#checkin-form .form-card input[type=text]')?.value.trim() || '[Pilot Name]';
+
+  const nl = String.fromCharCode(10);
+  const parts = [
+    'Subject: AI Tool License Request - ' + tool + ' | ' + pilotName,
+    '',
+    'Hi [AI Champion name],',
+    '',
+    'I am submitting a license request for a new AI tool as part of my active pilot.',
+    '',
+    'PILOT LEAD',
+    'Name: ' + leadName,
+    'Email: ' + leadEmail,
+    'Pilot: ' + pilotName,
+    '',
+    'TOOL REQUESTED',
+    'Tool: ' + tool,
+    toolUrl ? 'Website / Description: ' + toolUrl : null,
+    'Licenses requested: 1 (Pilot Lead only, for pilot use)',
+    'Requested start date: ' + startDate + ' (within a week if possible)',
+    '',
+    'THE CASE FOR THIS TOOL',
+    'The Pilot Lead will receive access to ' + tool + ' for ' + receive + '.',
+    '',
+    'The Pilot Lead intends to use ' + tool + ' for ' + use + '.',
+    '',
+    'We will measure impact by ' + measure + '.',
+    '',
+    'Please escalate to Level 5 and IT as appropriate.',
+    '',
+    'Thank you,',
+    leadName
+  ].filter(p => p !== null);
+  return parts.join(nl);
+}
+
+function previewLicenseEmail() {
+  const text = buildLicenseEmailText();
+  const preview = document.getElementById('lr-preview');
+  const body = document.getElementById('lr-email-body');
+  if (preview && body) {
+    body.textContent = text;
+    preview.style.display = '';
+    preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function copyLicenseEmail() {
+  const text = buildLicenseEmailText();
+  const doConfirm = () => {
+    const confirm = document.getElementById('lr-copy-confirm');
+    if (confirm) { confirm.style.display = ''; setTimeout(() => confirm.style.display = 'none', 5000); }
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(doConfirm).catch(() => fallbackCopy(text, doConfirm));
+  } else {
+    fallbackCopy(text, doConfirm);
+  }
+}
+
+function fallbackCopy(text, callback) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); if (callback) callback(); } catch(e) {}
+  document.body.removeChild(ta);
+}
 
 document.addEventListener('keydown', e => { if (state) state._shiftHeld = e.shiftKey; });
 document.addEventListener('keyup',   e => { if (state) state._shiftHeld = false; });
