@@ -655,7 +655,27 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
     </div>
 
-    <!-- ─── VISUAL CANVAS ─────────────────────────────────────────── -->
+    <!-- ─── TEAM MEMBERS (collapsible) ───────────────────────────── -->
+    <div style="margin-bottom:14px;">
+      <button onclick="toggleTeamPanel()" id="team-panel-toggle"
+        style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:600;color:#888;padding:0;margin-bottom:0;">
+        <span id="team-panel-arrow" style="font-size:10px;transition:transform 0.2s;">▶</span>
+        Team members working on this workflow
+        <span id="team-count-badge" style="display:none;background:var(--bts-pink);color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;"></span>
+      </button>
+      <div id="team-panel" style="display:none;margin-top:10px;background:white;border:1px solid #E8EBF0;border-radius:10px;padding:14px 16px;">
+        <p style="font-size:11px;color:#999;margin-bottom:10px;line-height:1.5;">Add the email of everyone who participated in mapping this workflow. These will be included in the SOP document for records.</p>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+          <input type="email" id="team-email-input" placeholder="name@bts.com"
+            style="flex:1;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);outline:none;"
+            onfocus="this.style.borderColor='var(--bts-pink)'" onblur="this.style.borderColor='#DDE1E6'"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();addTeamMember();}" />
+          <button onclick="event.preventDefault();event.stopPropagation();addTeamMember()"
+            style="background:var(--bts-pink);color:white;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;">+ Add</button>
+        </div>
+        <div id="team-chips" style="display:flex;flex-wrap:wrap;gap:6px;min-height:0;"></div>
+      </div>
+    </div>
     <div class="mapper-container">
       <div class="mapper-toolbar">
         <button class="mapper-btn" id="btn-add-step" onclick="psAddMode('step')">+ Step</button>
@@ -668,7 +688,22 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div class="mapper-sep"></div>
         <button class="mapper-btn" onclick="showAddLanePanel()">+ Add Lane</button>
         <div class="mapper-sep"></div>
+        <button class="mapper-btn" onclick="loadProcessStudio()" style="color:var(--bts-blue);border-color:var(--bts-blue);">&#8635; Load Workflow</button>
+        <div class="mapper-sep"></div>
         <button class="mapper-btn" onclick="clearMapper()" style="color:#E63F4F;">Clear All</button>
+      </div>
+
+      <!-- Load workflow picker -->
+      <div id="load-workflow-panel" style="display:none;padding:12px 14px;border-bottom:1px solid #E8EBF0;background:#F0F6FF;">
+        <div style="font-size:11px;font-weight:700;color:var(--bts-blue);margin-bottom:8px;">&#8635; Load a saved workflow</div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <select id="load-workflow-select" style="padding:6px 10px;border:1px solid var(--bts-blue);border-radius:7px;font-size:12px;font-family:var(--font);outline:none;min-width:220px;">
+            <option value="">Loading workflows...</option>
+          </select>
+          <button onclick="confirmLoadWorkflow()" style="background:var(--bts-blue);color:white;border:none;border-radius:7px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);">Load</button>
+          <button onclick="document.getElementById('load-workflow-panel').style.display='none'" style="background:none;border:1px solid #DDE1E6;border-radius:7px;padding:6px 12px;font-size:12px;color:#888;cursor:pointer;font-family:var(--font);">Cancel</button>
+          <span id="load-workflow-status" style="font-size:11px;color:#888;"></span>
+        </div>
       </div>
 
       <!-- Lane picker -->
@@ -763,8 +798,21 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 
     <!-- ─── SAVE ──────────────────────────────────────────────────── -->
     <div class="btn-row" style="margin-top:20px;">
-      <button class="btn-sec" onclick="psExportSummary()">&#128196; Export Summary</button>
-      <button class="btn-submit" onclick="saveProcessStudio()">Save to Smartsheet</button>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <a href="https://bts.box.com/s/ulbt9enqlbb9z0c64hfdovgll62m8knn" target="_blank" style="font-size:11px;color:var(--bts-teal);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">&#8679; Upload map to Box</a>
+          <button class="btn-sec" onclick="psExportMapPDF()">&#128247; Export Map PDF</button>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <a href="https://bts.box.com/s/ctcpzsem4jgore7wcnd7jddwb547zii5" target="_blank" style="font-size:11px;color:var(--bts-teal);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">&#8679; Upload SOP to Box</a>
+          <button class="btn-sec" onclick="psExportSOPDoc()">&#128196; Export SOP Document</button>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button class="btn-sec" onclick="psExportSummary()">&#128196; Export Summary</button>
+          <button class="btn-submit" onclick="saveProcessStudio()">Save to Smartsheet</button>
+        </div>
+      </div>
+    </div>
     </div>
     <div class="success-toast" id="mapper-toast" style="margin-top:12px;"></div>
   </div>
@@ -1537,23 +1585,27 @@ async function submitCheckin(day) {
 
 const PS_SHEET_ID = '8451378574741380';
 const PS_COLS = {
-  stepName:     7489713847177092,
-  workflowName: 1860214312963972,
-  stepNum:      6363813940334468,
-  lane:         4112014126649220,
-  stepType:     8615613754019716,
-  input:        452839429410692,
-  output:       4956439056781188,
-  toolUsed:     2704639243095940,
-  frictionFlag: 7208238870466436,
-  frictionReason:1578739336253316,
-  timeEst:      6082338963623812,
-  notes:        3830539149938564,
-  phase:        8334138777309060,
-  submittedBy:  1015789382832004,
+  stepName:       7489713847177092,
+  workflowName:   1860214312963972,
+  stepNum:        6363813940334468,
+  lane:           4112014126649220,
+  stepType:       8615613754019716,
+  input:          452839429410692,
+  output:         4956439056781188,
+  toolUsed:       2704639243095940,
+  frictionFlag:   7208238870466436,
+  frictionReason: 1578739336253316,
+  timeEst:        6082338963623812,
+  notes:          3830539149938564,
+  phase:          8334138777309060,
+  submittedBy:    1015789382832004,
   submittedByEmail:5519389010202500,
-  submittedAt:  3267589196517252
+  submittedAt:    3267589196517252
 };
+// Extra fields stored as JSON in the notes column supplement
+// Tool group and stacking data encoded into a metadata JSON appended to notes
+// We use these virtual keys when reading back rows:
+const PS_META_KEY = '__psmeta__'; // JSON blob appended to notes field
 
 const PS_PHASES = {
   1: {
@@ -2508,8 +2560,13 @@ function clearMapper() {
   if (!confirm('Clear all steps from the canvas?')) return;
   psCanvasNodes = [];
   psStructuredSteps = [];
+  psToolGroups = [];
+  psTeamMembers = [];
+  renderTeamChips();
+  psDpActiveNodeId = null;
+  const dp = document.getElementById('ps-details-panel');
+  if (dp) dp.style.display = 'none';
   renderCanvas();
-  renderStructuredSteps();
 }
 
 // ── Structured Step Entry ─────────────────────────────────────
@@ -2611,14 +2668,13 @@ function psRemoveStep(i) {
 async function saveProcessStudio() {
   const toast = document.getElementById('mapper-toast');
   const title = document.getElementById('workflow-title')?.value.trim() || 'Untitled Workflow';
-  const tool  = document.getElementById('workflow-tool')?.value.trim() || '';
 
-  if (!psStructuredSteps.length) {
+  if (!psCanvasNodes.filter(n => n.type === 'step').length) {
     toast.style.display = 'block';
     toast.style.background = '#FAEEDA';
     toast.style.borderColor = '#FAC775';
     toast.style.color = '#854F0B';
-    toast.textContent = 'Add at least one structured step before saving to Smartsheet.';
+    toast.textContent = 'Add at least one step to the canvas before saving.';
     setTimeout(() => toast.style.display = 'none', 4000);
     return;
   }
@@ -2627,47 +2683,303 @@ async function saveProcessStudio() {
   toast.style.background = 'var(--bts-blue-light)';
   toast.style.borderColor = '#B5D4F4';
   toast.style.color = 'var(--bts-blue)';
-  toast.textContent = 'Saving ' + psStructuredSteps.length + ' step(s) to Smartsheet...';
+  toast.textContent = 'Saving workflow to Smartsheet...';
 
-  const now = new Date().toISOString();
-  const user = state.user?.name || 'Preview User';
-  const email = state.user?.email || '';
+  // One shared session ID for all rows in this save
+  const sessionId = new Date().toISOString();
+  const user       = state.user?.name  || 'Preview User';
+  const email      = state.user?.email || '';
   const phaseLabel = PS_PHASES[psCurrentPhase]?.label || 'Current State';
 
-  let successCount = 0;
-  for (const s of psStructuredSteps) {
-    const result = await smAddRow(PS_SHEET_ID, {
-      [PS_COLS.stepName]:       s.name || '(unnamed)',
-      [PS_COLS.workflowName]:   title,
-      [PS_COLS.stepNum]:        String(s.num),
-      [PS_COLS.lane]:           s.lane,
-      [PS_COLS.stepType]:       s.type === 'friction' ? 'Task' : s.type === 'star' ? 'Task' : 'Task',
-      [PS_COLS.input]:          s.input,
-      [PS_COLS.output]:         s.output,
-      [PS_COLS.toolUsed]:       s.tool,
-      [PS_COLS.frictionFlag]:   s.friction,
-      [PS_COLS.frictionReason]: s.frictionReason,
-      [PS_COLS.timeEst]:        s.timeEst,
-      [PS_COLS.notes]:          s.stackedWith ? (s.notes ? s.notes + ' | Runs at same time as Step ' + s.stackedWith : 'Runs at same time as Step ' + s.stackedWith) : s.notes,
-      [PS_COLS.phase]:          phaseLabel,
-      [PS_COLS.submittedBy]:    user,
-      [PS_COLS.submittedByEmail]: email,
-      [PS_COLS.submittedAt]:    now
-    });
-    if (result.ok) successCount++;
+  // Build column map (same logic as renderCanvas)
+  const columns = [];
+  const gMap = {};
+  psCanvasNodes.forEach(node => {
+    const gid = node.groupId || node.id;
+    if (gMap[gid] !== undefined) columns[gMap[gid]].nodes.push(node);
+    else { gMap[gid] = columns.length; columns.push({ groupId: gid, nodes: [node] }); }
+  });
+  let stepCounter = 0;
+  columns.forEach(col => {
+    const countable = col.nodes.some(n => ['step','parallel','shared'].includes(n.type));
+    if (countable) stepCounter++;
+    col.stepNum = countable ? stepCounter : null;
+  });
+
+  // Get lane label from DOM
+  function getLaneLabel(laneId) {
+    const el = document.querySelector('#swim-lanes .swim-lane[data-lane="' + laneId + '"] .lane-label');
+    return el ? el.textContent.trim() : laneId.toUpperCase();
   }
 
-  if (successCount === psStructuredSteps.length) {
+  let successCount = 0;
+  let totalRows    = 0;
+
+  for (const col of columns) {
+    if (!col.stepNum) continue; // skip non-step columns
+    for (const node of col.nodes) {
+      if (!['step','parallel','shared'].includes(node.type)) continue;
+      totalRows++;
+
+      // Get structured step details
+      const s = psStructuredSteps.find(st => st.nodeId === node.id) || {};
+
+      // Get tool group for this node
+      const tg = psToolGroups.find(g => g.nodeIds.includes(node.id)) || null;
+
+      // Build metadata blob (for round-trip restore)
+      const meta = {
+        nodeId:      node.id,
+        groupId:     node.groupId || null,
+        toolGroupId: node.toolGroupId || null,
+        isStacked:   col.nodes.length > 1,
+        toolGroup:   tg ? {
+          id:       tg.id,
+          toolName: tg.toolName,
+          nodeIds:  tg.nodeIds,
+          details:  tg.details,
+          action:   tg.action,
+          oversight:tg.oversight
+        } : null
+      };
+
+      const notesWithMeta = (s.notes || '') + (s.notes ? ' | ' : '') + PS_META_KEY + JSON.stringify(meta);
+
+      const result = await smAddRow(PS_SHEET_ID, {
+        [PS_COLS.stepName]:        node.text || '(unnamed)',
+        [PS_COLS.workflowName]:    title,
+        [PS_COLS.stepNum]:         String(col.stepNum),
+        [PS_COLS.lane]:            getLaneLabel(node.lane),
+        [PS_COLS.stepType]:        s.type || 'Task',
+        [PS_COLS.input]:           s.input   || '',
+        [PS_COLS.output]:          s.output  || '',
+        [PS_COLS.toolUsed]:        tg ? tg.toolName : (s.tool || ''),
+        [PS_COLS.frictionFlag]:    s.friction || 'No',
+        [PS_COLS.frictionReason]:  s.frictionReason || '',
+        [PS_COLS.timeEst]:         s.timeEst || '',
+        [PS_COLS.notes]:           notesWithMeta,
+        [PS_COLS.phase]:           phaseLabel,
+        [PS_COLS.submittedBy]:     user,
+        [PS_COLS.submittedByEmail]:email,
+        [PS_COLS.submittedAt]:     sessionId
+      });
+      if (result.ok) successCount++;
+    }
+  }
+
+  if (successCount === totalRows && totalRows > 0) {
     toast.style.background = '';
     toast.style.borderColor = '';
     toast.style.color = '';
-    toast.textContent = '✓ ' + successCount + ' step(s) saved to PMO AI — Process Steps in Smartsheet.';
+    toast.textContent = '✓ ' + successCount + ' step(s) saved to Smartsheet. Session: ' + new Date(sessionId).toLocaleString();
+  } else if (totalRows === 0) {
+    toast.style.background = '#FAEEDA';
+    toast.style.borderColor = '#FAC775';
+    toast.style.color = '#854F0B';
+    toast.textContent = 'No steps found to save. Add steps to the canvas first.';
   } else {
     toast.style.background = '#FCEBEB';
     toast.style.borderColor = '#F7C1C1';
     toast.style.color = '#A32D2D';
-    toast.textContent = successCount + ' of ' + psStructuredSteps.length + ' steps saved. Check your Smartsheet API connection.';
+    toast.textContent = successCount + ' of ' + totalRows + ' steps saved. Check your Smartsheet API connection.';
   }
+  setTimeout(() => toast.style.display = 'none', 6000);
+}
+
+// ── Load Workflow from Smartsheet ─────────────────────────────────────────────
+
+async function loadProcessStudio() {
+  const panel  = document.getElementById('load-workflow-panel');
+  const select = document.getElementById('load-workflow-select');
+  const status = document.getElementById('load-workflow-status');
+
+  // Toggle panel
+  if (panel.style.display !== 'none') {
+    panel.style.display = 'none';
+    return;
+  }
+
+  panel.style.display = 'block';
+  select.innerHTML = '<option value="">Loading workflows...</option>';
+  status.textContent = '';
+
+  // Fetch all rows from Process Steps sheet
+  const rows = await smGetSheet(PS_SHEET_ID);
+  if (!rows.length) {
+    select.innerHTML = '<option value="">No saved workflows found</option>';
+    return;
+  }
+
+  // Group by workflow name, find latest session per name
+  const workflowMap = {}; // name -> { latestSession, rows[] }
+  rows.forEach(row => {
+    const name    = row['Workflow Name'] || row['WorkflowName'] || '';
+    const session = row['Submitted At']  || row['SubmittedAt']  || '';
+    if (!name) return;
+    if (!workflowMap[name]) workflowMap[name] = { latestSession: session, sessions: {} };
+    if (!workflowMap[name].sessions[session]) workflowMap[name].sessions[session] = [];
+    workflowMap[name].sessions[session].push(row);
+    // Track latest session
+    if (session > workflowMap[name].latestSession) workflowMap[name].latestSession = session;
+  });
+
+  const names = Object.keys(workflowMap).sort();
+  if (!names.length) {
+    select.innerHTML = '<option value="">No saved workflows found</option>';
+    return;
+  }
+
+  select.innerHTML = '<option value="">— Select a workflow —</option>';
+  names.forEach(name => {
+    const latest = workflowMap[name].latestSession;
+    const dateStr = latest ? new Date(latest).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name + (dateStr ? '  (last saved ' + dateStr + ')' : '');
+    select.appendChild(opt);
+  });
+
+  // Store for use by confirmLoadWorkflow
+  select._workflowMap = workflowMap;
+}
+
+async function confirmLoadWorkflow() {
+  const select = document.getElementById('load-workflow-select');
+  const status = document.getElementById('load-workflow-status');
+  const name   = select.value;
+  if (!name) { status.textContent = 'Please select a workflow.'; return; }
+
+  const wfMap = select._workflowMap;
+  if (!wfMap || !wfMap[name]) { status.textContent = 'Workflow data not found.'; return; }
+
+  status.textContent = 'Loading...';
+
+  const { latestSession, sessions } = wfMap[name];
+  const rows = sessions[latestSession] || [];
+
+  if (!rows.length) { status.textContent = 'No steps found for this workflow.'; return; }
+
+  // Confirm if canvas has content
+  if (psCanvasNodes.length > 0) {
+    if (!confirm('Loading "' + name + '" will replace your current canvas. Continue?')) return;
+  }
+
+  // Clear canvas
+  psCanvasNodes   = [];
+  psStructuredSteps = [];
+  psToolGroups    = [];
+  psDpActiveNodeId = null;
+  psNodeIdCounter  = 100; // start high to avoid ID conflicts
+  document.getElementById('ps-details-panel').style.display = 'none';
+
+  // Set workflow name
+  const titleEl = document.getElementById('workflow-title');
+  if (titleEl) titleEl.value = name;
+
+  // Ensure lanes exist for all loaded rows
+  const laneNames = [...new Set(rows.map(r => r['Lane'] || r['lane'] || 'PMO'))];
+  laneNames.forEach(laneLabel => {
+    const laneId = laneLabel.toLowerCase().replace(/[^a-z0-9]/g,'');
+    if (!document.querySelector('#swim-lanes .swim-lane[data-lane="' + laneId + '"]')) {
+      addLane(laneId, laneLabel);
+    }
+  });
+
+  // Sort rows by step number
+  rows.sort((a,b) => {
+    const an = parseFloat(a['Step Number'] || a['StepNum'] || 0);
+    const bn = parseFloat(b['Step Number'] || b['StepNum'] || 0);
+    return an - bn;
+  });
+
+  // Track tool groups to rebuild (by tool group id)
+  const toolGroupsMap = {};
+
+  rows.forEach((row, idx) => {
+    const laneLabel  = row['Lane']          || 'PMO';
+    const laneId     = laneLabel.toLowerCase().replace(/[^a-z0-9]/g,'');
+    const stepName   = row['Step Name']     || row['StepName'] || '(unnamed)';
+    const stepType   = row['Step Type']     || 'Task';
+    const rawNotes   = row['Notes / Tacit Knowledge'] || row['Notes'] || '';
+    const stepNum    = parseInt(row['Step Number'] || row['StepNum'] || idx+1);
+
+    // Extract meta blob if present
+    let meta = null;
+    let cleanNotes = rawNotes;
+    const metaIdx = rawNotes.indexOf(PS_META_KEY);
+    if (metaIdx > -1) {
+      try {
+        meta = JSON.parse(rawNotes.slice(metaIdx + PS_META_KEY.length));
+        cleanNotes = rawNotes.slice(0, metaIdx).trim();
+      } catch(e) { meta = null; }
+    }
+
+    const nodeId = ++psNodeIdCounter;
+    const groupId = meta?.groupId || null;
+
+    // Build canvas node
+    const node = {
+      id:          nodeId,
+      lane:        laneId,
+      text:        stepName,
+      type:        'step',
+      groupId:     groupId,
+      toolGroupId: null, // set after tool groups rebuilt
+      stackedWith: null
+    };
+    psCanvasNodes.push(node);
+
+    // Build structured step
+    psStructuredSteps.push({
+      nodeId,
+      num:           stepNum,
+      name:          stepName,
+      lane:          laneLabel,
+      type:          stepType,
+      input:         row['Input']            || '',
+      output:        row['Output']           || '',
+      tool:          row['Tool Used']        || '',
+      friction:      row['Friction Flag']    || row['Friction?'] || 'No',
+      frictionReason:row['Friction Reason']  || '',
+      timeEst:       row['Time Estimate']    || '',
+      notes:         cleanNotes,
+      stackedWith:   null
+    });
+
+    // Collect tool group data from meta
+    if (meta?.toolGroup) {
+      const tg = meta.toolGroup;
+      if (!toolGroupsMap[tg.id]) {
+        toolGroupsMap[tg.id] = {
+          id:        tg.id,
+          toolName:  tg.toolName,
+          nodeIds:   [],
+          details:   tg.details  || '',
+          action:    tg.action   || '',
+          oversight: tg.oversight || ''
+        };
+      }
+      toolGroupsMap[tg.id].nodeIds.push(nodeId);
+      node.toolGroupId = tg.id;
+    }
+  });
+
+  // Rebuild tool groups array
+  psToolGroups = Object.values(toolGroupsMap);
+
+  // Close panel and render
+  document.getElementById('load-workflow-panel').style.display = 'none';
+  renderCanvas();
+  renderToolBrackets();
+
+  // Show success
+  const toast = document.getElementById('mapper-toast');
+  toast.style.display = 'block';
+  toast.style.background = '';
+  toast.style.borderColor = '';
+  toast.style.color = '';
+  const dateStr = new Date(latestSession).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+  toast.textContent = '✓ Loaded "' + name + '" — ' + rows.length + ' step(s) from ' + dateStr;
   setTimeout(() => toast.style.display = 'none', 5000);
 }
 
@@ -3123,12 +3435,573 @@ function positionTourSpotlight(el, position) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── PDF Map Export ────────────────────────────────────────────────────────────
+// Generates a printable landscape HTML page from the current canvas state
+// and opens it in a new window for PDF printing.
+
+function psExportMapPDF() {
+  if (!psCanvasNodes.length) {
+    alert('Add some steps to the canvas first before exporting.');
+    return;
+  }
+
+  const STEP_W   = 160;
+  const ARROW_W  = 28;
+  const COL_W    = STEP_W + ARROW_W;
+  const LANE_LBL = 70;
+  const MIN_FONT = 10; // px — never go below this
+  const PAGE_W   = 1056; // landscape A4 px approx (297mm @ 96dpi = 1122, use conservative 1056)
+  const CANVAS_W = PAGE_W - LANE_LBL - 40; // usable canvas width per page
+
+  // Build columns
+  const columns = [];
+  const gMap = {};
+  psCanvasNodes.forEach(node => {
+    const gid = node.groupId || node.id;
+    if (gMap[gid] !== undefined) columns[gMap[gid]].nodes.push(node);
+    else { gMap[gid] = columns.length; columns.push({ groupId: gid, nodes: [node] }); }
+  });
+  let stepCounter = 0;
+  columns.forEach(col => {
+    const countable = col.nodes.some(n => ['step','parallel','shared'].includes(n.type));
+    if (countable) stepCounter++;
+    col.stepNum = countable ? stepCounter : null;
+  });
+
+  const laneIds = [...new Set(psCanvasNodes.map(n => n.lane))];
+
+  // Calculate how many columns fit per page
+  const colsPerPage = Math.max(1, Math.floor(CANVAS_W / COL_W));
+  const totalPages  = Math.ceil(columns.length / colsPerPage);
+
+  // Helper: get lane label from DOM
+  function getLaneLabel(laneId) {
+    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-label`);
+    return el ? el.textContent.trim() : laneId.toUpperCase();
+  }
+
+  // Helper: get lane background color
+  function getLaneBg(laneId) {
+    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-body`);
+    if (!el) return '#FAFAFA';
+    return getComputedStyle(el).backgroundColor || '#FAFAFA';
+  }
+
+  function getLaneLabelBg(laneId) {
+    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-label`);
+    if (!el) return '#F0F0F0';
+    return getComputedStyle(el).backgroundColor || '#F0F0F0';
+  }
+
+  function getLaneLabelColor(laneId) {
+    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-label`);
+    if (!el) return '#333';
+    return getComputedStyle(el).color || '#333';
+  }
+
+  // Build HTML pages
+  let pagesHtml = '';
+
+  for (let page = 0; page < totalPages; page++) {
+    const startCol = page * colsPerPage;
+    const endCol   = Math.min(startCol + colsPerPage, columns.length);
+    const pageCols = columns.slice(startCol, endCol);
+
+    // Find tool groups that have nodes in this page slice
+    const pageNodeIds = new Set(pageCols.flatMap(c => c.nodes.map(n => n.id)));
+    const pageTools   = psToolGroups.filter(tg => tg.nodeIds.some(nid => pageNodeIds.has(nid)));
+
+    // Build tool bracket row HTML
+    let toolBracketHtml = '';
+    if (pageTools.length) {
+      let bracketInner = '';
+      pageTools.forEach(tg => {
+        const colIndices = tg.nodeIds
+          .map(nid => pageCols.findIndex(c => c.nodes.some(n => n.id === nid)))
+          .filter(i => i > -1);
+        if (!colIndices.length) return;
+        const minC = Math.min(...colIndices);
+        const maxC = Math.max(...colIndices);
+        const left  = minC * COL_W;
+        const width = (maxC - minC + 1) * COL_W - 6;
+        bracketInner += `<div style="position:absolute;left:${left}px;width:${width}px;top:2px;height:18px;
+          background:#E1F5EE;border:1px solid #1D7279;border-radius:3px;
+          display:flex;align-items:center;padding:0 6px;
+          font-size:${MIN_FONT}px;font-weight:700;color:#1D7279;white-space:nowrap;overflow:hidden;">
+          ★ ${tg.toolName}</div>`;
+      });
+      toolBracketHtml = `
+        <div style="display:flex;margin-left:${LANE_LBL}px;">
+          <div style="position:relative;width:${pageCols.length * COL_W}px;height:26px;">
+            ${bracketInner}
+          </div>
+        </div>`;
+    }
+
+    // Build swim lane rows
+    let lanesHtml = '';
+    laneIds.forEach(lid => {
+      const hasNodes = pageCols.some(c => c.nodes.some(n => n.lane === lid));
+      const laneLabel = getLaneLabel(lid);
+      const laneBg    = getLaneBg(lid);
+      const lblBg     = getLaneLabelBg(lid);
+      const lblColor  = getLaneLabelColor(lid);
+
+      let cellsHtml = '';
+      pageCols.forEach((col, colIdx) => {
+        const node = col.nodes.find(n => n.lane === lid);
+        const isStacked = col.nodes.length > 1;
+
+        if (!node) {
+          // Spacer
+          cellsHtml += `<div style="display:inline-flex;align-items:center;flex-shrink:0;width:${COL_W}px;">
+            <div style="width:${STEP_W}px;height:44px;"></div>
+            <div style="width:${ARROW_W}px;"></div>
+          </div>`;
+          return;
+        }
+
+        const isFriction = node.type === 'friction';
+        const isStar     = node.type === 'star';
+        const isStep     = !isFriction && !isStar;
+        const num        = col.stepNum;
+        const s          = psStructuredSteps.find(st => st.nodeId === node.id) || {};
+        const isFrictionFlagged = s.friction === 'Yes';
+        const hasToolGrp = !!node.toolGroupId;
+
+        // Determine border color
+        let borderColor = '#DDE1E6';
+        let bgColor     = 'white';
+        if (isFrictionFlagged) { borderColor = '#E63F4F'; bgColor = '#FEF5F5'; }
+        else if (hasToolGrp)   { borderColor = '#1D7279'; }
+        else if (isStacked)    { borderColor = '#EF9F27'; bgColor = '#FFFBF2'; }
+
+        // Badge
+        const badgeBg = isStacked ? '#EF9F27' : '#CA1C68';
+        const badgeHtml = num ? `<span style="background:${badgeBg};color:white;font-size:8px;font-weight:700;
+          min-width:14px;height:14px;border-radius:50%;display:inline-flex;align-items:center;
+          justify-content:center;flex-shrink:0;margin-right:3px;padding:0 2px;">${num}</span>` : '';
+
+        // Icon
+        let iconHtml = '';
+        if (isFriction)       iconHtml = `<span style="color:#E63F4F;font-size:9px;margin-right:2px;">⚠</span>`;
+        else if (isStar)      iconHtml = `<span style="color:#1D7279;font-size:9px;margin-right:2px;">★</span>`;
+        else if (isStacked)   iconHtml = `<span style="color:#EF9F27;font-size:9px;margin-right:2px;">⊕</span>`;
+
+        // Arrow — show if lane has a node in a later column on this page
+        const hasNext = pageCols.slice(colIdx + 1).some(c => c.nodes.some(n => n.lane === lid));
+        const arrowHtml = hasNext
+          ? `<div style="width:${ARROW_W}px;display:inline-flex;align-items:center;justify-content:center;
+              color:#CCC;font-size:13px;flex-shrink:0;">→</div>`
+          : `<div style="width:${ARROW_W}px;flex-shrink:0;"></div>`;
+
+        // Top border accent for tool coverage
+        const topBorder = hasToolGrp ? `border-top:2px solid #1D7279;` : '';
+
+        cellsHtml += `<div style="display:inline-flex;align-items:center;flex-shrink:0;width:${COL_W}px;">
+          <div style="border:1px solid ${borderColor};${topBorder}border-radius:6px;padding:5px 7px;
+            font-size:${MIN_FONT}px;color:#24282B;background:${bgColor};
+            width:${STEP_W}px;min-width:${STEP_W}px;max-width:${STEP_W}px;box-sizing:border-box;
+            display:flex;align-items:center;overflow:hidden;">
+            ${iconHtml}${badgeHtml}
+            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">${node.text}</span>
+          </div>
+          ${arrowHtml}
+        </div>`;
+      });
+
+      lanesHtml += `<div style="display:flex;min-height:60px;border-bottom:1px solid #E8EBF0;">
+        <div style="width:${LANE_LBL}px;min-width:${LANE_LBL}px;background:${lblBg};color:${lblColor};
+          display:flex;align-items:center;justify-content:center;
+          font-size:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;
+          writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);
+          border-right:1px solid #E8EBF0;padding:6px 4px;">
+          ${laneLabel}
+        </div>
+        <div style="background:${laneBg};flex:1;padding:8px 6px;display:flex;align-items:center;
+          flex-wrap:nowrap;overflow:hidden;">
+          ${cellsHtml}
+        </div>
+      </div>`;
+    });
+
+    // Legend
+    const legendHtml = `
+      <div style="display:flex;gap:16px;padding:6px 10px;border-top:1px solid #E8EBF0;
+        background:#FAFBFC;flex-wrap:wrap;font-size:9px;color:#888;">
+        <span style="display:flex;align-items:center;gap:4px;">
+          <span style="width:3px;height:12px;background:#E63F4F;border-radius:2px;display:inline-block;"></span>
+          Friction point
+        </span>
+        <span style="display:flex;align-items:center;gap:4px;">
+          <span style="width:3px;height:12px;background:#1D7279;border-radius:2px;display:inline-block;"></span>
+          AI tool assigned
+        </span>
+        <span style="display:flex;align-items:center;gap:4px;">
+          <span style="width:3px;height:12px;background:#EF9F27;border-radius:2px;display:inline-block;"></span>
+          Concurrent steps
+        </span>
+        ${totalPages > 1 ? `<span style="margin-left:auto;">Page ${page+1} of ${totalPages}</span>` : ''}
+      </div>`;
+
+    pagesHtml += `
+      <div class="page" style="page-break-after:${page < totalPages - 1 ? 'always' : 'auto'};">
+        <div style="font-family:'Segoe UI',Arial,sans-serif;padding:16px 20px 0;">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;
+            border-bottom:2px solid #CA1C68;padding-bottom:8px;margin-bottom:10px;">
+            <div>
+              <div style="font-size:7px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#888;margin-bottom:2px;">
+                PMO AI Innovation Tool — Process Map
+              </div>
+              <div style="font-size:14px;font-weight:700;color:#24282B;">
+                ${document.getElementById('workflow-title')?.value || 'Workflow Map'}
+              </div>
+            </div>
+            <div style="text-align:right;font-size:8px;color:#888;">
+              <div>Exported: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+              ${totalPages > 1 ? `<div style="margin-top:2px;font-weight:700;">Columns ${startCol+1}–${endCol} of ${columns.length}</div>` : ''}
+            </div>
+          </div>
+          ${toolBracketHtml}
+          <div style="border:1px solid #E8EBF0;border-radius:6px;overflow:hidden;margin-top:${pageTools.length ? '2px' : '0'};">
+            ${lanesHtml}
+            ${legendHtml}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // Open print window
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${document.getElementById('workflow-title')?.value || 'Workflow Map'} — Process Map</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: white; }
+    @page { size: A4 landscape; margin: 8mm 10mm; }
+    @media print {
+      .page { page-break-after: always; }
+      .page:last-child { page-break-after: auto; }
+      .no-print { display: none !important; }
+    }
+    .no-print {
+      position: fixed; top: 12px; right: 12px;
+      background: #CA1C68; color: white; border: none;
+      border-radius: 7px; padding: 8px 18px;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      box-shadow: 0 2px 8px rgba(202,28,104,0.3);
+    }
+  </style>
+</head>
+<body>
+  <button class="no-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+  ${pagesHtml}
+<\/body>
+<\/html>`);
+  win.document.close();
+}
+
+// ── SOP Word Doc Export ───────────────────────────────────────────────────────
+// Serialises canvas state to JSON and sends it to a server-side generator.
+// Since we are running as a local HTML file, we use docx-js via a Blob approach.
+
+async function psExportSOPDoc() {
+  if (!psCanvasNodes.length) {
+    alert('Add some steps to the canvas first before exporting.');
+    return;
+  }
+
+  const toast = document.getElementById('mapper-toast');
+  toast.style.display = 'block';
+  toast.style.background = 'var(--bts-blue-light)';
+  toast.style.borderColor = '#B5D4F4';
+  toast.style.color = 'var(--bts-blue)';
+  toast.textContent = 'Generating SOP document...';
+
+  try {
+    // Build column/step data
+    const columns = [];
+    const gMap = {};
+    psCanvasNodes.forEach(node => {
+      const gid = node.groupId || node.id;
+      if (gMap[gid] !== undefined) columns[gMap[gid]].nodes.push(node);
+      else { gMap[gid] = columns.length; columns.push({ groupId: gid, nodes: [node] }); }
+    });
+    let stepCounter = 0;
+    columns.forEach(col => {
+      const countable = col.nodes.some(n => ['step','parallel','shared'].includes(n.type));
+      if (countable) stepCounter++;
+      col.stepNum = countable ? stepCounter : null;
+    });
+
+    const workflowTitle = document.getElementById('workflow-title')?.value?.trim() || 'Untitled Workflow';
+    const mappedBy      = state.user?.name || 'PMO Team';
+    const mappedDate    = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    const phaseLabel    = PS_PHASES[psCurrentPhase]?.label || 'Current State';
+
+    // Build SOP text content as a rich HTML blob for download
+    // (Full docx generation requires server-side Node.js; we output a styled HTML file
+    //  that Word can open natively as a .doc)
+    const NA = '<span style="color:#999;font-style:italic;">N/A</span>';
+
+    function val(v) {
+      return (v && String(v).trim()) ? escHtml(String(v)) : NA;
+    }
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    let stepsHtml = '';
+    columns.forEach(col => {
+      if (!col.stepNum) return;
+      col.nodes.forEach(node => {
+        if (!['step','parallel','shared'].includes(node.type)) return;
+        const s = psStructuredSteps.find(st => st.nodeId === node.id) || {};
+        const isFriction = s.friction === 'Yes';
+        const toolGrp = psToolGroups.find(g => g.nodeIds.includes(node.id)) || null;
+        const laneLabel = (document.querySelector(`#swim-lanes .swim-lane[data-lane="${node.lane}"] .lane-label`)?.textContent?.trim() || node.lane || '').toUpperCase();
+        const isStacked = col.nodes.length > 1;
+
+        stepsHtml += `
+          <div style="margin-bottom:24px;page-break-inside:avoid;">
+            <h2 style="font-family:Tenorite,Calibri,Arial;font-size:14pt;font-weight:bold;color:#CA1C68;
+              border-bottom:1px solid #E8EBF0;padding-bottom:6px;margin-bottom:10px;">
+              Step ${col.stepNum} — ${escHtml(node.text)}
+              ${isFriction ? '<span style="color:#E63F4F;font-size:11pt;margin-left:8px;">⚠ Friction point</span>' : ''}
+            </h2>
+            <p style="font-family:Tenorite,Calibri,Arial;font-size:10pt;color:#555;margin-bottom:10px;">
+              <strong>Lane:</strong> ${laneLabel}
+              ${isStacked ? ' &nbsp;|&nbsp; <span style="color:#EF9F27;">⊕ Concurrent step</span>' : ''}
+            </p>
+            <table style="width:100%;border-collapse:collapse;font-family:Tenorite,Calibri,Arial;font-size:10pt;">
+              <tr>
+                <td style="width:22%;background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Input</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.input)}</td>
+              </tr>
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Output</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.output)}</td>
+              </tr>
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Tool used</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.tool)}</td>
+              </tr>
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Step type</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.type || 'Task')}</td>
+              </tr>
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Time estimate</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${s.timeEst ? escHtml(s.timeEst) + ' mins' : NA}</td>
+              </tr>
+              ${isFriction ? `<tr>
+                <td style="background:#FEF5F5;padding:6px 8px;font-weight:bold;border:1px solid #E63F4F;color:#E63F4F;">Friction reason</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.frictionReason)}</td>
+              </tr>` : ''}
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Notes / Tacit knowledge</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.notes)}</td>
+              </tr>
+              ${toolGrp ? `<tr>
+                <td style="background:#E1F5EE;padding:6px 8px;font-weight:bold;border:1px solid #1D7279;color:#1D7279;">AI Tool: ${escHtml(toolGrp.toolName)}</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(toolGrp.details || toolGrp.action)}</td>
+              </tr>` : ''}
+            </table>
+          </div>`;
+      });
+    });
+
+    // Tool summary
+    let toolSummaryHtml = '';
+    if (psToolGroups.length) {
+      toolSummaryHtml = `
+        <div style="page-break-before:always;">
+          <h1 style="font-family:Tenorite,Calibri,Arial;font-size:16pt;font-weight:bold;color:#24282B;
+            border-bottom:2px solid #1D7279;padding-bottom:8px;margin-bottom:16px;">AI Tool Summary</h1>
+          <p style="font-family:Tenorite,Calibri,Arial;font-size:10pt;color:#555;margin-bottom:16px;">
+            The following AI tools were identified as candidates during the Phase 4 workflow review.
+          </p>`;
+
+      psToolGroups.forEach(tg => {
+        const coveredNums = tg.nodeIds.map(nid => {
+          const col = columns.find(c => c.nodes.some(n => n.id === nid));
+          return col?.stepNum;
+        }).filter(Boolean);
+
+        toolSummaryHtml += `
+          <div style="margin-bottom:20px;page-break-inside:avoid;">
+            <h2 style="font-family:Tenorite,Calibri,Arial;font-size:13pt;font-weight:bold;color:#1D7279;margin-bottom:8px;">
+              ★ ${escHtml(tg.toolName)}
+            </h2>
+            <table style="width:100%;border-collapse:collapse;font-family:Tenorite,Calibri,Arial;font-size:10pt;">
+              <tr>
+                <td style="width:22%;background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Steps covered</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${coveredNums.length ? coveredNums.map(n=>'Step '+n).join(', ') : NA}</td>
+              </tr>
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">What it does</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(tg.details)}</td>
+              </tr>
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Role</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(tg.action)}</td>
+              </tr>
+              <tr>
+                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Human oversight</td>
+                <td style="padding:6px 8px;border:1px solid #DDD;">${val(tg.oversight)}</td>
+              </tr>
+            </table>
+          </div>`;
+      });
+      toolSummaryHtml += '</div>';
+    }
+
+    // Full document HTML (Word-compatible)
+    const docHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${escHtml(workflowTitle)} — SOP</title>
+  <style>
+    @page { size: letter; margin: 2.5cm 2cm; }
+    body { font-family: Tenorite, Calibri, Arial, sans-serif; font-size: 10pt; color: #24282B; }
+    h1 { font-size: 16pt; font-weight: bold; color: #24282B; }
+    h2 { font-size: 13pt; }
+    p { font-size: 10pt; }
+    table { border-collapse: collapse; }
+  </style>
+  <!--[if gte mso 9]>
+  <xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml>
+  <![endif]-->
+</head>
+<body>
+  <!-- Cover page -->
+  <div style="page-break-after:always;padding-top:80px;">
+    <p style="font-size:9pt;font-weight:bold;letter-spacing:1px;color:#888;text-transform:uppercase;margin-bottom:6px;">
+      PMO AI Innovation Tool
+    </p>
+    <h1 style="font-size:22pt;color:#CA1C68;margin-bottom:4px;">Standard Operating Procedure</h1>
+    <p style="font-size:11pt;color:#24282B;margin-bottom:24px;">Process Workflow Documentation</p>
+    <div style="border-bottom:3px solid #CA1C68;margin-bottom:20px;"></div>
+    <table style="width:100%;font-size:10pt;">
+      <tr><td style="padding:6px 0;font-weight:bold;width:140px;">Workflow:</td><td style="color:#CA1C68;font-weight:bold;">${escHtml(workflowTitle)}</td></tr>
+      <tr><td style="padding:6px 0;font-weight:bold;">Mapped by:</td><td>${escHtml(mappedBy)}</td></tr>
+      <tr><td style="padding:6px 0;font-weight:bold;">Date:</td><td>${escHtml(mappedDate)}</td></tr>
+      <tr><td style="padding:6px 0;font-weight:bold;">Phase:</td><td>${escHtml(phaseLabel)}</td></tr>
+      <tr><td style="padding:6px 0;font-weight:bold;">Total steps:</td><td>${stepCounter}</td></tr>
+      ${psTeamMembers.length ? `<tr><td style="padding:6px 0;font-weight:bold;vertical-align:top;">Team members:</td><td>${psTeamMembers.map(e => escHtml(e)).join('<br>')}</td></tr>` : ''}
+    </table>
+    <p style="position:absolute;bottom:30px;right:30px;font-size:8pt;color:#999;">Copyright &copy; 2026 BTS</p>
+  </div>
+
+  <!-- Steps heading -->
+  <h1 style="font-size:18pt;font-weight:bold;color:#24282B;border-bottom:2px solid #CA1C68;
+    padding-bottom:8px;margin-bottom:20px;">Workflow Steps</h1>
+
+  ${stepsHtml}
+  ${toolSummaryHtml}
+<\/body>
+<\/html>`;
+
+    // Download as .doc (Word-compatible HTML)
+    const blob = new Blob([docHtml], { type: 'application/msword' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = (workflowTitle.replace(/\s+/g,'_') || 'Workflow') + '_SOP.doc';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    toast.style.background = '';
+    toast.style.borderColor = '';
+    toast.style.color = '';
+    toast.textContent = '✓ SOP document downloaded.';
+    setTimeout(() => toast.style.display = 'none', 3000);
+
+  } catch(err) {
+    console.error('SOP export error:', err);
+    toast.style.background = '#FCEBEB';
+    toast.style.borderColor = '#F7C1C1';
+    toast.style.color = '#A32D2D';
+    toast.textContent = 'Export failed. Check console for details.';
+    setTimeout(() => toast.style.display = 'none', 4000);
+  }
+}
+
+// ── Team Members ──────────────────────────────────────────────────────────────
+let psTeamMembers = []; // array of email strings
+
+function toggleTeamPanel() {
+  const panel  = document.getElementById('team-panel');
+  const arrow  = document.getElementById('team-panel-arrow');
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  arrow.style.transform = isOpen ? '' : 'rotate(90deg)';
+}
+
+function addTeamMember() {
+  const input = document.getElementById('team-email-input');
+  const email = input.value.trim().toLowerCase();
+  if (!email) return;
+  // Basic email validation
+  if (!email.includes('@') || !email.includes('.')) {
+    input.style.borderColor = 'var(--bts-red)';
+    input.placeholder = 'Please enter a valid email';
+    setTimeout(() => { input.style.borderColor = '#DDE1E6'; input.placeholder = 'name@bts.com'; }, 2000);
+    return;
+  }
+  if (psTeamMembers.includes(email)) {
+    input.value = '';
+    return;
+  }
+  psTeamMembers.push(email);
+  input.value = '';
+  renderTeamChips();
+}
+
+function removeTeamMember(email) {
+  psTeamMembers = psTeamMembers.filter(e => e !== email);
+  renderTeamChips();
+}
+
+function renderTeamChips() {
+  const container = document.getElementById('team-chips');
+  const badge     = document.getElementById('team-count-badge');
+  if (!container) return;
+
+  container.innerHTML = '';
+  psTeamMembers.forEach(email => {
+    const chip = document.createElement('div');
+    chip.style.cssText = 'display:inline-flex;align-items:center;gap:5px;background:var(--bts-pink-light);border:1px solid var(--bts-pink);border-radius:20px;padding:4px 10px 4px 12px;font-size:11px;color:var(--bts-dark);font-family:var(--font);';
+    chip.innerHTML = `<span>${email}</span><button onclick="removeTeamMember('${email}')" style="background:none;border:none;cursor:pointer;color:var(--bts-pink);font-size:13px;padding:0;line-height:1;font-weight:700;" title="Remove">×</button>`;
+    container.appendChild(chip);
+  });
+
+  // Update badge
+  if (badge) {
+    if (psTeamMembers.length > 0) {
+      badge.style.display = 'inline';
+      badge.textContent = psTeamMembers.length;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+}
+
+// Reset team members when canvas is cleared
+const _origClearMapper = typeof clearMapper === 'function' ? clearMapper : null;
+
 </script>
+
   <!-- ── Facilitator Tour Overlay ─────────────────────────────── -->
   <div id="tour-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.0);z-index:9000;pointer-events:none;"></div>
   <div id="tour-spotlight" style="display:none;position:fixed;z-index:9001;border-radius:10px;box-shadow:0 0 0 4000px rgba(0,0,0,0.7);pointer-events:none;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);outline:2.5px solid #6C5CE7;"></div>
   <div id="tour-card" style="display:none;position:fixed;z-index:9002;background:white;border-radius:12px;padding:20px 22px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.28);pointer-events:all;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);">
-    <div class="tour-step-label" id="tour-step-label">Step 1 of 9</div>
+    <div class="tour-step-label" id="tour-step-label">STEP 1 OF 9</div>
     <div class="tour-title" id="tour-title"></div>
     <div class="tour-body" id="tour-body"></div>
     <div class="tour-actions">
@@ -3141,3 +4014,4 @@ function positionTourSpotlight(el, position) {
   </div>
 
 </body>
+</html>
