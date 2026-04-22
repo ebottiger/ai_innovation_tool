@@ -72,16 +72,20 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .greet p { font-size: 12px; color: #888; margin-top: 3px; }
 
 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 10px; }
-.action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 28px; }
-.action-card { background: white; border-radius: 10px; border: 1px solid #E8EBF0; padding: 18px 14px; cursor: pointer; transition: all 0.15s; }
-.action-card:hover { border-color: var(--bts-pink); box-shadow: 0 2px 8px rgba(202,28,104,0.08); }
+.action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 28px; }
+.action-card { background: white; border-radius: 10px; border: 1px solid #E8EBF0; padding: 18px 14px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+.action-card:hover { border-color: var(--bts-pink); box-shadow: 0 2px 12px rgba(202,28,104,0.10); }
 .ac-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 15px; }
 .ac-pink { background: var(--bts-pink-light); }
 .ac-blue { background: var(--bts-blue-light); }
 .ac-teal { background: var(--bts-teal-light); }
 .ac-purple { background: var(--bts-purple-light); }
 .action-card h3 { font-size: 12px; font-weight: 700; color: var(--bts-dark); margin-bottom: 3px; }
-.action-card p { font-size: 11px; color: #999; line-height: 1.5; }
+.action-card p { font-size: 11px; color: #999; line-height: 1.5; margin-bottom: 0; }
+.ac-hover-desc { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease; opacity: 0; margin-top: 0; font-size: 11px; color: #666; line-height: 1.7; border-top: 0px solid #F0F0F0; }
+.action-card:hover .ac-hover-desc { max-height: 500px; opacity: 1; margin-top: 10px; padding-top: 10px; border-top-width: 1px; }
+.ac-hover-desc .ac-brene { font-style: italic; color: #999; display: block; margin-bottom: 7px; }
+.ac-hover-desc .ac-what { color: var(--bts-dark); font-style: normal; }
 
 /* ---- PILOT CARDS ---- */
 .pilot-list { display: flex; flex-direction: column; gap: 8px; }
@@ -220,9 +224,16 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .lane-leadership .lane-body    { background: #FFF8F4; }
 .lane-other .lane-label        { background: #F2F2F2; color: #555555; }
 .lane-other .lane-body         { background: #FAFAFA; }
-.lane-body { flex: 1; padding: 10px 12px; display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow: visible; min-width: max-content; }
-.step-node { border: 1px solid #DDE1E6; border-radius: 8px; padding: 7px 10px; font-size: 11px; color: var(--bts-dark); cursor: grab; display: flex; align-items: center; justify-content: space-between; gap: 5px; background: white; min-width: 120px; max-width: 160px; flex-shrink: 0; transition: border-color 0.15s; }
+.lane-body { flex: 1; padding: 10px 8px; display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow: visible; min-width: max-content; min-height: 68px; }
+.step-node { border: 1px solid #DDE1E6; border-radius: 8px; padding: 7px 10px; font-size: 11px; color: var(--bts-dark); cursor: default; display: flex; align-items: center; gap: 5px; background: white; width: 165px; min-width: 165px; max-width: 165px; flex-shrink: 0; transition: border-color 0.15s; box-sizing: border-box; }
 .step-node.friction { border-left: 3px solid var(--bts-red); }
+.step-node.ps-tool-selected { border: 2px solid var(--bts-teal) !important; background: #E1F5EE !important; cursor: crosshair !important; }
+.step-node.ps-tool-covered { border-top: 2.5px solid var(--bts-teal) !important; }
+.tool-bracket-row { height: 22px; display: flex; align-items: flex-end; padding: 0 0 2px 80px; border-bottom: 1px dashed #E0E4E8; background: #F4FBF8; position: relative; }
+.tool-bracket { position: absolute; bottom: 3px; height: 14px; background: var(--bts-teal-light); border: 1.5px solid var(--bts-teal); border-radius: 4px; display: flex; align-items: center; padding: 0 7px; font-size: 9px; font-weight: 700; color: var(--bts-teal); white-space: nowrap; cursor: pointer; gap: 4px; }
+.tool-bracket:hover { background: #9FE1CB; }
+.step-node.ps-friction-flag { border: 1.5px solid var(--bts-red) !important; background: #FEF5F5 !important; }
+.step-node.ps-selected { border: 1.5px solid var(--bts-pink) !important; background: var(--bts-pink-light) !important; }
 .step-node.star { border-left: 3px solid var(--bts-teal); }
 .step-node span { font-size: 11px; line-height: 1.4; }
 .node-del { background: none; border: none; color: #CCC; cursor: pointer; font-size: 13px; padding: 0 0 0 3px; line-height: 1; flex-shrink: 0; }
@@ -231,6 +242,22 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .add-node-btn:hover { border-color: var(--bts-pink); color: var(--bts-pink); }
 .node-input-wrap { display: flex; align-items: center; gap: 5px; }
 .node-input { border: 1px solid var(--bts-pink); border-radius: 6px; padding: 5px 8px; font-size: 11px; width: 110px; font-family: var(--font); outline: none; color: var(--bts-dark); }
+/* ── Facilitator Tour ─────────────────────────────────────────────────── */
+#tour-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9000; pointer-events: none; transition: opacity 0.3s; }
+#tour-spotlight { position: fixed; z-index: 9001; border-radius: 10px; box-shadow: 0 0 0 4000px rgba(0,0,0,0.7); pointer-events: none; transition: all 0.4s cubic-bezier(0.4,0,0.2,1); outline: 2.5px solid var(--bts-purple); }
+#tour-card { position: fixed; z-index: 9002; background: white; border-radius: 12px; padding: 20px 22px; width: 320px; box-shadow: 0 8px 32px rgba(0,0,0,0.28); pointer-events: all; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+#tour-card .tour-step-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--bts-purple); margin-bottom: 6px; }
+#tour-card .tour-title { font-size: 14px; font-weight: 700; color: var(--bts-dark); margin-bottom: 8px; }
+#tour-card .tour-body { font-size: 12px; color: #555; line-height: 1.7; margin-bottom: 16px; }
+#tour-card .tour-actions { display: flex; align-items: center; justify-content: space-between; }
+#tour-card .tour-next { background: var(--bts-purple); color: white; border: none; border-radius: 7px; padding: 8px 18px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: var(--font); transition: background 0.15s; }
+#tour-card .tour-next:hover { background: #3C3489; }
+#tour-card .tour-skip { font-size: 11px; color: #BBB; cursor: pointer; background: none; border: none; font-family: var(--font); padding: 0; }
+#tour-card .tour-skip:hover { color: #888; text-decoration: underline; }
+#tour-card .tour-dots { display: flex; gap: 5px; align-items: center; }
+#tour-card .tour-dot { width: 6px; height: 6px; border-radius: 50%; background: #E0E4E8; transition: background 0.2s; }
+#tour-card .tour-dot.active { background: var(--bts-purple); width: 18px; border-radius: 3px; }
+/* ───────────────────────────────────────────────────────────────────────── */
 .mapper-legend { display: flex; gap: 16px; padding: 10px 14px; border-top: 1px solid #E8EBF0; background: #FAFBFC; flex-wrap: wrap; }
 .ml-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #888; }
 .ml-bar { width: 3px; height: 16px; border-radius: 2px; }
@@ -459,21 +486,37 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div class="ac-icon ac-pink" style="font-size:17px">&#128161;</div>
         <h3>Log a New Idea</h3>
         <p>Submit an AI or automation idea to the intake form</p>
+        <div class="ac-hover-desc">
+          <span class="ac-brene">"Every big change starts with someone willing to say 'what if.' This is that place. Don't edit yourself before you begin — just put the idea down."</span>
+          <span class="ac-what">When you click here, you'll answer a few quick questions to see if your idea is ready to move forward. If it is, you'll complete a form that submits it directly to the Enablement AI Idea intake in Smartsheet — where it gets reviewed by the AI Champion and team leadership.</span>
+        </div>
       </div>
       <div class="action-card" onclick="showTab('checkin')">
         <div class="ac-icon ac-blue" style="font-size:17px">&#9989;</div>
         <h3>Submit a Check-In</h3>
         <p>Day 1, 15, 30, 45, 60, 75, or 90 pilot update</p>
+        <div class="ac-hover-desc">
+          <span class="ac-brene">"Showing up and telling the truth about where you are takes courage. This isn't a status report — it's a chance to say what's actually happening so the right people can support you."</span>
+          <span class="ac-what">When you click here, you'll select your pilot's current day milestone — Day 1, 15, 30, 45, 60, 75, or 90 — and complete a structured check-in that captures your progress, your wins, and where you need help. It saves directly to Smartsheet.</span>
+        </div>
       </div>
       <div class="action-card" onclick="showTab('mapper')">
         <div class="ac-icon ac-teal" style="font-size:17px">&#128195;</div>
         <h3>Map a Workflow</h3>
         <p>Brainstorm and map process flows with swim lanes</p>
+        <div class="ac-hover-desc">
+          <span class="ac-brene">"The bravest thing a team can do is look honestly at how they actually work — not how they think they work. This is where that conversation starts."</span>
+          <span class="ac-what">When you click here, you'll open the Process Studio — a structured process flow map where you and your team map a real workflow together, name the friction points, simplify the workflow, and explore where AI could change the game.</span>
+        </div>
       </div>
       <div class="action-card" onclick="showTab('dashboard')">
         <div class="ac-icon ac-purple" style="font-size:17px">&#128202;</div>
         <h3>Pilot Dashboard</h3>
         <p>View health status of all active pilots</p>
+        <div class="ac-hover-desc">
+          <span class="ac-brene">Available to AI Champions and Level 5 leadership. "Progress isn't always visible until someone makes it visible. This is how we see what's moving, what needs attention, and who might need a hand."</span>
+          <span class="ac-what">When you click here, you'll see a real-time view of all active PMO AI pilots — their health status, current phase, and any flags that need follow-up.</span>
+        </div>
       </div>
     </div>
 
@@ -561,6 +604,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
       <div style="text-align:right;">
         <button id="btn-facilitator" onclick="toggleFacilitatorMode()" style="display:inline-flex;align-items:center;gap:6px;background:var(--bts-purple-light);border:1.5px solid var(--bts-purple);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.background='var(--bts-purple)';this.style.color='white'" onmouseout="if(!window.facilitatorOn){this.style.background='var(--bts-purple-light)';this.style.color='var(--bts-purple)'}">&#9654; Facilitator Mode</button>
+        <button onclick="startTour()" style="display:inline-flex;align-items:center;gap:6px;background:white;border:1.5px solid var(--bts-purple);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.background='var(--bts-purple-light)'" onmouseout="this.style.background='white'">&#9432; Facilitator Intro</button>
         <p style="font-size:10px;color:#BBB;margin-top:4px;max-width:260px;line-height:1.5;">Optional. Designed for screen share. Turns on guided phase prompts and a countdown timer to help your group stay focused and moving. One person drives — everyone talks.</p>
       </div>
     </div>
@@ -615,8 +659,12 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     <div class="mapper-container">
       <div class="mapper-toolbar">
         <button class="mapper-btn" id="btn-add-step" onclick="psAddMode('step')">+ Step</button>
-        <button class="mapper-btn" id="btn-friction" onclick="psAddMode('friction')">+ Friction</button>
-        <button class="mapper-btn" id="btn-star" onclick="psAddMode('star')" style="display:none;">&#9733; Tool Lives Here</button>
+        <button class="mapper-btn" id="btn-star" onclick="startToolSelectMode()" style="display:none;background:var(--bts-teal-light);border-color:var(--bts-teal);color:var(--bts-teal);">&#9733; Assign Tool</button>
+        <div id="tool-select-banner" style="display:none;align-items:center;gap:8px;background:#E1F5EE;border:1px solid var(--bts-teal);border-radius:7px;padding:5px 12px;font-size:11px;color:var(--bts-teal);font-weight:600;">
+          <span>&#9733; Click steps to select — <span id="tool-select-count">0</span> selected</span>
+          <button onclick="confirmToolAssignment()" style="background:var(--bts-teal);color:white;border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);">Assign Tool</button>
+          <button onclick="cancelToolSelectMode()" style="background:none;border:1px solid var(--bts-teal);border-radius:5px;padding:4px 8px;font-size:11px;color:var(--bts-teal);cursor:pointer;font-family:var(--font);">Cancel</button>
+        </div>
         <div class="mapper-sep"></div>
         <button class="mapper-btn" onclick="showAddLanePanel()">+ Add Lane</button>
         <div class="mapper-sep"></div>
@@ -634,6 +682,9 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         </div>
       </div>
 
+      <!-- Tool bracket row — shows tool spans above swim lanes -->
+      <div id="tool-bracket-row" class="tool-bracket-row" style="display:none;"></div>
+
       <!-- Swim lanes — horizontally scrollable -->
       <div class="swim-lanes-scroll-outer">
         <div class="swim-lanes-scroll-inner">
@@ -647,24 +698,63 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
 
       <div class="mapper-legend">
-        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-red)"></div> Friction point</div>
+        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-red)"></div> Friction point (red outline)</div>
         <div class="ml-item"><div class="ml-bar" style="background:var(--bts-teal)"></div> Tool lives here (&#9733;)</div>
         <div class="ml-item"><div class="ml-bar" style="background:#EF9F27"></div> Stacked — same time</div>
         <div class="ml-item" style="color:#BBB">Click a lane to add a step &bull; Hover a step to stack &bull; Click &times; to remove</div>
       </div>
     </div>
 
-    <!-- ─── STRUCTURED STEP ENTRY (Phase 1 only, after canvas) ─── -->
-    <div id="ps-step-entry" style="display:none;margin-top:16px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-        <div>
-          <div style="font-size:14px;font-weight:700;color:var(--bts-dark);">Capture Step Details</div>
-          <p style="font-size:11px;color:#888;margin-top:2px;">Add structured data for each step — this powers the agent training layer</p>
-        </div>
-        <button onclick="addStructuredStep()" style="display:inline-flex;align-items:center;gap:6px;background:var(--bts-teal-light);border:1.5px solid var(--bts-teal);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-teal);cursor:pointer;font-family:var(--font);">+ Add Step Details</button>
+    <!-- ─── STEP DETAILS PANEL ────────────────────────────────────── -->
+    <div id="ps-details-panel" style="display:none;margin-top:0;border:1px solid #E8EBF0;border-top:2px solid var(--bts-pink);background:white;border-radius:0 0 10px 10px;padding:14px 16px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <div id="ps-dp-badge" style="background:var(--bts-pink);color:white;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
+        <div id="ps-dp-title" style="font-size:13px;font-weight:700;color:var(--bts-dark);"></div>
+        <div id="ps-dp-lane-tag" style="font-size:9px;padding:2px 8px;border-radius:4px;font-weight:700;"></div>
+        <button onclick="closePsDetailsPanel()" style="margin-left:auto;background:none;border:1px solid #E0E4E8;border-radius:5px;padding:3px 9px;font-size:11px;color:#888;cursor:pointer;font-family:var(--font);">✕ close</button>
       </div>
-      <div id="ps-steps-list" style="display:flex;flex-direction:column;gap:10px;"></div>
-    </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div class="field" style="margin-bottom:0;"><label>Input</label><input type="text" id="ps-dp-input" placeholder="What triggers this step?" oninput="psDpSync('input',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
+        <div class="field" style="margin-bottom:0;"><label>Output</label><input type="text" id="ps-dp-output" placeholder="What does this step produce?" oninput="psDpSync('output',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
+        <div class="field" style="margin-bottom:0;"><label>Tool Used</label><input type="text" id="ps-dp-tool" placeholder="e.g. Salesforce, email" oninput="psDpSync('tool',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
+        <div class="field" style="margin-bottom:0;"><label>Step Type</label><select id="ps-dp-type" onchange="psDpSync('type',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);"><option>Task</option><option>Decision</option><option>Handoff</option><option>Wait</option></select></div>
+        <div class="field" style="margin-bottom:0;"><label>Time Estimate (mins)</label><input type="number" id="ps-dp-time" placeholder="e.g. 30" oninput="psDpSync('timeEst',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
+        <div class="field" style="margin-bottom:0;display:flex;flex-direction:column;justify-content:flex-end;"><label>Friction point?</label><label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;background:white;"><input type="checkbox" id="ps-dp-friction" onchange="psDpFrictionToggle(this.checked)" style="accent-color:var(--bts-red);width:15px;height:15px;cursor:pointer;" /><span style="font-size:12px;color:var(--bts-dark);">Yes — this step has friction</span></label></div>
+        <div class="field" id="ps-dp-friction-row" style="margin-bottom:0;grid-column:1/-1;display:none;">
+          <label style="color:var(--bts-red);">Friction reason</label>
+          <input type="text" id="ps-dp-friction-reason" placeholder="What makes this step hard or slow?" oninput="psDpSync('frictionReason',this.value)" style="width:100%;padding:7px 10px;border:1px solid var(--bts-red);border-radius:7px;font-size:12px;font-family:var(--font);" />
+        </div>
+        <div class="field" style="margin-bottom:0;grid-column:1/-1;">
+          <label>Notes / Tacit Knowledge</label>
+          <textarea id="ps-dp-notes" placeholder="What would a new person never know to ask? What lives only in people's heads?" rows="2" oninput="psDpSync('notes',this.value)" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;box-sizing:border-box;"></textarea>
+        </div>
+      </div>
+      <div id="ps-dp-tool-section" style="display:none;margin-top:12px;border-top:1.5px solid var(--bts-teal);padding-top:12px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <span style="font-size:11px;font-weight:700;color:var(--bts-teal);">★ Tool assigned to this step</span>
+          <span id="ps-dp-tool-name-tag" style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--bts-teal-light);color:var(--bts-teal);font-weight:700;"></span>
+          <button onclick="removeSelfFromToolGroup()" style="margin-left:auto;font-size:10px;color:#BBB;background:none;border:1px solid #E0E4E8;border-radius:4px;padding:2px 7px;cursor:pointer;font-family:var(--font);">Remove from tool</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="field" style="margin-bottom:0;">
+            <label>What does the tool do here?</label>
+            <textarea id="ps-dp-tool-action" rows="2" placeholder="e.g. Summarises the scope doc and pre-fills the SOW template" oninput="psDpToolSync('details', this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;box-sizing:border-box;"></textarea>
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label>Human oversight required?</label>
+            <textarea id="ps-dp-tool-oversight" rows="2" placeholder="e.g. PM reviews output before sending to client" oninput="psDpToolSync('oversight', this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;box-sizing:border-box;"></textarea>
+          </div>
+          <div class="field" style="margin-bottom:0;grid-column:1/-1;">
+            <label>Role of the tool</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;" id="ps-dp-tool-role-btns">
+              <button onclick="psDpToolRoleSelect('Replaces step')" class="tool-role-btn" style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);border:1.5px solid #DDE1E6;background:white;color:#888;">Replaces step</button>
+              <button onclick="psDpToolRoleSelect('Augments step')" class="tool-role-btn" style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);border:1.5px solid #DDE1E6;background:white;color:#888;">Augments step</button>
+              <button onclick="psDpToolRoleSelect('Runs in parallel')" class="tool-role-btn" style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);border:1.5px solid #DDE1E6;background:white;color:#888;">Runs in parallel</button>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:6px;font-size:10px;color:#BBB;">Changes sync across all steps covered by this tool. <span id="ps-dp-override-note"></span></div>
+      </div>
 
     <!-- ─── FRICTION TOAST ────────────────────────────────────────── -->
     <div id="friction-toast" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--bts-dark);color:white;padding:12px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;border-left:4px solid var(--bts-red);box-shadow:0 4px 20px rgba(0,0,0,0.25);">
@@ -989,21 +1079,27 @@ function showAuthLoading(panelPrefix, visible) {
 // (lookupUser, registerUser, updateLastLogin defined above using direct REST API)
 
 function launchApp(user) {
+  try {
   state.user = user;
   const initials = user.name.split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('user-avatar-top').textContent = initials;
-  document.getElementById('user-name-top').textContent = user.name;
-  document.getElementById('home-greeting').textContent = getGreeting(user.name);
-  document.getElementById('home-date').textContent = formatDate(new Date());
+  const avatarEl = document.getElementById('user-avatar-top');
+  const nameEl = document.getElementById('user-name-top');
+  const greetEl = document.getElementById('home-greeting');
+  const dateEl = document.getElementById('home-date');
+  if (avatarEl) avatarEl.textContent = initials;
+  if (nameEl) nameEl.textContent = user.name;
+  if (greetEl) greetEl.textContent = getGreeting(user.name);
+  if (dateEl) dateEl.textContent = formatDate(new Date());
   show('screen-login', false);
   show('screen-app', true);
-  // Elevate dashboard nav for Level 5 and Champion
-  if (user.role === 'Level 5 / Team Leadership' || user.role === 'AI Champion') {
-    document.getElementById('nav-dashboard').style.fontWeight = '800';
-    document.getElementById('nav-dashboard').style.color = 'var(--bts-pink)';
+  const navDash = document.getElementById('nav-dashboard');
+  if (navDash && (user.role === 'Level 5 / Team Leadership' || user.role === 'AI Champion')) {
+    navDash.style.fontWeight = '800';
+    navDash.style.color = 'var(--bts-pink)';
   }
-  renderDashboard();
-  renderHomePilots();
+  try { renderDashboard(); } catch(e) {}
+  try { renderHomePilots(); } catch(e) {}
+  } catch(err) { console.error('launchApp error:', err); }
 }
 
 async function doSignIn() {
@@ -1087,8 +1183,17 @@ function formatDate(d) {
 
 function show(id, visible) {
   const el = document.getElementById(id);
+  if (!el) return;
   if (visible) { el.classList.add('active'); }
   else { el.classList.remove('active'); }
+}
+
+function renderDashboard() {
+  try { loadFromSmartsheet && typeof loadFromSmartsheet === 'function' && loadFromSmartsheet(); } catch(e) {}
+}
+
+function renderHomePilots() {
+  // loads pilot summary on home tab — no-op if not yet implemented
 }
 
 function showTab(tab) {
@@ -1492,6 +1597,9 @@ let psTimerSeconds = 480;
 let facilitatorOn = false;
 window.facilitatorOn = false;
 let psStructuredSteps = [];
+let psToolGroups = [];      // { id, toolName, nodeIds[], action, oversight, details }
+let psSelectMode = false;   // true when shift-selecting for tool assignment
+let psSelectedNodeIds = []; // nodes highlighted for tool assignment
 
 // ── Phase navigation ──────────────────────────────────────────
 
@@ -1641,171 +1749,287 @@ function setAddMode(mode) { psAddMode(mode); }
 
 // ── Step entry — prompt-based (reliable from file://) ───────────────────
 
-function handleLaneClick(e, lane) {
-  if (e.target.classList.contains('node-del')) return;
-  if (e.target.closest('.step-node')) return;
-  if (e.target.closest('.ps-insert-panel')) return;
-  addStepToLane(lane);
-}
-
-function addStepToLane(lane) {
-  var laneEl = document.querySelector('#swim-lanes .swim-lane[data-lane="' + lane + '"] .lane-label');
-  var laneName = laneEl ? laneEl.textContent.trim() : lane.toUpperCase();
-  var mode = psAddModeState;
-  var label = mode === 'friction' ? 'friction point' : 'step';
-  var text = window.prompt('Add ' + label + ' to ' + laneName + ':', '');
-  if (text === null || text.trim() === '') return;
-  text = text.trim();
-  var type = mode === 'friction' ? 'friction' : mode === 'star' ? 'star' : 'step';
-  psCanvasNodes.push({ id: ++psNodeIdCounter, lane: lane, text: text, type: type, stackedWith: null });
-  renderCanvas();
-  if (type === 'friction') showFrictionToast();
-}
-
-function startNodeEntry(lane) { addStepToLane(lane); }
-function initEntryBar() {}
-function hideEntryBar() {}
-function showEntryBar(lane) { addStepToLane(lane); }
-function psEntryDoAdd() {}
-
-// ── Canvas node management ───────────────────────────────────
-// Central array tracks all canvas nodes in sequence order
-// Each entry: { id, lane, text, type } where type = 'step'|'friction'|'star'
+// ── Canvas node data ─────────────────────────────────────────────────────────
 let psCanvasNodes = [];
 let psNodeIdCounter = 0;
+let psDpActiveNodeId = null;
+
+function handleLaneClick(e, lane) {
+  // Ignore clicks on existing nodes, delete buttons, or inline inputs
+  if (e.target.classList.contains('node-del')) return;
+  if (e.target.closest('.step-node')) return;
+  if (e.target.closest('.ps-inline-add')) return;
+  if (e.target.closest('.ps-insert-panel')) return;
+  // Close any open inline add first
+  closeInlineAdd();
+  openInlineAdd(lane, -1); // -1 = append to end
+}
+
+// ── Inline add input (replaces window.prompt) ──────────────────────────────
+
+let inlineAddActive = false;
+
+function openInlineAdd(lane, insertBeforeIdx) {
+  closeInlineAdd();
+  inlineAddActive = true;
+
+  const laneBody = document.getElementById('lane-' + lane);
+  if (!laneBody) return;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'ps-inline-add';
+  wrap.setAttribute('data-lane', lane);
+  wrap.setAttribute('data-idx', insertBeforeIdx);
+  wrap.style.cssText = 'display:inline-flex;align-items:center;gap:5px;flex-shrink:0;padding:4px;';
+
+  const mode = psAddModeState;
+  const isFriction = mode === 'friction';
+  const isStar = mode === 'star';
+
+  const input = document.createElement('input');
+  input.className = 'node-input';
+  input.placeholder = isFriction ? 'Describe friction...' : isStar ? 'Tool name...' : 'Step name...';
+  input.style.cssText = `width:130px;border-color:${isFriction ? 'var(--bts-red)' : isStar ? 'var(--bts-teal)' : 'var(--bts-pink)'};`;
+
+  const addBtn = document.createElement('button');
+  addBtn.textContent = '✓';
+  addBtn.style.cssText = `background:${isFriction ? 'var(--bts-red)' : isStar ? 'var(--bts-teal)' : 'var(--bts-pink)'};color:white;border:none;border-radius:6px;padding:5px 8px;font-size:12px;font-weight:700;cursor:pointer;`;
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = '✕';
+  cancelBtn.style.cssText = 'background:none;border:1px solid #DDD;border-radius:6px;padding:5px 7px;font-size:11px;color:#999;cursor:pointer;';
+
+  const doAdd = () => {
+    const text = input.value.trim();
+    if (!text) { closeInlineAdd(); return; }
+    const type = isFriction ? 'friction' : isStar ? 'star' : 'step';
+    const newNode = { id: ++psNodeIdCounter, lane, text, type, stackedWith: null };
+    const idx = parseInt(wrap.getAttribute('data-idx'));
+    if (idx === -1) {
+      psCanvasNodes.push(newNode);
+    } else {
+      psCanvasNodes.splice(idx, 0, newNode);
+    }
+    closeInlineAdd();
+    try { renderCanvas(); } catch(err) { console.error('renderCanvas error:', err); }
+    if (type === 'friction') showFrictionToast();
+  };
+
+  input.onkeydown = e => { e.stopPropagation(); if (e.key === 'Enter') doAdd(); if (e.key === 'Escape') closeInlineAdd(); };
+  addBtn.onclick = e => { e.stopPropagation(); e.preventDefault(); doAdd(); };
+  cancelBtn.onclick = e => { e.stopPropagation(); e.preventDefault(); closeInlineAdd(); };
+  wrap.onclick = e => e.stopPropagation();
+
+  wrap.appendChild(input);
+  wrap.appendChild(addBtn);
+  wrap.appendChild(cancelBtn);
+
+  // Append to the lane body (insertBeforeIdx is for data tracking; visual position = end)
+  laneBody.appendChild(wrap);
+  input.focus();
+}
+
+function closeInlineAdd() {
+  inlineAddActive = false;
+  document.querySelectorAll('.ps-inline-add').forEach(el => el.remove());
+}
+
+// ── renderCanvas ─────────────────────────────────────────────────────────────
+// Renders a column-aligned grid across swim lanes.
+// Each node occupies one global column. Lanes without a node at column N show a spacer.
+// Steps in the same lane connect left→right with arrows.
+// Cross-lane handoffs are indicated visually by column alignment.
 
 function renderCanvas() {
-  // ── Column-aligned grid rendering ──────────────────────────
-  // Every step occupies a global column position.
-  // Lanes that don't have a step at position N show an empty cell.
-  // This means step 3 in Logistics appears to the RIGHT of step 2 in PMO.
-
-  // Get all lane IDs in current DOM order
   const laneIds = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => l.getAttribute('data-lane'));
-
-  // Clear all lane bodies
-  laneIds.forEach(lid => {
-    const lb = document.getElementById('lane-' + lid);
-    if (lb) lb.innerHTML = '';
-  });
-
+  laneIds.forEach(lid => { const lb = document.getElementById('lane-' + lid); if (lb) lb.innerHTML = ''; });
   if (!psCanvasNodes.length) return;
 
-  // Assign a global column index to each node (= its position in psCanvasNodes array)
-  // Number only step/parallel/shared types; friction/star are inline annotations
-  let stepCounter = 0;
-  const columnCount = psCanvasNodes.length;
+  const STEP_W = 165;
+  const ARROW_W = 32;
+  const COL_W = STEP_W + ARROW_W;
 
-  // Build a map: colIdx -> node
-  const colMap = {};
-  psCanvasNodes.forEach((node, colIdx) => {
-    const isCountable = ['step','parallel','shared'].includes(node.type);
-    if (isCountable) stepCounter++;
-    colMap[colIdx] = { ...node, stepNum: isCountable ? stepCounter : null };
+  // ── Build column groups ──────────────────────────────────────────────────
+  // Each "column" is a group of nodes that share the same horizontal position.
+  // Stacked nodes (same groupId) share a column. All others are solo columns.
+  // groupId is set when stacking; solo nodes have groupId === their own id.
+
+  const columns = []; // each entry: { groupId, nodes: [...], stepNum }
+  const groupMap = {}; // groupId → column index
+
+  let stepCounter = 0;
+
+  psCanvasNodes.forEach(node => {
+    const gid = node.groupId || node.id;
+    if (groupMap[gid] !== undefined) {
+      // Add to existing column
+      columns[groupMap[gid]].nodes.push(node);
+    } else {
+      // New column
+      const isCountable = ['step','parallel','shared'].includes(node.type);
+      if (isCountable) stepCounter++;
+      const colIdx = columns.length;
+      groupMap[gid] = colIdx;
+      columns.push({ groupId: gid, nodes: [node], stepNum: isCountable ? stepCounter : null });
+    }
   });
 
-  // For each lane, render all columns — node if it belongs here, empty cell otherwise
+  const totalCols = columns.length;
+
+  // ── Render each lane ─────────────────────────────────────────────────────
   laneIds.forEach(lid => {
     const lb = document.getElementById('lane-' + lid);
     if (!lb) return;
 
-    for (let colIdx = 0; colIdx < columnCount; colIdx++) {
-      const node = colMap[colIdx];
-      const belongsHere = node.lane === lid;
-      const isShared = node.type === 'shared';
-      const showHere = belongsHere || isShared;
+    for (let colIdx = 0; colIdx < totalCols; colIdx++) {
+      const col = columns[colIdx];
+      const nodeForThisLane = col.nodes.find(n => n.lane === lid);
+      const isShared = col.nodes.some(n => n.type === 'shared' && n.lane === lid);
+      const showHere = !!nodeForThisLane || isShared;
+      const isStackedCol = col.nodes.length > 1;
 
-      // Cell wrapper — fixed width to align columns
       const cell = document.createElement('div');
-      cell.style.cssText = 'display:inline-flex;align-items:center;flex-shrink:0;';
+      cell.style.cssText = `display:inline-flex;align-items:center;flex-shrink:0;width:${COL_W}px;`;
 
       if (!showHere) {
-        // Empty spacer — same width as a step node + arrow
         const spacer = document.createElement('div');
-        spacer.style.cssText = 'width:158px;height:48px;flex-shrink:0;border:1.5px dashed transparent;border-radius:8px;';
+        spacer.style.cssText = `width:${STEP_W}px;height:48px;flex-shrink:0;`;
+        const arrowSpacer = document.createElement('span');
+        arrowSpacer.style.cssText = `width:${ARROW_W}px;display:inline-block;`;
         cell.appendChild(spacer);
+        cell.appendChild(arrowSpacer);
       } else {
-        // Render the actual node
+        const node = nodeForThisLane;
+        if (!node) { lb.appendChild(cell); continue; } // guard: shared node not in this lane
         const wrapper = document.createElement('div');
         wrapper.style.cssText = 'display:inline-flex;align-items:center;gap:0;position:relative;';
         wrapper.setAttribute('data-node-id', node.id);
 
         const isFriction = node.type === 'friction';
         const isStar     = node.type === 'star';
-        const isStep     = node.type === 'step';
-        const num        = node.stepNum;
+        const isStep     = !isFriction && !isStar;
+        const num        = col.stepNum;
+        const isStacked  = isStackedCol;
 
-        // Insert-before button + Stack button on hover
-        if (!isFriction && !isStar) {
+        // Hover buttons: insert-before and stack
+        if (isStep) {
           const insertBtn = document.createElement('button');
-          insertBtn.title = 'Insert step before';
+          insertBtn.title = 'Insert step before this one';
           insertBtn.textContent = '+';
-          insertBtn.style.cssText = 'position:absolute;left:-9px;top:30%;transform:translateY(-50%);width:17px;height:17px;border-radius:50%;background:var(--bts-teal);color:white;border:none;font-size:11px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:10;padding:0;line-height:1;';
-          insertBtn.onclick = (e) => { e.stopPropagation(); openInsertPanel(colIdx, lb, wrapper); };
-          wrapper.appendChild(insertBtn);
+          insertBtn.style.cssText = 'position:absolute;left:-10px;top:25%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:var(--bts-teal);color:white;border:none;font-size:12px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:20;padding:0;line-height:1;';
+          insertBtn.onclick = (e) => { e.stopPropagation(); openInsertPanel(colIdx, node.lane, wrapper); };
 
           const stackBtn = document.createElement('button');
           stackBtn.title = 'Stack — happens at the same time';
           stackBtn.textContent = '⊕';
-          stackBtn.style.cssText = 'position:absolute;left:-9px;top:70%;transform:translateY(-50%);width:17px;height:17px;border-radius:50%;background:#EF9F27;color:white;border:none;font-size:11px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:10;padding:0;line-height:1;';
-          stackBtn.onclick = (e) => { e.stopPropagation(); openStackPanel(colIdx, node, wrapper); };
-          wrapper.appendChild(stackBtn);
+          stackBtn.style.cssText = 'position:absolute;left:-10px;top:70%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:#EF9F27;color:white;border:none;font-size:11px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:20;padding:0;line-height:1;';
+          stackBtn.onclick = (e) => { e.stopPropagation(); openStackPanel(colIdx, col, node, wrapper); };
 
-          wrapper.onmouseenter = () => { insertBtn.style.display = 'flex'; stackBtn.style.display = 'flex'; };
-          wrapper.onmouseleave = () => {
-            if (!wrapper.querySelector('.ps-insert-input') && !wrapper.querySelector('.ps-stack-input')) {
-              insertBtn.style.display = 'none';
-              stackBtn.style.display = 'none';
-            }
+          wrapper.onmouseenter = () => { if (!wrapper.querySelector('.ps-insert-panel')) { insertBtn.style.display='flex'; stackBtn.style.display='flex'; } };
+          wrapper.onmouseleave = () => { if (!wrapper.querySelector('.ps-insert-panel')) { insertBtn.style.display='none'; stackBtn.style.display='none'; } };
+          wrapper.appendChild(insertBtn);
+          wrapper.appendChild(stackBtn);
+        }
+
+        // Node card
+        const isSelected = (psDpActiveNodeId === node.id);
+        const isFrictionFlagged = psStructuredSteps.some(s => s.nodeId === node.id && s.friction === 'Yes');
+        const isToolSelected = psSelectMode && psSelectedNodeIds.includes(node.id);
+        const isToolCovered = !psSelectMode && !!node.toolGroupId;
+        const nodeEl = document.createElement('div');
+        nodeEl.className = 'step-node' + (isFriction?' friction':'') + (isStar?' star':'') + (isSelected?' ps-selected':'') + (isFrictionFlagged?' ps-friction-flag':'') + (isToolSelected?' ps-tool-selected':'') + (isToolCovered?' ps-tool-covered':'');
+        nodeEl.style.width = STEP_W + 'px';
+        if (isStep) {
+          nodeEl.style.cursor = psSelectMode ? 'crosshair' : 'pointer';
+          nodeEl.title = psSelectMode ? 'Click to select/deselect for tool assignment' : 'Click to add step details';
+          nodeEl.onclick = (e) => {
+            if (e.target.classList.contains('node-del')) return;
+            e.preventDefault();
+            if (psSelectMode) { toggleToolNodeSelect(node.id); }
+            else { openPsDetailsPanel(node.id); }
+          };
+          nodeEl.onmousedown = (e) => {
+            if (psSelectMode) { e.preventDefault(); } // prevent text selection on click
           };
         }
 
-        const nodeEl = document.createElement('div');
-        nodeEl.className = 'step-node' + (isFriction ? ' friction' : '') + (isStar ? ' star' : '');
-
         if (isFriction) {
-          nodeEl.innerHTML = `<span style="color:var(--bts-red);font-size:10px;margin-right:3px;">⚠</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+          nodeEl.style.borderLeft = '3px solid var(--bts-red)';
+          nodeEl.innerHTML = `<span style="color:var(--bts-red);font-size:10px;margin-right:3px;">⚠</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
         } else if (isStar) {
-          nodeEl.innerHTML = `<span style="color:var(--bts-teal);margin-right:2px;">★</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+          nodeEl.style.borderLeft = '3px solid var(--bts-teal)';
+          nodeEl.innerHTML = `<span style="color:var(--bts-teal);margin-right:2px;">★</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
         } else if (isStacked) {
           nodeEl.style.borderLeft = '3px solid #EF9F27';
           nodeEl.style.background = '#FFFBF2';
-          nodeEl.innerHTML = `<span style="color:#EF9F27;font-size:10px;margin-right:3px;" title="Same time as Step ${node.stackedWith}">⊕</span><span class="step-badge" style="background:#EF9F27;color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">${num}</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+          nodeEl.innerHTML = `<span style="color:#EF9F27;font-size:10px;margin-right:3px;" title="Concurrent step">⊕</span><span class="step-badge" style="background:#EF9F27;color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">${num}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
         } else {
-          nodeEl.innerHTML = `<span class="step-badge" style="background:var(--bts-pink);color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">${num}</span><span>${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
+          nodeEl.innerHTML = `<span class="step-badge" style="background:var(--bts-pink);color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">${num}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${node.text}</span><button class="node-del" onclick="psRemoveCanvasNode(${node.id})">&#x2715;</button>`;
         }
 
         wrapper.appendChild(nodeEl);
 
-        // Arrow after every node
-        const arrow = document.createElement('span');
-        arrow.style.cssText = 'color:#DDD;font-size:13px;padding:0 2px;flex-shrink:0;';
-        arrow.textContent = '→';
+        // Arrow — only show if this lane has another node in a later column
+        const arrow = document.createElement('div');
+        arrow.style.cssText = `width:${ARROW_W}px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:#CCC;font-size:16px;`;
+        const hasNextInLane = columns.slice(colIdx+1).some(c => c.nodes.some(n => n.lane === lid));
+        arrow.textContent = hasNextInLane ? '→' : '';
         wrapper.appendChild(arrow);
         cell.appendChild(wrapper);
       }
-
       lb.appendChild(cell);
     }
   });
+  // Keep tool brackets in sync
+  renderToolBrackets();
 }
 
-function openInsertPanel(insertBeforeIdx, lb, wrapper) {
-  // Close any open insert panels first
-  document.querySelectorAll('.ps-insert-input').forEach(el => el.closest('.ps-insert-panel')?.remove());
+function openInsertPanel(insertBeforeIdx, defaultLane, wrapper) {
+  // Close any open panels
+  document.querySelectorAll('.ps-insert-panel').forEach(el => el.remove());
+  closeInlineAdd();
 
   const panel = document.createElement('div');
   panel.className = 'ps-insert-panel';
-  panel.style.cssText = 'position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:white;border:1.5px solid var(--bts-teal);border-radius:8px;padding:6px 8px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,0.12);white-space:nowrap;';
+  panel.style.cssText = 'position:absolute;top:calc(100% + 6px);left:0;z-index:100;background:white;border:1.5px solid var(--bts-teal);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 16px rgba(0,0,0,0.14);white-space:nowrap;min-width:240px;';
+
+  const title = document.createElement('div');
+  title.style.cssText = 'font-size:10px;font-weight:700;color:var(--bts-teal);letter-spacing:0.4px;text-transform:uppercase;';
+  title.textContent = '+ Insert step before';
+
+  // Lane selector
+  const lanes = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => ({
+    id: l.getAttribute('data-lane'),
+    label: l.querySelector('.lane-label').textContent.trim()
+  }));
+
+  const laneRow = document.createElement('div');
+  laneRow.style.cssText = 'display:flex;align-items:center;gap:6px;';
+  const laneLabel = document.createElement('span');
+  laneLabel.style.cssText = 'font-size:10px;color:#888;white-space:nowrap;';
+  laneLabel.textContent = 'Lane:';
+  const laneSelect = document.createElement('select');
+  laneSelect.style.cssText = 'padding:4px 7px;border:1px solid #DDE1E6;border-radius:6px;font-size:11px;font-family:var(--font);outline:none;flex:1;';
+  lanes.forEach(l => {
+    const opt = document.createElement('option');
+    opt.value = l.id;
+    opt.textContent = l.label;
+    if (l.id === defaultLane) opt.selected = true;
+    laneSelect.appendChild(opt);
+  });
+  laneRow.appendChild(laneLabel);
+  laneRow.appendChild(laneSelect);
+
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:6px;';
 
   const input = document.createElement('input');
-  input.className = 'ps-insert-input node-input';
-  input.placeholder = 'New step name...';
-  input.style.cssText = 'width:130px;padding:5px 8px;border:1px solid var(--bts-teal);border-radius:6px;font-size:11px;font-family:var(--font);outline:none;';
+  input.placeholder = 'Step name...';
+  input.style.cssText = 'flex:1;padding:5px 8px;border:1px solid var(--bts-teal);border-radius:6px;font-size:11px;font-family:var(--font);outline:none;';
 
   const addBtn = document.createElement('button');
   addBtn.textContent = 'Insert';
-  addBtn.style.cssText = 'background:var(--bts-teal);color:white;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);';
+  addBtn.style.cssText = 'background:var(--bts-teal);color:white;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;';
 
   const cancelBtn = document.createElement('button');
   cancelBtn.textContent = '✕';
@@ -1814,67 +2038,89 @@ function openInsertPanel(insertBeforeIdx, lb, wrapper) {
   const doInsert = () => {
     const text = input.value.trim();
     if (!text) { panel.remove(); return; }
-    const laneName = wrapper.closest('.swim-lane')?.getAttribute('data-lane') || 'pmo';
-    psInsertNode(insertBeforeIdx, text, 'step', laneName);
+    const lane = laneSelect.value;
+    psCanvasNodes.splice(insertBeforeIdx, 0, { id: ++psNodeIdCounter, lane, text, type: 'step', stackedWith: null });
     panel.remove();
+    renderCanvas();
   };
 
   input.onkeydown = e => { if (e.key === 'Enter') doInsert(); if (e.key === 'Escape') panel.remove(); };
   addBtn.onclick = doInsert;
   cancelBtn.onclick = () => panel.remove();
 
-  panel.appendChild(input);
-  panel.appendChild(addBtn);
-  panel.appendChild(cancelBtn);
+  row.appendChild(input);
+  row.appendChild(addBtn);
+  row.appendChild(cancelBtn);
+
+  panel.appendChild(title);
+  panel.appendChild(laneRow);
+  panel.appendChild(row);
   wrapper.style.position = 'relative';
   wrapper.appendChild(panel);
   input.focus();
 }
 
 function psInsertNode(insertBeforeIdx, text, type, lane) {
-  const newNode = { id: ++psNodeIdCounter, lane, text, type, stackedWith: null };
-  psCanvasNodes.splice(insertBeforeIdx, 0, newNode);
+  psCanvasNodes.splice(insertBeforeIdx, 0, { id: ++psNodeIdCounter, lane, text, type, stackedWith: null });
   renderCanvas();
 }
 
-function openStackPanel(colIdx, parentNode, wrapper) {
-  // Close any open panels first
-  document.querySelectorAll('.ps-stack-input').forEach(el => el.closest('.ps-insert-panel')?.remove());
-  document.querySelectorAll('.ps-insert-input').forEach(el => el.closest('.ps-insert-panel')?.remove());
+function openStackPanel(colIdx, parentCol, parentNode, wrapper) {
+  document.querySelectorAll('.ps-insert-panel').forEach(el => el.remove());
+  closeInlineAdd();
 
   const panel = document.createElement('div');
   panel.className = 'ps-insert-panel';
-  panel.style.cssText = 'position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:white;border:1.5px solid #EF9F27;border-radius:8px;padding:6px 8px;display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,0.12);white-space:nowrap;min-width:200px;';
+  panel.style.cssText = 'position:absolute;top:calc(100% + 6px);left:0;z-index:100;background:white;border:1.5px solid #EF9F27;border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 16px rgba(0,0,0,0.14);white-space:nowrap;min-width:240px;';
 
-  const label = document.createElement('div');
-  label.style.cssText = 'font-size:10px;font-weight:700;color:#EF9F27;letter-spacing:0.4px;text-transform:uppercase;';
-  label.textContent = '⊕ Stack — happens at same time';
+  const title = document.createElement('div');
+  title.style.cssText = 'font-size:10px;font-weight:700;color:#EF9F27;letter-spacing:0.4px;text-transform:uppercase;';
+  title.textContent = '⊕ Stack — happens at same time';
 
-  const row = document.createElement('div');
-  row.style.cssText = 'display:flex;align-items:center;gap:6px;';
-
-  const laneSelect = document.createElement('select');
-  laneSelect.className = 'ps-stack-input';
-  laneSelect.style.cssText = 'padding:5px 8px;border:1px solid #EF9F27;border-radius:6px;font-size:11px;font-family:var(--font);outline:none;';
   const lanes = Array.from(document.querySelectorAll('#swim-lanes .swim-lane')).map(l => ({
     id: l.getAttribute('data-lane'),
     label: l.querySelector('.lane-label').textContent.trim()
   }));
+  const usedLanes = new Set(parentCol.nodes.map(n => n.lane));
+
+  const laneRow = document.createElement('div');
+  laneRow.style.cssText = 'display:flex;align-items:center;gap:6px;';
+  const laneLabel = document.createElement('span');
+  laneLabel.style.cssText = 'font-size:10px;color:#888;white-space:nowrap;';
+  laneLabel.textContent = 'Lane:';
+  const laneSelect = document.createElement('select');
+  laneSelect.style.cssText = 'padding:4px 7px;border:1px solid #DDE1E6;border-radius:6px;font-size:11px;font-family:var(--font);outline:none;flex:1;';
+  laneSelect.innerHTML = '';
   lanes.forEach(l => {
+    if (usedLanes.has(l.id)) return;
     const opt = document.createElement('option');
     opt.value = l.id;
     opt.textContent = l.label;
     laneSelect.appendChild(opt);
   });
+  // Pre-select first available lane
+  if (laneSelect.options.length === 0) {
+    const msg = document.createElement('div');
+    msg.style.cssText = 'font-size:11px;color:#888;';
+    msg.textContent = 'All lanes already in this stack group.';
+    panel.appendChild(title); panel.appendChild(msg);
+    wrapper.style.position = 'relative'; wrapper.appendChild(panel);
+    setTimeout(() => panel.remove(), 2000);
+    return;
+  }
+  laneRow.appendChild(laneLabel);
+  laneRow.appendChild(laneSelect);
+
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:6px;';
 
   const input = document.createElement('input');
-  input.className = 'ps-stack-input node-input';
-  input.placeholder = 'Step name...';
+  input.placeholder = 'Concurrent step name...';
   input.style.cssText = 'flex:1;padding:5px 8px;border:1px solid #EF9F27;border-radius:6px;font-size:11px;font-family:var(--font);outline:none;';
 
   const addBtn = document.createElement('button');
   addBtn.textContent = 'Add';
-  addBtn.style.cssText = 'background:#EF9F27;color:white;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);';
+  addBtn.style.cssText = 'background:#EF9F27;color:white;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;';
 
   const cancelBtn = document.createElement('button');
   cancelBtn.textContent = '✕';
@@ -1884,27 +2130,272 @@ function openStackPanel(colIdx, parentNode, wrapper) {
     const text = input.value.trim();
     if (!text) { panel.remove(); return; }
     const lane = laneSelect.value;
-    // Insert the stacked node right after the parent node in psCanvasNodes
-    const parentStepNum = parentNode.stepNum;
-    const newNode = { id: ++psNodeIdCounter, lane, text, type: 'step', stackedWith: parentStepNum };
-    psCanvasNodes.splice(colIdx + 1, 0, newNode);
-    renderCanvas();
+    // Use the parent column's groupId (or parent node's id if no groupId yet)
+    const groupId = parentNode.groupId || parentNode.id;
+    // Also set groupId on the parent node if it doesn't have one
+    if (!parentNode.groupId) parentNode.groupId = parentNode.id;
+    // Find insertion point: insert after the last node in this group
+    const lastGroupIdx = psCanvasNodes.reduce((last, n, i) => ((n.groupId || n.id) === groupId ? i : last), psCanvasNodes.indexOf(parentNode));
+    const newNode = { id: ++psNodeIdCounter, lane, text, type: 'step', groupId, stackedWith: parentNode.id };
+    psCanvasNodes.splice(lastGroupIdx + 1, 0, newNode);
     panel.remove();
+    renderCanvas();
   };
 
   input.onkeydown = e => { if (e.key === 'Enter') doStack(); if (e.key === 'Escape') panel.remove(); };
   addBtn.onclick = doStack;
   cancelBtn.onclick = () => panel.remove();
 
-  row.appendChild(laneSelect);
   row.appendChild(input);
   row.appendChild(addBtn);
   row.appendChild(cancelBtn);
-  panel.appendChild(label);
+
+  panel.appendChild(title);
+  panel.appendChild(laneRow);
   panel.appendChild(row);
   wrapper.style.position = 'relative';
   wrapper.appendChild(panel);
   input.focus();
+}
+
+// ── Details panel ────────────────────────────────────────────────────────────
+
+function openPsDetailsPanel(nodeId) {
+  const node = psCanvasNodes.find(n => n.id === nodeId);
+  if (!node || node.type === 'friction' || node.type === 'star') return;
+  psDpActiveNodeId = nodeId;
+  if (!psStructuredSteps.find(s => s.nodeId === nodeId)) {
+    const laneLabel = getLaneLabelById(node.lane);
+    psStructuredSteps.push({ nodeId, name: node.text, lane: laneLabel, type: 'Task', input: '', output: '', tool: '', friction: 'No', frictionReason: '', timeEst: '', notes: '', stackedWith: node.stackedWith });
+  }
+  const s = psStructuredSteps.find(s => s.nodeId === nodeId);
+  const laneLabel = getLaneLabelById(node.lane);
+  // Count step number
+  let stepNum = 0;
+  for (const n of psCanvasNodes) {
+    if (n.type === 'step') stepNum++;
+    if (n.id === nodeId) break;
+  }
+  const badge = document.getElementById('ps-dp-badge');
+  const title = document.getElementById('ps-dp-title');
+  const laneTag = document.getElementById('ps-dp-lane-tag');
+  if (badge) badge.textContent = stepNum;
+  if (title) title.textContent = node.text;
+  if (laneTag) { laneTag.textContent = laneLabel; laneTag.style.background = getLaneColors(node.lane).bg; laneTag.style.color = getLaneColors(node.lane).text; }
+  const fields = { 'ps-dp-input': s.input, 'ps-dp-output': s.output, 'ps-dp-tool': s.tool, 'ps-dp-time': s.timeEst, 'ps-dp-notes': s.notes, 'ps-dp-friction-reason': s.frictionReason };
+  Object.entries(fields).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val || ''; });
+  const typeEl = document.getElementById('ps-dp-type'); if (typeEl) typeEl.value = s.type || 'Task';
+  const frEl = document.getElementById('ps-dp-friction'); if (frEl) frEl.checked = (s.friction === 'Yes');
+  psDpFrictionToggle(s.friction === 'Yes');
+
+  // Tool section — show if this step is part of a tool group
+  const toolSection = document.getElementById('ps-dp-tool-section');
+  const grp = node.toolGroupId ? psToolGroups.find(g => g.id === node.toolGroupId) : null;
+  if (toolSection) {
+    if (grp) {
+      toolSection.style.display = 'block';
+      document.getElementById('ps-dp-tool-name-tag').textContent = grp.toolName;
+      document.getElementById('ps-dp-tool-action').value = grp.details || '';
+      document.getElementById('ps-dp-tool-oversight').value = grp.oversight || '';
+      document.querySelectorAll('.tool-role-btn').forEach(btn => {
+        const active = btn.textContent.trim() === grp.action;
+        btn.style.background = active ? 'var(--bts-teal)' : 'white';
+        btn.style.color = active ? 'white' : '#888';
+        btn.style.borderColor = active ? 'var(--bts-teal)' : '#DDE1E6';
+      });
+    } else {
+      toolSection.style.display = 'none';
+    }
+  }
+
+  const panel = document.getElementById('ps-details-panel');
+  if (panel) { panel.style.display = 'block'; panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  renderCanvas();
+}
+
+function closePsDetailsPanel() {
+  psDpActiveNodeId = null;
+  const panel = document.getElementById('ps-details-panel');
+  if (panel) panel.style.display = 'none';
+  renderCanvas();
+}
+
+// ── Tool select mode ──────────────────────────────────────────────────────────
+
+function startToolSelectMode() {
+  psSelectMode = true;
+  psSelectedNodeIds = [];
+  const banner = document.getElementById('tool-select-banner');
+  banner.style.display = 'flex';
+  document.getElementById('tool-select-count').textContent = '0';
+  // Disable text selection on canvas while in select mode
+  const lanes = document.getElementById('swim-lanes');
+  if (lanes) lanes.style.userSelect = 'none';
+  closePsDetailsPanel();
+  renderCanvas();
+}
+
+function cancelToolSelectMode() {
+  psSelectMode = false;
+  psSelectedNodeIds = [];
+  const lanes = document.getElementById('swim-lanes');
+  if (lanes) lanes.style.userSelect = '';
+  const banner = document.getElementById('tool-select-banner');
+  banner.style.display = 'none';
+  banner.innerHTML = `<span>&#9733; Click steps to select &mdash; <span id="tool-select-count">0</span> selected</span>
+    <button onclick="confirmToolAssignment()" style="background:var(--bts-teal);color:white;border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);">Assign Tool</button>
+    <button onclick="cancelToolSelectMode()" style="background:none;border:1px solid var(--bts-teal);border-radius:5px;padding:4px 8px;font-size:11px;color:var(--bts-teal);cursor:pointer;font-family:var(--font);">Cancel</button>`;
+  renderCanvas();
+}
+
+function toggleToolNodeSelect(nodeId) {
+  const idx = psSelectedNodeIds.indexOf(nodeId);
+  if (idx > -1) psSelectedNodeIds.splice(idx, 1);
+  else psSelectedNodeIds.push(nodeId);
+  const cnt = document.getElementById('tool-select-count');
+  if (cnt) cnt.textContent = psSelectedNodeIds.length;
+  renderCanvas();
+}
+
+function confirmToolAssignment() {
+  if (!psSelectedNodeIds.length) { cancelToolSelectMode(); return; }
+  const banner = document.getElementById('tool-select-banner');
+  banner.innerHTML = `
+    <span style="font-size:11px;font-weight:700;color:var(--bts-teal);">Tool name:</span>
+    <input id="tool-name-input" type="text" placeholder="e.g. AI Scope Summariser" style="padding:4px 9px;border:1px solid var(--bts-teal);border-radius:5px;font-size:11px;font-family:var(--font);outline:none;width:200px;" />
+    <button onclick="finaliseToolAssignment()" style="background:var(--bts-teal);color:white;border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);">Confirm</button>
+    <button onclick="cancelToolSelectMode()" style="background:none;border:1px solid var(--bts-teal);border-radius:5px;padding:4px 8px;font-size:11px;color:var(--bts-teal);cursor:pointer;font-family:var(--font);">Cancel</button>`;
+  const inp = document.getElementById('tool-name-input');
+  if (inp) { inp.focus(); inp.onkeydown = e => { if (e.key === 'Enter') finaliseToolAssignment(); if (e.key === 'Escape') cancelToolSelectMode(); }; }
+}
+
+function finaliseToolAssignment() {
+  const nameEl = document.getElementById('tool-name-input');
+  const toolName = nameEl ? nameEl.value.trim() : '';
+  if (!toolName) { cancelToolSelectMode(); return; }
+  const groupId = Date.now();
+  psToolGroups.push({ id: groupId, toolName, nodeIds: [...psSelectedNodeIds], details: '', oversight: '', action: '' });
+  psSelectedNodeIds.forEach(nid => { const n = psCanvasNodes.find(n => n.id === nid); if (n) n.toolGroupId = groupId; });
+  psSelectMode = false;
+  psSelectedNodeIds = [];
+  const lanes2 = document.getElementById('swim-lanes');
+  if (lanes2) lanes2.style.userSelect = '';
+  const banner = document.getElementById('tool-select-banner');
+  banner.style.display = 'none';
+  banner.innerHTML = `<span>&#9733; Click steps to select &mdash; <span id="tool-select-count">0</span> selected</span>
+    <button onclick="confirmToolAssignment()" style="background:var(--bts-teal);color:white;border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);">Assign Tool</button>
+    <button onclick="cancelToolSelectMode()" style="background:none;border:1px solid var(--bts-teal);border-radius:5px;padding:4px 8px;font-size:11px;color:var(--bts-teal);cursor:pointer;font-family:var(--font);">Cancel</button>`;
+  renderCanvas();
+  renderToolBrackets();
+}
+
+function removeSelfFromToolGroup() {
+  if (psDpActiveNodeId === null) return;
+  const node = psCanvasNodes.find(n => n.id === psDpActiveNodeId);
+  if (!node || !node.toolGroupId) return;
+  const grp = psToolGroups.find(g => g.id === node.toolGroupId);
+  if (grp) grp.nodeIds = grp.nodeIds.filter(id => id !== psDpActiveNodeId);
+  if (grp && grp.nodeIds.length === 0) psToolGroups = psToolGroups.filter(g => g.id !== grp.id);
+  delete node.toolGroupId;
+  openPsDetailsPanel(psDpActiveNodeId);
+  renderCanvas();
+  renderToolBrackets();
+}
+
+// ── Tool brackets ─────────────────────────────────────────────────────────────
+
+function renderToolBrackets() {
+  const row = document.getElementById('tool-bracket-row');
+  if (!row) return;
+  if (!psToolGroups.length) { row.style.display = 'none'; row.innerHTML = ''; return; }
+  row.style.display = 'flex';
+  row.innerHTML = '';
+  const STEP_W = 165, ARROW_W = 32, COL_W = STEP_W + ARROW_W, LANE_LABEL_W = 80;
+  const columns = [];
+  const gMap = {};
+  psCanvasNodes.forEach(node => {
+    const gid = node.groupId || node.id;
+    if (gMap[gid] !== undefined) columns[gMap[gid]].nodes.push(node);
+    else { gMap[gid] = columns.length; columns.push({ groupId: gid, nodes: [node] }); }
+  });
+  psToolGroups.forEach(tg => {
+    const colIndices = tg.nodeIds.map(nid => columns.findIndex(c => c.nodes.some(n => n.id === nid))).filter(i => i > -1);
+    if (!colIndices.length) return;
+    const minCol = Math.min(...colIndices);
+    const maxCol = Math.max(...colIndices);
+    const left = LANE_LABEL_W + (minCol * COL_W) + 4;
+    const width = ((maxCol - minCol + 1) * COL_W) - 10;
+    const bracket = document.createElement('div');
+    bracket.className = 'tool-bracket';
+    bracket.style.left = left + 'px';
+    bracket.style.width = width + 'px';
+    bracket.title = 'Click to edit tool details';
+    bracket.onclick = () => { const firstNodeId = tg.nodeIds[0]; if (firstNodeId) openPsDetailsPanel(firstNodeId); };
+    const star = document.createElement('span'); star.textContent = '★';
+    const name = document.createElement('span'); name.textContent = tg.toolName;
+    const del = document.createElement('button');
+    del.textContent = '✕'; del.title = 'Remove tool';
+    del.style.cssText = 'background:none;border:none;color:var(--bts-teal);cursor:pointer;font-size:10px;padding:0;margin-left:auto;';
+    del.onclick = (e) => { e.stopPropagation(); removeToolGroup(tg.id); };
+    bracket.appendChild(star); bracket.appendChild(name); bracket.appendChild(del);
+    row.appendChild(bracket);
+  });
+}
+
+function removeToolGroup(groupId) {
+  psToolGroups = psToolGroups.filter(g => g.id !== groupId);
+  psCanvasNodes.forEach(n => { if (n.toolGroupId === groupId) delete n.toolGroupId; });
+  renderCanvas(); renderToolBrackets();
+}
+
+// ── Tool details sync ─────────────────────────────────────────────────────────
+
+function psDpToolSync(field, value) {
+  if (psDpActiveNodeId === null) return;
+  const node = psCanvasNodes.find(n => n.id === psDpActiveNodeId);
+  if (!node || !node.toolGroupId) return;
+  const grp = psToolGroups.find(g => g.id === node.toolGroupId);
+  if (grp) grp[field] = value;
+}
+
+function psDpToolRoleSelect(role) {
+  if (psDpActiveNodeId === null) return;
+  const node = psCanvasNodes.find(n => n.id === psDpActiveNodeId);
+  if (!node || !node.toolGroupId) return;
+  const grp = psToolGroups.find(g => g.id === node.toolGroupId);
+  if (grp) grp.action = role;
+  document.querySelectorAll('.tool-role-btn').forEach(btn => {
+    const active = btn.textContent.trim() === role;
+    btn.style.background = active ? 'var(--bts-teal)' : 'white';
+    btn.style.color = active ? 'white' : '#888';
+    btn.style.borderColor = active ? 'var(--bts-teal)' : '#DDE1E6';
+  });
+}
+
+function psDpSync(field, value) {
+  if (psDpActiveNodeId === null) return;
+  const s = psStructuredSteps.find(s => s.nodeId === psDpActiveNodeId);
+  if (s) s[field] = value;
+}
+
+function psDpFrictionToggle(checked) {
+  const val = checked ? 'Yes' : 'No';
+  const row = document.getElementById('ps-dp-friction-row');
+  if (row) row.style.display = checked ? 'block' : 'none';
+  psDpSync('friction', val);
+  renderCanvas(); // re-render so red outline appears/disappears live
+}
+
+function getLaneLabelById(laneId) {
+  const el = document.querySelector('#swim-lanes .swim-lane[data-lane="' + laneId + '"] .lane-label');
+  return el ? el.textContent.trim() : laneId.toUpperCase();
+}
+
+function getLaneColors(laneId) {
+  const el = document.querySelector('#swim-lanes .swim-lane[data-lane="' + laneId + '"] .lane-label');
+  if (!el) return { bg: '#F2F2F2', text: '#555' };
+  const s = getComputedStyle(el);
+  return { bg: s.backgroundColor, text: s.color };
 }
 
 function psRemoveCanvasNode(nodeId) {
@@ -1921,10 +2412,8 @@ function renumberAllNodes() { renderCanvas(); }
 function confirmNode(lane, text, wrap) {
   if (!text || !text.trim()) { if (wrap) wrap.remove(); return; }
   if (wrap) wrap.remove();
-  // Remove any open quick-add panel
   const qa = document.getElementById('ps-quick-add');
   if (qa) qa.remove();
-
   const mode = psAddModeState;
   const type = mode === 'friction' ? 'friction' : mode === 'star' ? 'star' : 'step';
   psCanvasNodes.push({ id: ++psNodeIdCounter, lane: lane, text: text, type: type, stackedWith: null });
@@ -2097,7 +2586,7 @@ function renderStructuredSteps() {
         </div>
       </div>
       <div class="field" style="margin-top:10px;margin-bottom:0;">
-        <label>Notes / Tacit Knowledge <span style="font-weight:400;color:var(--bts-pink);">★ most important for agent training</span></label>
+        <label>Notes / Tacit Knowledge</label>
         <textarea onchange="psUpdateStep(${i},'notes',this.value)" placeholder="What would a new person never know to ask about this step? What lives only in people's heads?" rows="2" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;">${s.notes}</textarea>
       </div>
     </div>
@@ -2458,6 +2947,197 @@ function fallbackCopy(text, callback) {
 document.addEventListener('keydown', e => { if (state) state._shiftHeld = e.shiftKey; });
 document.addEventListener('keyup',   e => { if (state) state._shiftHeld = false; });
 
+// ── Facilitator Tour ──────────────────────────────────────────────────────────
+
+const TOUR_STEPS = [
+  {
+    target: 'ps-stepper',
+    title: 'The four phases',
+    body: 'These phases guide your session from mapping what exists today, to visualising it clearly, simplifying it, and finally exploring where AI fits. Work through them in order — or revisit any phase at any time.',
+    position: 'below'
+  },
+  {
+    target: 'workflow-title',
+    title: 'Name your workflow',
+    body: 'Start here. Give the workflow a clear name so everyone in the room knows exactly what you\'re mapping today. Be specific — "SOW Creation" is better than "Our Process."',
+    position: 'below'
+  },
+  {
+    target: 'btn-add-step',
+    title: 'Adding steps',
+    body: 'Click "+ Step" then click any swim lane to place a step. Every workflow starts with one step at a time. Don\'t overthink the order — you can insert steps between existing ones by hovering and clicking the green + button.',
+    position: 'below'
+  },
+  {
+    target: 'swim-lanes',
+    title: 'Swim lanes',
+    body: 'Each lane represents a team or role. Steps live in the lane of whoever owns them. Use "+ Add Lane" to bring in other teams. Steps in the same column happen at the same time — use the ⊕ stack button to show that.',
+    position: 'above'
+  },
+  {
+    target: 'ps-phase-card',
+    title: 'Phase guidance',
+    body: 'This card gives your team a facilitation prompt for the current phase. It changes as you move through the phases — use it to keep the conversation focused and on track.',
+    position: 'below'
+  },
+  {
+    target: 'ps-details-panel-anchor',
+    title: 'Step details',
+    body: 'Click any step card on the canvas to open the details panel here. Capture the input, output, tool used, time estimate, and — most importantly — tacit knowledge. This is where the real intelligence lives.',
+    position: 'above'
+  },
+  {
+    target: 'mapper-legend',
+    title: 'Friction points',
+    body: 'Open a step\'s details and check "Friction?" to flag where the workflow is slow, confusing, or painful. The step card turns red on the canvas. Celebrate these — they\'re the most valuable thing your team can name.',
+    position: 'above'
+  },
+  {
+    target: 'ps-p4',
+    title: 'Phase 4 — Add a Tool',
+    body: 'When you\'re ready to explore AI, switch to Phase 4. Click "★ Assign Tool", select the steps the tool would cover across any lane, name the tool, and describe what it does. One tool can span multiple steps and multiple lanes.',
+    position: 'below'
+  },
+  {
+    target: 'mapper-toast-anchor',
+    title: 'Save to Smartsheet',
+    body: 'When your map is ready, hit "Save to Smartsheet." Every step becomes its own row — structured and searchable. This is how your session becomes a permanent team record and the foundation for our Standard Operating Procedure.',
+    position: 'above'
+  }
+];
+
+let tourStep = 0;
+
+function startTour() {
+  // Make sure we are on the mapper tab
+  showTab('mapper');
+  setTimeout(() => {
+    tourStep = 0;
+    document.getElementById('tour-overlay').style.display = 'block';
+    renderTourStep();
+  }, 300);
+}
+
+function endTour() {
+  document.getElementById('tour-overlay').style.display = 'none';
+  document.getElementById('tour-spotlight').style.display = 'none';
+  document.getElementById('tour-card').style.display = 'none';
+  // Remove any temp anchor elements
+  const anchor = document.getElementById('ps-details-panel-anchor');
+  if (anchor) anchor.remove();
+  const anchor2 = document.getElementById('mapper-toast-anchor');
+  if (anchor2) anchor2.remove();
+}
+
+function tourNext() {
+  tourStep++;
+  if (tourStep >= TOUR_STEPS.length) { endTour(); return; }
+  renderTourStep();
+}
+
+function renderTourStep() {
+  const step = TOUR_STEPS[tourStep];
+  const total = TOUR_STEPS.length;
+
+  // Update card text
+  document.getElementById('tour-step-label').textContent = 'STEP ' + (tourStep + 1) + ' OF ' + total;
+  document.getElementById('tour-title').textContent = step.title;
+  document.getElementById('tour-body').textContent = step.body;
+
+  // Update next button label
+  const nextBtn = document.getElementById('tour-next-btn');
+  nextBtn.textContent = tourStep === total - 1 ? 'Finish ✓' : 'Next →';
+
+  // Dots
+  const dotsEl = document.getElementById('tour-dots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'tour-dot' + (i === tourStep ? ' active' : '');
+    dotsEl.appendChild(dot);
+  }
+
+  // Find target element
+  let targetEl = document.getElementById(step.target);
+
+  // Special anchors for elements that may not always exist
+  if (step.target === 'ps-details-panel-anchor') {
+    targetEl = document.getElementById('ps-details-panel');
+    if (!targetEl) targetEl = document.getElementById('mapper-legend');
+  }
+  if (step.target === 'mapper-toast-anchor') {
+    targetEl = document.querySelector('.btn-row');
+    if (!targetEl) targetEl = document.getElementById('mapper-toast');
+  }
+
+  if (!targetEl) {
+    // Skip this step if element not found
+    tourNext(); return;
+  }
+
+  // Scroll element into view
+  targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  setTimeout(() => {
+    positionTourSpotlight(targetEl, step.position);
+  }, 350);
+}
+
+function positionTourSpotlight(el, position) {
+  const rect = el.getBoundingClientRect();
+  const PAD = 8;
+
+  const spotlight = document.getElementById('tour-spotlight');
+  spotlight.style.display = 'block';
+  spotlight.style.left   = (rect.left - PAD) + 'px';
+  spotlight.style.top    = (rect.top - PAD) + 'px';
+  spotlight.style.width  = (rect.width + PAD * 2) + 'px';
+  spotlight.style.height = (rect.height + PAD * 2) + 'px';
+
+  // Position card
+  const card = document.getElementById('tour-card');
+  card.style.display = 'block';
+  const CARD_W = 320;
+  const CARD_GAP = 16;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  // Horizontal: try to centre on spotlight, keep within viewport
+  let cardLeft = rect.left + rect.width / 2 - CARD_W / 2;
+  cardLeft = Math.max(12, Math.min(cardLeft, vw - CARD_W - 12));
+
+  let cardTop;
+  if (position === 'below') {
+    cardTop = rect.bottom + PAD + CARD_GAP;
+    // If it would go off bottom, flip above
+    if (cardTop + 220 > vh) cardTop = rect.top - PAD - CARD_GAP - 220;
+  } else {
+    cardTop = rect.top - PAD - CARD_GAP - 220;
+    // If it would go off top, flip below
+    if (cardTop < 12) cardTop = rect.bottom + PAD + CARD_GAP;
+  }
+  cardTop = Math.max(12, Math.min(cardTop, vh - 240));
+
+  card.style.left = cardLeft + 'px';
+  card.style.top  = cardTop + 'px';
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 </script>
+  <!-- ── Facilitator Tour Overlay ─────────────────────────────── -->
+  <div id="tour-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.0);z-index:9000;pointer-events:none;"></div>
+  <div id="tour-spotlight" style="display:none;position:fixed;z-index:9001;border-radius:10px;box-shadow:0 0 0 4000px rgba(0,0,0,0.7);pointer-events:none;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);outline:2.5px solid #6C5CE7;"></div>
+  <div id="tour-card" style="display:none;position:fixed;z-index:9002;background:white;border-radius:12px;padding:20px 22px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.28);pointer-events:all;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);">
+    <div class="tour-step-label" id="tour-step-label">Step 1 of 9</div>
+    <div class="tour-title" id="tour-title"></div>
+    <div class="tour-body" id="tour-body"></div>
+    <div class="tour-actions">
+      <div class="tour-dots" id="tour-dots"></div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="tour-skip" onclick="endTour()">Skip tour ✕</button>
+        <button class="tour-next" id="tour-next-btn" onclick="tourNext()">Next →</button>
+      </div>
+    </div>
+  </div>
+
 </body>
-</html>
