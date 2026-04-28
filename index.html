@@ -72,7 +72,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .greet p { font-size: 12px; color: #888; margin-top: 3px; }
 
 .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 10px; }
-.action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 28px; }
+.action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 28px; }
 .action-card { background: white; border-radius: 10px; border: 1px solid #E8EBF0; padding: 18px 14px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
 .action-card:hover { border-color: var(--bts-pink); box-shadow: 0 2px 12px rgba(202,28,104,0.10); }
 .ac-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 15px; }
@@ -471,6 +471,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Check-In</div>
     <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Process Studio</div>
     <div class="nav-item" id="nav-dashboard" onclick="showTab('dashboard')">Pilot Dashboard</div>
+    <div class="nav-item" id="nav-roles" onclick="showTab('roles')">Roles & Responsibilities</div>
   </div>
 
   <!-- ======= HOME TAB ======= -->
@@ -516,6 +517,15 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div class="ac-hover-desc">
           <span class="ac-brene">Available to AI Champions and Level 5 leadership. "Progress isn't always visible until someone makes it visible. This is how we see what's moving, what needs attention, and who might need a hand."</span>
           <span class="ac-what">When you click here, you'll see a real-time view of all active PMO AI pilots — their health status, current phase, and any flags that need follow-up.</span>
+        </div>
+      </div>
+      <div class="action-card" onclick="showTab('roles')">
+        <div class="ac-icon" style="font-size:17px;background:var(--bts-pink-light);">&#128101;</div>
+        <h3>Roles &amp; Responsibilities</h3>
+        <p>Quick reference for pilot ownership</p>
+        <div class="ac-hover-desc">
+          <span class="ac-brene">"Clarity is kindness. When everyone knows their role, no one has to guess — and the work moves forward with confidence instead of confusion."</span>
+          <span class="ac-what">When you click here, you'll see a side-by-side comparison of the Pilot Lead, Pilot Partner, and Level 5 responsibilities — including who owns each check-in milestone. Bookmark this page for quick reference throughout your pilot.</span>
         </div>
       </div>
     </div>
@@ -888,6 +898,190 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
     </div>
   </div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ROLES & RESPONSIBILITIES TAB                                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="main" id="tab-roles" style="display:none">
+  <div class="page-title">Roles &amp; Responsibilities</div>
+  <p class="page-sub">Quick reference for pilot ownership — based on the PMO AI Pilot Playbook</p>
+
+  <!-- Intro banner -->
+  <div style="background:var(--bts-dark);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
+    <div>
+      <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">The Two-Person Ownership Model</div>
+      <div style="font-size:12px;color:#B0B8C1;line-height:1.6;">Every pilot has exactly two owners — a Pilot Lead and a Pilot Partner. Co-ownership is <strong style="color:white;">never assigned</strong> — both people must volunteer. The role split exists to remove ambiguity, not divide accountability. Shared accountability without clear roles is how pilots quietly stall.</div>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;">
+
+    <!-- Pilot Lead -->
+    <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-pink);overflow:hidden;">
+      <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-pink);margin-bottom:4px;">Role 01</div>
+        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Lead</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the momentum, all seven check-ins, and the Day 90 presentation.</div>
+      </div>
+      <div style="padding:14px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+        <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+          <li>Setting up the pilot and orienting the test group</li>
+          <li>Drafting and sending all written check-in updates to Level 5 (Days 1, 15, 30, 45, 75)</li>
+          <li>Leading verbal check-ins at Days 60 and 90</li>
+          <li>Keeping the pilot on schedule across all seven milestones</li>
+          <li>Presenting findings verbally to Level 5 at Day 90</li>
+          <li>Being the single point of contact Level 5 calls if there is silence</li>
+        </ul>
+        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Level 5</div>
+        <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#FEF8FB;border-radius:7px;padding:8px 10px;">Primary contact. Sends all check-ins. Level 5 directs all questions and feedback to the Pilot Lead first.</div>
+        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+        <div style="font-size:12px;color:var(--bts-pink);font-weight:600;background:#FEF8FB;border-radius:7px;padding:8px 10px;">If there is silence, Level 5 reaches out to the Pilot Lead.</div>
+      </div>
+    </div>
+
+    <!-- Pilot Partner -->
+    <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-teal);overflow:hidden;">
+      <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:4px;">Role 02</div>
+        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Partner</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the validation, the challenge, and the continuity if the Lead is pulled away.</div>
+      </div>
+      <div style="padding:14px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+        <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+          <li>Independently testing the tool and tracking their own usage data</li>
+          <li>Providing honest, unfiltered feedback — including when the tool is not working</li>
+          <li>Leading the Day 45 peer review (the "third eye" step)</li>
+          <li>Reviewing and co-signing the Day 90 findings before presentation</li>
+          <li>Stepping up to full Lead responsibilities if the Lead is unavailable</li>
+        </ul>
+        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Level 5</div>
+        <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F0FBF8;border-radius:7px;padding:8px 10px;">Copied on all check-ins. Attends the Day 90 presentation. Steps in as primary contact only if the Lead is unavailable.</div>
+        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+        <div style="font-size:12px;color:var(--bts-teal);font-weight:600;background:#F0FBF8;border-radius:7px;padding:8px 10px;">If the Pilot Lead is unavailable, the Pilot Partner becomes the Lead.</div>
+      </div>
+    </div>
+
+    <!-- Level 5 -->
+    <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-purple);overflow:hidden;">
+      <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-purple);margin-bottom:4px;">Role 03</div>
+        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Level 5 Leadership</div>
+        <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Receives updates, provides feedback, coaches the co-owners, and makes the final call at Day 90.</div>
+      </div>
+      <div style="padding:14px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+        <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+          <li>Receiving written check-in updates at Days 1, 15, 30, 45, and 75</li>
+          <li>Attending verbal check-ins at Days 60 and 90</li>
+          <li>Responding to written check-ins with feedback within one week</li>
+          <li>Making the final Standardize / Reevaluate / Table decision at Day 90</li>
+          <li>Approving any early pilot entry at Day 30 (exception only)</li>
+        </ul>
+        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Not in the ownership seat</div>
+        <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Level 5 does not own the pilot. They are informed, not accountable for day-to-day execution. Approval comes at Day 90 only.</div>
+        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+        <div style="font-size:12px;color:var(--bts-purple);font-weight:600;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Nothing becomes a Standard without explicit Level 5 approval. No exceptions.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Why this model works -->
+  <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;padding:20px 22px;margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;color:var(--bts-dark);margin-bottom:10px;">Why this model works for our team</div>
+    <div style="font-size:12px;color:#555;line-height:1.8;">Our team operates in silos and people are frequently pulled into competing delivery priorities. A single owner is vulnerable — if they are pulled away, the pilot dies quietly. Two owners prevents that. And because co-ownership is always opted into rather than assigned, both people arrive with genuine commitment — not compliance.</div>
+    <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">But two willing owners without a clear role split creates a different problem: diffusion, where both people do less because each assumes the other has the lead. The Pilot Lead / Pilot Partner model keeps the redundancy of two owners while eliminating the ambiguity. The Lead is accountable for momentum. The Partner is accountable for honest validation. Together, they produce a richer, more credible Day 90 finding than either could alone — and Level 5 gets two independent perspectives, not one advocate.</div>
+  </div>
+
+  <!-- Check-in ownership summary -->
+  <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;overflow:hidden;margin-bottom:20px;">
+    <div style="padding:14px 18px;border-bottom:1px solid #F0F2F5;background:#FAFBFC;">
+      <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Check-In Ownership at a Glance</div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr style="background:#F5F6F8;">
+            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-dark);border-bottom:1px solid #E8EBF0;">Milestone</th>
+            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-pink);border-bottom:1px solid #E8EBF0;">Pilot Lead</th>
+            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-teal);border-bottom:1px solid #E8EBF0;">Pilot Partner</th>
+            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-purple);border-bottom:1px solid #E8EBF0;">Level 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #F0F2F5;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 1</td>
+            <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
+            <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
+            <td style="padding:10px 16px;color:#555;">Receives &amp; acknowledges</td>
+          </tr>
+          <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 15</td>
+            <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
+            <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
+            <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
+          </tr>
+          <tr style="border-bottom:1px solid #F0F2F5;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 30</td>
+            <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
+            <td style="padding:10px 16px;color:#555;">Reviews &amp; adds perspective before send</td>
+            <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
+          </tr>
+          <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 45</td>
+            <td style="padding:10px 16px;color:#555;">Supports</td>
+            <td style="padding:10px 16px;color:#555;font-weight:600;">Leads — brings in fresh perspectives ("third eye")</td>
+            <td style="padding:10px 16px;color:#555;">Receives written summary</td>
+          </tr>
+          <tr style="border-bottom:1px solid #F0F2F5;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60</td>
+            <td style="padding:10px 16px;color:#555;font-weight:600;">Leads verbal check-in</td>
+            <td style="padding:10px 16px;color:#555;">Attends &amp; contributes</td>
+            <td style="padding:10px 16px;color:#555;">Attends &amp; gives verbal feedback</td>
+          </tr>
+          <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60–75</td>
+            <td style="padding:10px 16px;color:#555;">Leads cross-functional review</td>
+            <td style="padding:10px 16px;color:#555;">Supports</td>
+            <td style="padding:10px 16px;color:#555;">Monitors approval status</td>
+          </tr>
+          <tr style="border-bottom:1px solid #F0F2F5;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 75</td>
+            <td style="padding:10px 16px;color:#555;">Sends written readiness update</td>
+            <td style="padding:10px 16px;color:#555;">Reviews before send</td>
+            <td style="padding:10px 16px;color:#555;">Receives &amp; responds</td>
+          </tr>
+          <tr style="background:#FAFBFC;">
+            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 90</td>
+            <td style="padding:10px 16px;color:#555;font-weight:600;">Presents findings verbally</td>
+            <td style="padding:10px 16px;color:#555;">Present to answer questions</td>
+            <td style="padding:10px 16px;color:#555;font-weight:600;">Makes final decision: Standardize / Reevaluate / Table</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Key rules footer -->
+  <div style="background:var(--bts-dark);border-radius:10px;padding:16px 22px;display:flex;gap:24px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:200px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-pink);margin-bottom:4px;">Non-negotiable</div>
+      <div style="font-size:12px;color:white;line-height:1.6;">Co-ownership is never assigned. Both owners must volunteer. No pilot moves forward without two willing owners.</div>
+    </div>
+    <div style="flex:1;min-width:200px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-teal);margin-bottom:4px;">Non-negotiable</div>
+      <div style="font-size:12px;color:white;line-height:1.6;">Every idea starts at Experiment. There is no express lane to Pilot. Experiment → Pilot → Standard. No shortcuts.</div>
+    </div>
+    <div style="flex:1;min-width:200px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-purple);margin-bottom:4px;">Non-negotiable</div>
+      <div style="font-size:12px;color:white;line-height:1.6;">Nothing becomes a Standard without explicit Level 5 approval. Approval comes at Day 90 only. No exceptions.</div>
+    </div>
+  </div>
+
+</div>
 </div>
 
 <script>
@@ -1245,7 +1439,7 @@ function renderHomePilots() {
 }
 
 function showTab(tab) {
-  ['home','idea','checkin','mapper','dashboard'].forEach(t => {
+  ['home','idea','checkin','mapper','dashboard','roles'].forEach(t => {
     document.getElementById('tab-' + t).style.display = (t === tab) ? '' : 'none';
     document.getElementById('nav-' + t).classList.toggle('active', t === tab);
   });
@@ -1275,6 +1469,203 @@ function classifyIdea() {
   }
   box.style.display = '';
   box.innerHTML = `<div style="background:${color};border-radius:8px;padding:12px 14px;font-size:12px;color:var(--bts-dark);line-height:1.6"><strong>Work Bucket:</strong> ${bucket} &nbsp;&bull;&nbsp; <strong>Starting Stage:</strong> ${stage}<br><span style="color:#666;margin-top:4px;display:block">${note}</span></div>`;
+}
+
+// ── Go-Do Actions System ──────────────────────────────────────────────────────
+
+// Pre-filled Go-Do items per day (from PMO AI Pilot Playbook)
+// These appear AFTER submitting that day, to be completed BEFORE the next check-in
+const GODO_TEMPLATES = {
+  1: [
+    'Send Day 1 written update to Level 5 via the AI Innovation Tool',
+    'Confirm Level 5 has received and acknowledged the kick-off update',
+    'Share the milestone calendar with both co-owners and Level 5',
+    'Both Lead and Partner independently document the baseline measurement',
+    'Set up the tool and orient all testers',
+    'If a new AI tool license was requested, follow up with the AI Champion'
+  ],
+  15: [
+    'Send Day 15 written update to Level 5 — both co-owners contribute their perspective',
+    'Monitor for Level 5 written feedback (due within one week)',
+    'Document any early surprises, blockers, or adjustments needed',
+    'Continue tracking usage data and time comparisons against baseline'
+  ],
+  30: [
+    'Pilot Lead drafts Day 30 update — Pilot Partner reviews before it is sent',
+    'Send Day 30 written update to Level 5',
+    'Monitor for Level 5 feedback (due within one week)',
+    'Decide together: continue, adjust, or pause — document your reasoning'
+  ],
+  45: [
+    'Pilot Partner: identify and brief team members not previously involved in the pilot',
+    'Facilitate the "third eye" review session with those fresh perspectives',
+    'Document all feedback surfaced — including concerns and blind spots',
+    'Incorporate any immediate refinements before Day 60',
+    'Prepare talking points for the Day 60 verbal check-in with Level 5'
+  ],
+  60: [
+    'Document key takeaways and Level 5 verbal feedback in writing via the AI Innovation Tool',
+    'Begin the cross-functional review — share the tool with any affected departments',
+    'Each affected department must confirm no workflow conflicts before Day 90',
+    'Document cross-functional approvals or concerns in the AI Innovation Tool',
+    'Incorporate any refinements from the Day 60 Level 5 feedback'
+  ],
+  75: [
+    'Send Day 75 written readiness update to Level 5',
+    'Confirm all cross-functional reviewers have had final review and practice use',
+    'Resolve any outstanding concerns raised by cross-functional reviewers',
+    'Prepare the Day 90 verbal presentation — Pilot Lead presents, Partner attends',
+    'Pilot Partner: prepare your independent testing findings for Day 90'
+  ],
+  90: []  // Day 90 is the final check-in — no future Go-Dos
+};
+
+// Next check-in day map
+const NEXT_CHECKIN = { 1: 15, 15: 30, 30: 45, 45: 60, 60: 75, 75: 90, 90: null };
+const PREV_CHECKIN = { 15: 1, 30: 15, 45: 30, 60: 45, 75: 60, 90: 75 };
+
+// Storage key for Go-Do state
+function godoKey(pilotName, day) {
+  return 'godo_' + (pilotName || 'pilot').replace(/\s+/g,'_') + '_day' + day;
+}
+
+function saveGodosForDay(pilotName, day, items) {
+  // items: array of { text, checked, custom }
+  try { localStorage.setItem(godoKey(pilotName, day), JSON.stringify(items)); } catch(e) {}
+}
+
+function loadGodosForDay(pilotName, day) {
+  try {
+    const raw = localStorage.getItem(godoKey(pilotName, day));
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function buildGodoItems(day, pilotName) {
+  // Load saved state or build fresh from template
+  const saved = loadGodosForDay(pilotName, day);
+  if (saved) return saved;
+  return (GODO_TEMPLATES[day] || []).map(text => ({ text, checked: false, custom: false }));
+}
+
+// Render previous day Go-Do checklist (appears at top of current check-in)
+function renderPrevGodoChecklist(currentDay, pilotName) {
+  const prevDay = PREV_CHECKIN[currentDay];
+  if (!prevDay) return '';
+  const items = buildGodoItems(prevDay, pilotName);
+  if (!items.length) return '';
+
+  const nextLabel = 'Day ' + currentDay;
+  const allChecked = items.every(i => i.checked);
+  const unchecked = items.filter(i => !i.checked).length;
+
+  const itemsHTML = items.map((item, idx) => `
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #F5F6F8;">
+      <input type="checkbox" id="prev-godo-${idx}" ${item.checked ? 'checked' : ''}
+        onchange="togglePrevGodo(${prevDay},'${(pilotName||'').replace(/'/g,"\'")}',${idx},this.checked)"
+        style="margin-top:2px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
+      <label for="prev-godo-${idx}" style="font-size:12px;color:${item.checked ? '#AAA' : 'var(--bts-dark)'};cursor:pointer;line-height:1.5;${item.checked ? 'text-decoration:line-through;' : ''}">
+        ${item.text}
+        ${!item.checked ? '<span style="margin-left:6px;font-size:9px;font-weight:700;background:#FAE5D3;color:#C0570F;border-radius:4px;padding:1px 5px;">FLAGGED</span>' : ''}
+      </label>
+    </div>`).join('');
+
+  return `
+    <div style="background:#FFFBF2;border:1px solid #FAC775;border-radius:10px;padding:14px 16px;margin-bottom:18px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="font-size:13px;">📋</span>
+        <div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Go-Do Actions from Day ${prevDay}</div>
+        ${unchecked > 0 ? `<span style="font-size:10px;font-weight:700;background:#FAE5D3;color:#C0570F;border-radius:5px;padding:2px 7px;">${unchecked} flagged</span>` : '<span style="font-size:10px;font-weight:700;background:#E1F5EE;color:#0F6E56;border-radius:5px;padding:2px 7px;">All complete ✓</span>'}
+      </div>
+      <p style="font-size:11px;color:#888;margin-bottom:10px;">Check off any remaining items before submitting your ${nextLabel} update.</p>
+      ${itemsHTML}
+    </div>`;
+}
+
+function togglePrevGodo(day, pilotName, idx, checked) {
+  const items = buildGodoItems(day, pilotName);
+  if (items[idx]) items[idx].checked = checked;
+  saveGodosForDay(pilotName, day, items);
+  // Update label styling without re-rendering
+  const label = document.querySelector(`label[for="prev-godo-${idx}"]`);
+  if (label) {
+    label.style.color = checked ? '#AAA' : 'var(--bts-dark)';
+    label.style.textDecoration = checked ? 'line-through' : '';
+    const flag = label.querySelector('span');
+    if (flag) flag.style.display = checked ? 'none' : 'inline';
+  }
+}
+
+// Render Go-Do section for current day (appears after submit)
+function renderGodoSection(day, pilotName) {
+  const nextDay = NEXT_CHECKIN[day];
+  if (!nextDay) return ''; // Day 90 has no next check-in
+  const items = buildGodoItems(day, pilotName);
+
+  const itemsHTML = items.map((item, idx) => `
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #F0F2F5;" id="godo-row-${idx}">
+      <input type="checkbox" id="godo-${idx}"
+        onchange="toggleGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}',${idx},this.checked)"
+        style="margin-top:3px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
+      <label for="godo-${idx}" style="font-size:12px;color:var(--bts-dark);cursor:pointer;line-height:1.5;flex:1;">${item.text}</label>
+    </div>`).join('');
+
+  return `
+    <div id="godo-section-${day}" style="margin-top:24px;border-top:2px solid var(--bts-teal);padding-top:16px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="font-size:14px;">✅</span>
+        <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Go-Do Actions before Day ${nextDay} Check-In</div>
+      </div>
+      <p style="font-size:11px;color:#888;margin-bottom:12px;line-height:1.5;">Complete these actions before your next check-in. Uncompleted items will be <strong>flagged</strong> at the start of your Day ${nextDay} check-in.</p>
+      <div id="godo-items-${day}">${itemsHTML}</div>
+      <div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
+        <input type="text" id="godo-custom-input-${day}" placeholder="Add a custom action..."
+          style="flex:1;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);outline:none;"
+          onfocus="this.style.borderColor='var(--bts-teal)'" onblur="this.style.borderColor='#DDE1E6'"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();event.stopPropagation();addCustomGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}');}" />
+        <button onclick="event.preventDefault();event.stopPropagation();addCustomGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}');"
+          style="background:var(--bts-teal);color:white;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;">+ Add</button>
+      </div>
+    </div>`;
+}
+
+function toggleGodo(day, pilotName, idx, checked) {
+  const items = buildGodoItems(day, pilotName);
+  if (items[idx]) items[idx].checked = checked;
+  saveGodosForDay(pilotName, day, items);
+}
+
+function addCustomGodo(day, pilotName) {
+  const input = document.getElementById('godo-custom-input-' + day);
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const items = buildGodoItems(day, pilotName);
+  items.push({ text, checked: false, custom: true });
+  saveGodosForDay(pilotName, day, items);
+  input.value = '';
+  // Append new item to list without full re-render
+  const container = document.getElementById('godo-items-' + day);
+  if (container) {
+    const idx = items.length - 1;
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #F0F2F5;';
+    row.id = 'godo-row-' + idx;
+    row.innerHTML = `<input type="checkbox" id="godo-${idx}"
+      onchange="toggleGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}',${idx},this.checked)"
+      style="margin-top:3px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
+      <label for="godo-${idx}" style="font-size:12px;color:var(--bts-dark);cursor:pointer;line-height:1.5;flex:1;">${text}</label>`;
+    container.appendChild(row);
+  }
+}
+
+// Collect current Go-Do state for Smartsheet save
+function collectGodoState(day, pilotName) {
+  const items = loadGodosForDay(pilotName, day);
+  if (!items) return '';
+  const checked = items.filter(i => i.checked).map(i => '✓ ' + i.text);
+  const unchecked = items.filter(i => !i.checked).map(i => '☐ ' + i.text);
+  return [...checked, ...unchecked].join(' | ');
 }
 
 function openCheckin(day) {
@@ -1470,9 +1861,10 @@ function openCheckin(day) {
       <p class="form-sub">${isVerbal ? 'Use this form to prepare your talking points before the meeting. After the meeting, return here to document key takeaways and Level 5 feedback.' : day === 45 ? 'The Pilot Partner owns bringing in fresh perspectives — team members who have not been involved yet. Use this form to capture what they surfaced.' : day === 30 ? 'Pilot Lead drafts this update. Pilot Partner reviews and adds their perspective before it is sent to Level 5.' : 'Complete this written update via the AI Innovation Tool.'}</p>
       ${isVerbal ? '<div class="warn-box">This is a <strong>verbal check-in</strong> — meet with Level 5 in person or on a call. Use this form to prepare talking points and record key takeaways immediately after.</div>' : ''}
       <div class="form-row">
-        <div class="field"><label>Pilot name</label><input type="text" placeholder="e.g. Digital Operator Tool Pilot" /></div>
+        <div class="field"><label>Pilot name</label><input type="text" id="ci-pilot-name" placeholder="e.g. Digital Operator Tool Pilot" /></div>
         <div class="field"><label>Your role on this pilot</label><select><option>Pilot Lead</option><option>Pilot Partner</option></select></div>
       </div>
+      <div id="prev-godo-container"></div>
       ${fieldsHTML}
       ${xfHTML}
       ${statusHTML}
@@ -1482,7 +1874,30 @@ function openCheckin(day) {
         <button class="btn-sec" onclick="backToCheckinSelector()">Cancel</button>
         <button class="btn-submit" onclick="submitCheckin(${day})">Submit Day ${day} Update</button>
       </div>
+      <div id="godo-container-${day}"></div>
     </div>`;
+
+  // Render prev Go-Do checklist and current Go-Do section immediately on load
+  setTimeout(() => {
+    const pilotNameEl = document.getElementById('ci-pilot-name');
+    const prevContainer = document.getElementById('prev-godo-container');
+    const godoContainer = document.getElementById('godo-container-' + day);
+
+    function refreshAll() {
+      const pn = pilotNameEl?.value.trim() || '';
+      if (prevContainer) prevContainer.innerHTML = renderPrevGodoChecklist(day, pn);
+      if (godoContainer) {
+        godoContainer.innerHTML = renderGodoSection(day, pn);
+        // Initialise storage for this day if not already saved
+        if (!loadGodosForDay(pn, day)) {
+          saveGodosForDay(pn, day, buildGodoItems(day, pn));
+        }
+      }
+    }
+
+    refreshAll();
+    if (pilotNameEl) pilotNameEl.addEventListener('blur', refreshAll);
+  }, 50);
 }
 
 function selectStatus(el, status) {
@@ -1568,7 +1983,12 @@ async function submitCheckin(day) {
     toast.textContent = day === 90
       ? 'Day 90 update saved to Smartsheet. Level 5 will review and communicate the standardization decision.'
       : 'Check-in saved to Smartsheet. Level 5 will respond within one week.';
-    setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 3500);
+
+    if (day !== 90) {
+      setTimeout(() => { toast.style.display = 'none'; }, 1500);
+    } else {
+      setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 3500);
+    }
   } else {
     toast.style.background = '#FCEBEB';
     toast.style.borderColor = '#F7C1C1';
@@ -1636,7 +2056,7 @@ const PS_PHASES = {
     label: "Add a Tool",
     time: 7,
     context: "<strong>Phase 4 — Add a Tool:</strong> Look at your friction points. Where could a tool help? Mark it with ★. You are not committing — you are imagining.",
-    prompt: "You have done the hard part. Now — if something could take one of those friction points off a person's plate, where would it go? Do not commit to anything. Just imagine what could be different.",
+    prompt: "Now — look at your friction points. Click ★ Assign Tool in the toolbar, then click the steps a tool would cover. Name the tool, then click any highlighted step to describe what it does and what human oversight stays. You are not committing — you are imagining what could be different.",
     color: "var(--bts-purple)",
     bg: "var(--bts-purple-light)"
   }
@@ -1677,10 +2097,44 @@ function setPhase(n) {
   // Update phase context card
   const card = document.getElementById('ps-phase-card');
   if (card) {
-    card.innerHTML = ph.context;
-    card.style.borderLeftColor = ph.color;
-    card.style.background = ph.bg;
-    card.style.color = ph.color;
+    if (n === 4) {
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:14px;">★</span>
+          <strong style="font-size:13px;">Phase 4 — Assign a Tool to Your Workflow</strong>
+        </div>
+        <p style="margin-bottom:12px;font-size:12px;line-height:1.7;">You have mapped the workflow and named the friction. Now ask: <em>where could AI change this?</em> Use the Assign Tool feature to mark which steps a tool would cover — across any lane.</p>
+        <div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid rgba(108,92,231,0.2);">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-purple);margin-bottom:8px;">How to assign a tool</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:22px;height:22px;background:var(--bts-purple);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">1</div>
+              <div style="font-size:12px;line-height:1.5;">Click <strong>★ Assign Tool</strong> in the toolbar above. The toolbar will enter selection mode.</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:22px;height:22px;background:var(--bts-purple);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">2</div>
+              <div style="font-size:12px;line-height:1.5;"><strong>Click each step</strong> the tool would cover — across any swim lane. Selected steps highlight in teal. Click again to deselect.</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:22px;height:22px;background:var(--bts-purple);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">3</div>
+              <div style="font-size:12px;line-height:1.5;">When all steps are selected, click <strong>Assign Tool</strong> in the banner, then type the tool name and press Confirm.</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <div style="min-width:22px;height:22px;background:var(--bts-purple);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">4</div>
+              <div style="font-size:12px;line-height:1.5;">A <strong>teal bracket</strong> will appear above the canvas spanning the covered steps. Click any covered step to add details — what the tool does, its role, and what human oversight is still needed.</div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:10px;font-size:11px;color:var(--bts-purple);font-style:italic;">You are not committing to anything — you are exploring what could be different.</p>`;
+      card.style.borderLeftColor = 'var(--bts-purple)';
+      card.style.background = 'var(--bts-purple-light)';
+      card.style.color = 'var(--bts-dark)';
+    } else {
+      card.innerHTML = ph.context;
+      card.style.borderLeftColor = ph.color;
+      card.style.background = ph.bg;
+      card.style.color = ph.color;
+    }
   }
 
   // Show/hide Tool Lives Here button
