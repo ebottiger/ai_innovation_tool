@@ -233,6 +233,10 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .tool-bracket { position: absolute; bottom: 3px; height: 14px; background: var(--bts-teal-light); border: 1.5px solid var(--bts-teal); border-radius: 4px; display: flex; align-items: center; padding: 0 7px; font-size: 9px; font-weight: 700; color: var(--bts-teal); white-space: nowrap; cursor: pointer; gap: 4px; }
 .tool-bracket:hover { background: #9FE1CB; }
 .step-node.ps-friction-flag { border: 1.5px solid var(--bts-red) !important; background: #FEF5F5 !important; }
+.step-node.ps-friction-flag.ps-tool-covered { border: 2px solid var(--bts-teal) !important; background: #E1F5EE !important; }
+.step-node.ps-friction-flag.ps-tool-covered::after { content: '✓'; position: absolute; top: -8px; right: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--bts-teal); color: white; font-size: 9px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.step-node { position: relative; }
+.field-hint { font-size:11px;color:#999;line-height:1.5;margin-top:3px;margin-bottom:4px;font-style:italic; }
 .step-node.ps-selected { border: 1.5px solid var(--bts-pink) !important; background: var(--bts-pink-light) !important; }
 .step-node.star { border-left: 3px solid var(--bts-teal); }
 .step-node span { font-size: 11px; line-height: 1.4; }
@@ -307,59 +311,6 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 </style>
 </head>
 <body>
-
-<!-- ===================== SETUP ===================== -->
-<div class="screen" id="screen-setup">
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="bts-dots"><div class="bts-dot d1"></div><div class="bts-dot d2"></div><div class="bts-dot d3"></div></div>
-      <span class="topbar-brand">bts</span>
-    </div>
-    <span class="topbar-title">Strategy made personal</span>
-    <span></span>
-  </div>
-  <div class="accent-bar"></div>
-  <div class="login-wrap">
-    <div class="login-card" style="max-width:480px">
-      <div class="login-logo">
-        <div class="login-logo-dots">
-          <div class="login-logo-dot" style="background:var(--bts-pink)"></div>
-          <div class="login-logo-dot" style="background:var(--bts-pink);opacity:.55"></div>
-          <div class="login-logo-dot" style="background:var(--bts-pink);opacity:.3"></div>
-        </div>
-        <span style="font-size:13px;font-weight:700;letter-spacing:1px;color:var(--bts-dark)">bts</span>
-      </div>
-      <h1>One-time <span>Setup</span></h1>
-      <p class="sub">This tool connects directly to Smartsheet. An AI Champion or admin needs to enter a Smartsheet API token once on this device. Regular team members will never see this screen.</p>
-      <div style="background:#FAEEDA;border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:#854F0B;margin-bottom:20px;line-height:1.6">
-        <strong>AI Champion / Admin only.</strong> This is a one-time step per device. The token is saved in this browser only &mdash; no Claude license required.
-      </div>
-      <div class="field">
-        <label>How to get your Smartsheet API token</label>
-        <div style="background:#F5F5F5;border-radius:8px;padding:12px 14px;font-size:12px;color:#555;line-height:1.9;margin-bottom:4px">
-          1. Open Smartsheet &rarr; click your <strong>avatar</strong> (top right)<br>
-          2. Go to <strong>Account &rarr; Apps &amp; Integrations &rarr; API Access</strong><br>
-          3. Click <strong>Generate new access token</strong><br>
-          4. Name it <em>PMO AI Innovation Tool</em> and copy the full token<br>
-          5. Paste it below and click Activate
-        </div>
-      </div>
-      <div class="field">
-        <label>Smartsheet API Token</label>
-        <input type="password" id="setup-token" placeholder="Paste your token here..." style="font-family:monospace;font-size:12px;letter-spacing:1px" />
-        <p style="font-size:11px;color:#999;margin-top:5px">Saved to this browser only. Never sent anywhere except Smartsheet.</p>
-      </div>
-      <div id="setup-error" style="display:none;background:#FCEBEB;border:1px solid #F7C1C1;border-radius:7px;padding:9px 12px;font-size:12px;color:#A32D2D;margin-bottom:14px;"></div>
-      <div id="setup-loading" style="display:none;background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:9px 12px;font-size:12px;color:var(--bts-blue);margin-bottom:14px;">Verifying with Smartsheet&hellip;</div>
-      <button class="btn-primary" onclick="activateToken()">Activate Tool</button>
-      <p class="login-note" style="margin-top:12px">Token saved in browser only &bull; Revoke anytime in Smartsheet &rarr; API Access</p>
-      <div style="margin-top:20px;padding-top:16px;border-top:1px dashed #EEE;text-align:center">
-        <p style="font-size:11px;color:#BBB;margin-bottom:8px">Still building? Skip setup entirely.</p>
-        <button onclick="document.getElementById('screen-setup').classList.remove('active');document.getElementById('screen-app').classList.add('active');var u={name:'Preview User',email:'preview@bts.com',role:'AI Champion'};state.user=u;document.getElementById('user-avatar-top').textContent='PV';document.getElementById('user-name-top').textContent='Preview User';var h=new Date().getHours();document.getElementById('home-greeting').textContent=(h<12?'Good morning, ':h<17?'Good afternoon, ':'Good evening, ')+'Preview';document.getElementById('home-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});renderDashboard();renderHomePilots();" style="background:transparent;border:1px solid #DDE1E6;border-radius:8px;padding:8px 18px;font-size:12px;color:#999;cursor:pointer;font-family:var(--font);" onmouseover="this.style.borderColor='var(--bts-pink)';this.style.color='var(--bts-pink)'" onmouseout="this.style.borderColor='#DDE1E6';this.style.color='#999'">&#128064; Preview Mode (dev only)</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ===================== LOGIN ===================== -->
 <div class="screen active" id="screen-login">
@@ -442,7 +393,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 
       <div style="margin-top:20px;padding-top:16px;border-top:1px dashed #EEE;text-align:center">
         <p style="font-size:11px;color:#BBB;margin-bottom:8px">Building or testing? Skip login.</p>
-        <button onclick="launchPreview()" style="background:transparent;border:1px solid #DDE1E6;border-radius:8px;padding:8px 18px;font-size:12px;color:#999;cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.borderColor='var(--bts-pink)';this.style.color='var(--bts-pink)'" onmouseout="this.style.borderColor='#DDE1E6';this.style.color='#999'">&#128064; Preview Mode (dev only)</button>
+        <button onclick="launchPreview()" style="background:transparent;border:1px solid #DDE1E6;border-radius:8px;padding:8px 18px;font-size:12px;color:#999;cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.borderColor='var(--bts-pink)';this.style.color='var(--bts-pink)'" onmouseout="this.style.borderColor='#DDE1E6';this.style.color='#999'" onclick="launchPreview()">&#128064; Preview Mode (dev only)</button>
       </div>
       <p class="login-note">BTS PMO team members only &bull; Version 1.0</p>
     </div>
@@ -472,6 +423,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Process Studio</div>
     <div class="nav-item" id="nav-dashboard" onclick="showTab('dashboard')">Pilot Dashboard</div>
     <div class="nav-item" id="nav-roles" onclick="showTab('roles')">Roles & Responsibilities</div>
+    <div class="nav-item" id="nav-research" onclick="showTab('research')">How Research Supports This Process</div>
   </div>
 
   <!-- ======= HOME TAB ======= -->
@@ -528,9 +480,19 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
           <span class="ac-what">When you click here, you'll see a side-by-side comparison of the Pilot Lead, Pilot Partner, and Level 5 responsibilities — including who owns each check-in milestone. Bookmark this page for quick reference throughout your pilot.</span>
         </div>
       </div>
+      <div class="action-card" onclick="showTab('research')">
+        <div class="ac-icon" style="font-size:17px;background:var(--bts-blue-light);">&#128270;</div>
+        <h3>How Research Supports This Process</h3>
+        <p>Why Map → Visualize → Simplify → Automate works</p>
+        <div class="ac-hover-desc">
+          <span class="ac-brene">"The sequence isn't a preference — it's a pattern. Three decades of evidence from McKinsey, BCG, MIT CISR, Bain, and HBR all converge on the same answer."</span>
+          <span class="ac-what">When you click here, you'll find four expandable cards — one for each phase — explaining the research behind why the order matters. Each card includes real citations and links to the original sources.</span>
+        </div>
+      </div>
     </div>
 
-    <div class="section-label">Active pilots</div>
+
+        <div class="section-label">Active pilots</div>
     <div class="pilot-list" id="home-pilots"></div>
   </div>
 
@@ -650,7 +612,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
       <div onclick="setPhase(4)" id="ps-p4" style="padding:11px 8px;text-align:center;cursor:pointer;background:white;transition:all 0.2s;">
         <div style="font-size:9px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#CCC;">Phase 4</div>
-        <div style="font-size:12px;font-weight:700;color:#BBB;margin-top:2px;">Add a Tool</div>
+        <div style="font-size:12px;font-weight:700;color:#BBB;margin-top:2px;">Automate</div>
       </div>
     </div>
 
@@ -662,6 +624,16 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       <div class="form-row">
         <div class="field"><label>Workflow name</label><input type="text" id="workflow-title" placeholder="e.g. Digital Operator Request" /></div>
         <div class="field" id="ps-tool-field" style="display:none;"><label>Tool being explored</label><input type="text" id="workflow-tool" placeholder="e.g. AI scheduling assistant" /></div>
+      </div>
+      <div class="form-row" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;">
+        <div class="field" style="margin-bottom:0;">
+          <label style="display:block;min-height:32px;">Why this workflow? <span style="font-weight:400;color:#888;">(Name the challenge, the gap, or the constraint.)</span></label>
+          <textarea id="workflow-why" placeholder="Be honest about what's hard. What friction, bottleneck, or recurring pain is this workflow creating for your team?" rows="4" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='var(--bts-pink)'" onblur="this.style.borderColor='#DDE1E6'"></textarea>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label style="display:block;min-height:32px;">What problem does this workflow solve for?</label>
+          <textarea id="workflow-problem" placeholder="Who benefits when this workflow works well — and what does that make possible for them?" rows="4" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='var(--bts-pink)'" onblur="this.style.borderColor='#DDE1E6'"></textarea>
+        </div>
       </div>
     </div>
 
@@ -707,8 +679,11 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       <div id="load-workflow-panel" style="display:none;padding:12px 14px;border-bottom:1px solid #E8EBF0;background:#F0F6FF;">
         <div style="font-size:11px;font-weight:700;color:var(--bts-blue);margin-bottom:8px;">&#8635; Load a saved workflow</div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <select id="load-workflow-select" style="padding:6px 10px;border:1px solid var(--bts-blue);border-radius:7px;font-size:12px;font-family:var(--font);outline:none;min-width:220px;">
+          <select id="load-workflow-select" onchange="populateVersionDropdown()" style="padding:6px 10px;border:1px solid var(--bts-blue);border-radius:7px;font-size:12px;font-family:var(--font);outline:none;min-width:220px;">
             <option value="">Loading workflows...</option>
+          </select>
+          <select id="load-version-select" style="padding:6px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);outline:none;display:none;">
+            <option value="">Latest version</option>
           </select>
           <button onclick="confirmLoadWorkflow()" style="background:var(--bts-blue);color:white;border:none;border-radius:7px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);">Load</button>
           <button onclick="document.getElementById('load-workflow-panel').style.display='none'" style="background:none;border:1px solid #DDE1E6;border-radius:7px;padding:6px 12px;font-size:12px;color:#888;cursor:pointer;font-family:var(--font);">Cancel</button>
@@ -743,8 +718,8 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
 
       <div class="mapper-legend">
-        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-red)"></div> Friction point (red outline)</div>
-        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-teal)"></div> Tool lives here (&#9733;)</div>
+        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-red)"></div> Friction identified (red outline)</div>
+        <div class="ml-item"><div class="ml-bar" style="background:var(--bts-teal)"></div> Tool assigned — friction addressed (teal outline)</div>
         <div class="ml-item"><div class="ml-bar" style="background:#EF9F27"></div> Stacked — same time</div>
         <div class="ml-item" style="color:#BBB">Click a lane to add a step &bull; Hover a step to stack &bull; Click &times; to remove</div>
       </div>
@@ -753,26 +728,40 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     <!-- ─── STEP DETAILS PANEL ────────────────────────────────────── -->
     <div id="ps-details-panel" style="display:none;margin-top:0;border:1px solid #E8EBF0;border-top:2px solid var(--bts-pink);background:white;border-radius:0 0 10px 10px;padding:14px 16px;">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-        <div id="ps-dp-badge" style="background:var(--bts-pink);color:white;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
-        <div id="ps-dp-title" style="font-size:13px;font-weight:700;color:var(--bts-dark);"></div>
-        <div id="ps-dp-lane-tag" style="font-size:9px;padding:2px 8px;border-radius:4px;font-weight:700;"></div>
-        <button onclick="closePsDetailsPanel()" style="margin-left:auto;background:none;border:1px solid #E0E4E8;border-radius:5px;padding:3px 9px;font-size:11px;color:#888;cursor:pointer;font-family:var(--font);">✕ close</button>
+        <div style="display:flex;flex-direction:column;flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div id="ps-dp-badge" style="background:var(--bts-pink);color:white;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
+            <input id="ps-dp-title" type="text" style="font-size:13px;font-weight:700;color:var(--bts-dark);border:none;background:transparent;outline:none;border-bottom:1.5px solid transparent;padding:1px 2px;font-family:var(--font);width:100%;cursor:text;" onfocus="this.style.borderBottomColor='var(--bts-pink)'" onblur="this.style.borderBottomColor='transparent';psUpdateStepName(this.value)" oninput="psUpdateStepName(this.value)" placeholder="Step name" />
+        </div>
+          <div id="ps-dp-lane-tag" style="font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;margin-top:3px;display:inline-block;align-self:flex-start;"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0;">
+        <select id="ps-dp-move-lane" onchange="psMoveStepToLane(this.value)" title="Move step to a different lane" style="font-size:11px;padding:3px 6px;border:1px solid #DDE1E6;border-radius:5px;color:#666;font-family:var(--font);cursor:pointer;max-width:140px;">
+          <option value="">↕ Move to lane...</option>
+        </select>
+        <button onclick="closePsDetailsPanel()" style="background:none;border:1px solid #E0E4E8;border-radius:5px;padding:3px 9px;font-size:11px;color:#888;cursor:pointer;font-family:var(--font);">✕ close</button>
+      </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
         <div class="field" style="margin-bottom:0;"><label>Input</label><input type="text" id="ps-dp-input" placeholder="What triggers this step?" oninput="psDpSync('input',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
         <div class="field" style="margin-bottom:0;"><label>Output</label><input type="text" id="ps-dp-output" placeholder="What does this step produce?" oninput="psDpSync('output',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
         <div class="field" style="margin-bottom:0;"><label>Tool Used</label><input type="text" id="ps-dp-tool" placeholder="e.g. Salesforce, email" oninput="psDpSync('tool',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
-        <div class="field" style="margin-bottom:0;"><label>Step Type</label><select id="ps-dp-type" onchange="psDpSync('type',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);"><option>Task</option><option>Decision</option><option>Handoff</option><option>Wait</option></select></div>
-        <div class="field" style="margin-bottom:0;"><label>Time Estimate (mins)</label><input type="number" id="ps-dp-time" placeholder="e.g. 30" oninput="psDpSync('timeEst',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" /></div>
+        <div class="field" style="margin-bottom:0;"><label>Step Type</label><select id="ps-dp-type" onchange="psDpSync('type',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:1em;font-family:var(--font);"><option>Task</option><option>Decision</option><option>Handoff</option><option>Wait</option></select></div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Current Time</label>
+          <div class="field-hint" data-sop-exclude="true">How long does this step take today? Enter any unit — e.g. 5 min, 2 hours, 1 day, 1 week.</div>
+          <input type="text" id="ps-dp-time" placeholder="e.g. 5 min, 2 hours, 1 day" oninput="psDpSync('timeEst',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
+        </div>
         <div class="field" style="margin-bottom:0;display:flex;flex-direction:column;justify-content:flex-end;"><label>Friction point?</label><label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;background:white;"><input type="checkbox" id="ps-dp-friction" onchange="psDpFrictionToggle(this.checked)" style="accent-color:var(--bts-red);width:15px;height:15px;cursor:pointer;" /><span style="font-size:12px;color:var(--bts-dark);">Yes — this step has friction</span></label></div>
         <div class="field" id="ps-dp-friction-row" style="margin-bottom:0;grid-column:1/-1;display:none;">
           <label style="color:var(--bts-red);">Friction reason</label>
           <input type="text" id="ps-dp-friction-reason" placeholder="What makes this step hard or slow?" oninput="psDpSync('frictionReason',this.value)" style="width:100%;padding:7px 10px;border:1px solid var(--bts-red);border-radius:7px;font-size:12px;font-family:var(--font);" />
         </div>
         <div class="field" style="margin-bottom:0;grid-column:1/-1;">
-          <label>Notes / Tacit Knowledge</label>
-          <textarea id="ps-dp-notes" placeholder="What would a new person never know to ask? What lives only in people's heads?" rows="2" oninput="psDpSync('notes',this.value)" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;box-sizing:border-box;"></textarea>
-        </div>
+          <label style="display:flex;align-items:center;gap:4px;">What do you do in this step? <span title="Write down any steps, notes, and/or knowledge that goes into this step here. Once you are finished, copy and paste this into ChatGPT or Claude and say: 'Review what I've written and identify any sub-steps that should be broken out as their own separate steps in a process map. For each one you find, name it clearly and explain why it deserves its own step.'" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#DDE1E6;color:#666;font-size:9px;font-weight:700;cursor:help;flex-shrink:0;margin-left:4px;" tabindex="0">?</span></label>
+          <textarea id="ps-dp-notes" maxlength="3800" placeholder="What would a new person never know to ask? What lives only in people's heads? (max 4,000 characters)" oninput="updateNotesCount(this,'ps-dp-notes-count')" rows="2" oninput="psDpSync('notes',this.value)" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;box-sizing:border-box;"></textarea>
+        
+          <div id="ps-dp-notes-count" style="font-size:10px;color:#AAA;text-align:right;margin-top:3px;">0 / 3,800</div></div>
       </div>
       <div id="ps-dp-tool-section" style="display:none;margin-top:12px;border-top:1.5px solid var(--bts-teal);padding-top:12px;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
@@ -1082,6 +1071,187 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
   </div>
 
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HOW RESEARCH SUPPORTS THIS PROCESS TAB                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="main" id="tab-research" style="display:none">
+  <div class="page-title">How Research Supports This Process</div>
+  <p class="page-sub">The Map → Visualize → Simplify → Automate sequence is grounded in decades of evidence. Click each card to learn why the order matters.</p>
+
+  <div style="background:var(--bts-dark);border-radius:10px;padding:14px 20px;margin-bottom:20px;">
+    <div style="font-size:12px;color:#B0B8C1;line-height:1.7;">This research spans McKinsey, BCG, MIT CISR, Bain, Deloitte, Harvard Business Review, and peer-reviewed academic journals. It synthesizes three decades of evidence on what separates organizations that successfully transform from those that don't. <strong style="color:white;">The sequence isn't a preference — it's a pattern.</strong></div>
+  </div>
+
+  <!-- CARD 1: WHY MAP -->
+  <div onclick="toggleResearch('r1')" style="border-radius:10px;border:1px solid #E0EAF5;overflow:hidden;cursor:pointer;margin-bottom:12px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(28,76,134,0.10)'" onmouseout="this.style.boxShadow=''">
+    <div style="background:var(--bts-blue-light);padding:16px 20px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:26px;">🗺️</div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:800;color:var(--bts-blue);">Why Map? — Phase 1: Current State</div>
+        <div style="font-size:11px;color:#667;margin-top:2px;">You cannot improve what you cannot see</div>
+      </div>
+      <div id="r1-arrow" style="color:var(--bts-blue);font-size:11px;font-weight:700;transition:transform 0.3s;white-space:nowrap;">▼ Learn more</div>
+    </div>
+    <div id="r1-body" style="display:none;padding:20px 22px;border-top:1px solid #E0EAF5;">
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Here's what the research keeps coming back to: <strong>you cannot improve what you cannot see.</strong> Most teams think they know their workflows until someone asks them to draw one out together — and then the room goes quiet. That silence? That's the work.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Seventy percent of digital transformations fail — and BCG's study of 900+ transformations finds the dominant failure mode is not technological. It's <em>automating broken processes</em> and standardizing workflows nobody actually follows. McKinsey documents cases where automation business-case projections <strong>shrank from 80% to under 10%</strong> once development began, because underlying processes were never mapped or simplified first.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Rummler and Brache's foundational research established something we still feel today: <strong>most process failures occur in the white space between functions</strong> — at handoff points, not within teams. A telecommunications company they studied found 183 disconnects in a single customer billing process. You can't find what you haven't mapped.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:20px;">
+        For a team that is siloed and semi-standardized, mapping is not a preliminary step. <strong>It is the foundation everything else stands on.</strong> Three workflows mapped per month isn't slow — it's the pace that actually sticks.
+      </p>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#AAA;margin-bottom:10px;">Sources</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="https://www.bcg.com/publications/2020/increasing-odds-of-success-in-digital-transformation" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F7F9FC;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-blue)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Flipping the Odds of Digital Transformation Success</div><div style="font-size:11px;color:#888;margin-top:3px;">BCG · 2020 · Study of 900+ transformations; 70% fail rate; six success factors identified</div></div>
+        </a>
+        <a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/how-to-avoid-the-three-common-execution-pitfalls-that-derail-automation-programs" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F7F9FC;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-blue)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">How to Avoid the Three Common Execution Pitfalls That Derail Automation Programs</div><div style="font-size:11px;color:#888;margin-top:3px;">McKinsey & Company · 2018 · RPA value estimates collapsed from 80% to under 10% when processes weren't simplified first</div></div>
+        </a>
+        <a href="https://www.rummlerbrache.com" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F7F9FC;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-blue)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Improving Performance: How to Manage the White Space on the Organization Chart</div><div style="font-size:11px;color:#888;margin-top:3px;">Rummler & Brache · 1995 · Most process failures occur at handoffs; 183 disconnects found in one billing process</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: WHY VISUALIZE -->
+  <div onclick="toggleResearch('r2')" style="border-radius:10px;border:1px solid #D4EEE6;overflow:hidden;cursor:pointer;margin-bottom:12px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(29,114,121,0.10)'" onmouseout="this.style.boxShadow=''">
+    <div style="background:var(--bts-teal-light);padding:16px 20px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:26px;">👁️</div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:800;color:var(--bts-teal);">Why Visualize? — Phase 2: Shared View</div>
+        <div style="font-size:11px;color:#667;margin-top:2px;">The bottleneck is alignment, not information</div>
+      </div>
+      <div id="r2-arrow" style="color:var(--bts-teal);font-size:11px;font-weight:700;white-space:nowrap;">▼ Learn more</div>
+    </div>
+    <div id="r2-body" style="display:none;padding:20px 22px;border-top:1px solid #D4EEE6;">
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Something shifts when a team sees their work together for the first time. Not reads about it. Not hears about it. <strong>Sees it.</strong> That shift — from individual understanding to collective understanding — is where alignment actually begins.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Swimlane diagrams are the single best tool for making cross-functional handoffs visible. Rummler and Brache called the spaces between organizational boxes "white space" — and documented that most process failures occur there, not within any single team. Swimlanes make that white space impossible to ignore.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        MIT CISR's research across 200+ companies found that organizations with a defined operating model — a shared picture of how they work — reported <strong>31% higher operational efficiency, 33% higher customer satisfaction, and 34% faster new product development.</strong> A shared visual is not decoration. It's infrastructure.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:20px;">
+        BTS's own research puts it plainly: <em>"The bottleneck is no longer information or coordination — it's alignment."</em> You build alignment by creating a shared view first. <strong>Everything else follows from that.</strong>
+      </p>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#AAA;margin-bottom:10px;">Sources</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="https://cisr.mit.edu/research/publications/" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F4FBF8;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-teal)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Enterprise Architecture as Strategy</div><div style="font-size:11px;color:#888;margin-top:3px;">Ross, Weill & Robertson · MIT CISR · 2006 · 200+ company study; defined operating model = 31% higher efficiency · Search "Enterprise Architecture as Strategy" in library</div></div>
+        </a>
+        <a href="https://bts.com/services/leader-readiness-development" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F4FBF8;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-teal)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">The 3 Human Intelligences That Will Define Leadership in the AI Era</div><div style="font-size:11px;color:#888;margin-top:3px;">Nicole Gams & Victor Steeb · BTS · 2026 · "The bottleneck is no longer information — it's alignment"</div></div>
+        </a>
+        <a href="https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/making-collaboration-across-functions-a-reality" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F4FBF8;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-teal)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Making Collaboration Across Functions a Reality</div><div style="font-size:11px;color:#888;margin-top:3px;">McKinsey Quarterly · 2016 · Cross-functional KPI alignment produced 1.5× speed-to-market improvement</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: WHY SIMPLIFY -->
+  <div onclick="toggleResearch('r3')" style="border-radius:10px;border:1px solid #E8E2F5;overflow:hidden;cursor:pointer;margin-bottom:12px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(76,52,128,0.10)'" onmouseout="this.style.boxShadow=''">
+    <div style="background:var(--bts-purple-light);padding:16px 20px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:26px;">✂️</div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:800;color:var(--bts-purple);">Why Simplify? — Phase 3: Redesign</div>
+        <div style="font-size:11px;color:#667;margin-top:2px;">Don't pave the cow paths</div>
+      </div>
+      <div id="r3-arrow" style="color:var(--bts-purple);font-size:11px;font-weight:700;white-space:nowrap;">▼ Learn more</div>
+    </div>
+    <div id="r3-body" style="display:none;padding:20px 22px;border-top:1px solid #E8E2F5;">
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Michael Hammer said it in 1990 and it remains the single most important principle in process work: <strong>"Stop paving the cow paths."</strong> Don't embed outdated processes in systems and software. Obliterate them and start over. The research since has only reinforced it.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Every major consulting firm converges on the same sequence: <strong>Eliminate → Synchronize → Streamline → Automate.</strong> McKinsey documents a bank that used this approach and reduced processing time from 12–15 days to 6–8 days, automating 70% of steps. The sequence isn't optional — it's the mechanism. Organizations that reverse this order fail at rates exceeding 70%.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Münstermann, Eckhardt, and Weitzel's empirical study of 156 firms found that business process standardization explains <strong>nearly 62% of the variance in process performance</strong> (R² = 0.619). The mechanism: common definitions make processes transparent, enable benchmarking through shared KPIs, and reduce ambiguity in cross-boundary communication.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:20px;">
+        Bain found that <strong>85% of CEOs in companies that ceased to be value creators blame internal complexity</strong> — much of it stemming from process fragmentation. Simplification isn't housekeeping. <strong>It's strategy.</strong>
+      </p>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#AAA;margin-bottom:10px;">Sources</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="https://hbr.org/1990/07/reengineering-work-dont-automate-obliterate" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F9F7FE;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-purple)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Reengineering Work: Don't Automate, Obliterate</div><div style="font-size:11px;color:#888;margin-top:3px;">Michael Hammer · Harvard Business Review · 1990 · The seminal "stop paving the cow paths" principle</div></div>
+        </a>
+        <a href="https://www.emerald.com/insight/content/doi/10.1108/14637151011017930/full/html" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F9F7FE;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-purple)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">The Performance Impact of Business Process Standardization</div><div style="font-size:11px;color:#888;margin-top:3px;">Münstermann, Eckhardt & Weitzel · BPMJ · 2010 · BPS explains 62% of variance in process performance (R²=0.619)</div></div>
+        </a>
+        <a href="https://www.bain.com/insights/killing-complexity-before-complexity-kills-growth-forbes/" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#F9F7FE;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-purple)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Killing Complexity Before Complexity Kills Growth</div><div style="font-size:11px;color:#888;margin-top:3px;">Bain & Company · 2011 · 85% of CEOs blame internal complexity; least complex companies grow 30–50% faster</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: WHY AUTOMATE LAST -->
+  <div onclick="toggleResearch('r4')" style="border-radius:10px;border:1px solid #F5E0EC;overflow:hidden;cursor:pointer;margin-bottom:12px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(202,28,104,0.10)'" onmouseout="this.style.boxShadow=''">
+    <div style="background:var(--bts-pink-light);padding:16px 20px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:26px;">⚡</div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:800;color:var(--bts-pink);">Why Automate Last? — Phase 4: Automate</div>
+        <div style="font-size:11px;color:#667;margin-top:2px;">Automation on a broken process is a faster broken process</div>
+      </div>
+      <div id="r4-arrow" style="color:var(--bts-pink);font-size:11px;font-weight:700;white-space:nowrap;">▼ Learn more</div>
+    </div>
+    <div id="r4-body" style="display:none;padding:20px 22px;border-top:1px solid #F5E0EC;">
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        Automation is powerful. It's also the most expensive way to make a broken process run faster. The research on this is unambiguous — and a little uncomfortable.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        MIT CISR's Jeanne Ross puts it plainly: <strong>"If you don't have a strong operational backbone, the platform you build is much more likely to be a waste of money."</strong> BCG found that 93% of 2,600 executives surveyed struggled to scale digital solutions because underlying process foundations were missing.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        McKinsey (2025) warns of a new version of this same problem in the AI era: <strong>"agent sprawl"</strong> — the uncontrolled proliferation of redundant, fragmented, and ungoverned AI agents across teams and functions. It mirrors early RPA sprawl, where individual tools multiplied without governance and compounded fragmentation rather than reducing it.
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:14px;">
+        HBR/Deloitte found that mature process definitions produce <strong>19% back-office capacity gains versus just 12%</strong> for organizations without mature standards — a 58% relative improvement in automation returns. <strong>The sequence is the ROI.</strong>
+      </p>
+      <p style="font-size:13px;color:var(--bts-dark);line-height:1.85;margin-bottom:20px;">
+        Automate last — not because automation isn't powerful, but because <strong>automation applied to a simplified, standardized process is the only kind that actually scales.</strong>
+      </p>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:#AAA;margin-bottom:10px;">Sources</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="https://cisr.mit.edu/research/publications/" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#FEF8FB;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-pink)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Five Building Blocks of Digital Transformation</div><div style="font-size:11px;color:#888;margin-top:3px;">MIT CISR · Jeanne Ross · 2018 · No operational backbone = platform is a waste of money · Search "Five Building Blocks" in library</div></div>
+        </a>
+        <a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/seizing-the-agentic-ai-advantage" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#FEF8FB;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-pink)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Seizing the Agentic AI Advantage</div><div style="font-size:11px;color:#888;margin-top:3px;">McKinsey & Company · 2025 · Warns of "agent sprawl" without process foundations and governance</div></div>
+        </a>
+        <a href="https://hbr.org/sponsored/2019/12/how-companies-are-using-intelligent-automation-to-be-more-innovative" target="_blank" style="display:flex;gap:12px;padding:12px 14px;background:#FEF8FB;border-radius:8px;border:1px solid #E8EBF0;text-decoration:none;" onmouseover="this.style.borderColor='var(--bts-pink)'" onmouseout="this.style.borderColor='#E8EBF0'">
+          <div style="font-size:22px;flex-shrink:0;">📄</div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--bts-dark);">How Companies Are Using Intelligent Automation to Be More Innovative</div><div style="font-size:11px;color:#888;margin-top:3px;">HBR / Deloitte · 2019 · Mature process definitions produce 58% better automation results</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 </div>
 
 <script>
@@ -1098,7 +1268,7 @@ let state = {
 
 
 // ============ SMARTSHEET BACKEND ============
-let SM_TOKEN = localStorage.getItem('sm_token') || '';
+let SM_TOKEN = 'YOUR_TOKEN_HERE'; // Replace with your Smartsheet API token before uploading
 
 const SM = {
   USER_REGISTRY_SHEET:   '82762976415620',
@@ -1400,14 +1570,6 @@ function logout() {
   if (!confirm('Sign out?')) return;
   show('screen-app', false);
   state.user = null;
-  if (state._shiftHeld) {
-    if (confirm('Also reset the Smartsheet connection? You will need to re-enter the API token.')) {
-      localStorage.removeItem('sm_token');
-      SM_TOKEN = '';
-      show('screen-setup', true);
-      return;
-    }
-  }
   show('screen-login', true);
 }
 
@@ -1438,8 +1600,183 @@ function renderHomePilots() {
   // loads pilot summary on home tab — no-op if not yet implemented
 }
 
+
+function updateNotesCount(el, counterId) {
+  const len = el.value.length;
+  if (counterId) {
+    const counter = document.getElementById(counterId);
+    if (counter) {
+      counter.textContent = len.toLocaleString() + ' / 3,800';
+      counter.style.color = len > 3400 ? (len > 3600 ? '#E63F4F' : '#EF9F27') : '#AAA';
+    }
+  }
+}
+
+
+function launchPreview() {
+  launchApp({ name: 'Preview User', email: 'preview@bts.com', role: 'AI Champion' });
+}
+
+
+// ── Facilitator Tour ────────────────────────────────────────────────────────
+const TOUR_STEPS = [
+  {
+    target: 'workflow-title',
+    title: 'Start with the workflow name',
+    body: 'Type the name of the workflow your team is mapping today. Be specific — this is what will appear on the SOP export.',
+    position: 'below'
+  },
+  {
+    target: 'workflow-why',
+    title: 'Name the challenge',
+    body: 'Ask the team: why are we mapping this workflow today? What pain, friction, or gap made this the right one to start with? There are no wrong answers here.',
+    position: 'below'
+  },
+  {
+    target: 'workflow-problem',
+    title: 'Who does this solve for?',
+    body: 'When this workflow works well, who benefits? This grounds the mapping in real impact — not just process documentation.',
+    position: 'below'
+  },
+  {
+    target: 'ps-phase-bar',
+    title: 'Four phases — start here',
+    body: 'You are in Phase 1: Current State. The goal is to map what actually happens today — not what should happen. Resist the urge to improve. Just capture.',
+    position: 'below'
+  },
+  {
+    target: 'swim-lanes',
+    title: 'Swim lanes = who does the work',
+    body: 'Each lane represents a role or team. Click a lane to add a step to it. Steps flow left to right. Use "+ Add Lane" to add more roles.',
+    position: 'above'
+  },
+  {
+    target: 'mapper-toolbar',
+    title: 'Your toolbar',
+    body: 'Use "+ Step" to add steps manually, or click directly in a lane. "Load Workflow" pulls in a previously saved map. "Clear All" starts fresh.',
+    position: 'below'
+  },
+  {
+    target: 'ps-dp-time',
+    title: 'Current time is your baseline',
+    body: 'For every step, capture how long it actually takes today. This becomes your before-state for measuring impact later. Be honest — no one is being evaluated.',
+    position: 'above'
+  },
+  {
+    target: 'ps-friction-check',
+    title: 'Celebrate friction points',
+    body: 'When a step has friction, check this box and describe why. Friction is not failure — it is the most valuable data you will collect today. Name it.',
+    position: 'above'
+  },
+  {
+    target: 'ps-save-btn',
+    title: 'Save when you are done',
+    body: 'Save to Smartsheet when the team has mapped the full current state. This creates a permanent record. You can always load it back and continue.',
+    position: 'above'
+  },
+];
+
+let tourCurrentStep = 0;
+
+function startTour() {
+  tourCurrentStep = 0;
+  showTourStep(0);
+}
+
+function showTourStep(idx) {
+  const steps = TOUR_STEPS;
+  if (idx < 0 || idx >= steps.length) { endTour(); return; }
+  const step = steps[idx];
+  const overlay = document.getElementById('tour-overlay');
+  const spotlight = document.getElementById('tour-spotlight');
+  const card = document.getElementById('tour-card');
+
+  // Show overlay
+  overlay.style.display = 'block';
+  card.style.display = 'block';
+
+  // Update card content
+  document.getElementById('tour-step-label').textContent = 'STEP ' + (idx+1) + ' OF ' + steps.length;
+  document.getElementById('tour-title').textContent = step.title;
+  document.getElementById('tour-body').textContent = step.body;
+
+  // Update dots
+  const dots = document.getElementById('tour-dots');
+  dots.innerHTML = '';
+  steps.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'tour-dot' + (i === idx ? ' active' : '');
+    dot.onclick = () => showTourStep(i);
+    dots.appendChild(dot);
+  });
+
+  // Update buttons
+  const prevBtn = document.getElementById('tour-prev');
+  const nextBtn = document.getElementById('tour-next');
+  if (prevBtn) prevBtn.style.display = idx === 0 ? 'none' : '';
+  if (nextBtn) nextBtn.textContent = idx === steps.length - 1 ? 'Finish ✓' : 'Next →';
+
+  // Spotlight target element
+  const target = document.getElementById(step.target);
+  if (target) {
+    const rect = target.getBoundingClientRect();
+    const pad = 8;
+    spotlight.style.display = 'block';
+    spotlight.style.left = (rect.left - pad) + 'px';
+    spotlight.style.top = (rect.top - pad) + 'px';
+    spotlight.style.width = (rect.width + pad*2) + 'px';
+    spotlight.style.height = (rect.height + pad*2) + 'px';
+
+    // Position card
+    const cardW = 320;
+    const cardH = 200;
+    let left = rect.left;
+    let top = step.position === 'above'
+      ? rect.top - cardH - 20
+      : rect.bottom + 20;
+    // Keep on screen
+    if (left + cardW > window.innerWidth - 20) left = window.innerWidth - cardW - 20;
+    if (left < 20) left = 20;
+    if (top < 20) top = rect.bottom + 20;
+    card.style.left = left + 'px';
+    card.style.top = top + 'px';
+    // Scroll target into view
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    spotlight.style.display = 'none';
+    card.style.left = '50%';
+    card.style.top = '50%';
+    card.style.transform = 'translate(-50%,-50%)';
+  }
+  tourCurrentStep = idx;
+}
+
+function tourNext() {
+  if (tourCurrentStep >= TOUR_STEPS.length - 1) { endTour(); return; }
+  showTourStep(tourCurrentStep + 1);
+}
+
+function tourPrev() {
+  showTourStep(tourCurrentStep - 1);
+}
+
+function endTour() {
+  document.getElementById('tour-overlay').style.display = 'none';
+  document.getElementById('tour-spotlight').style.display = 'none';
+  document.getElementById('tour-card').style.display = 'none';
+}
+
+function toggleResearch(id) {
+  const body = document.getElementById(id + '-body');
+  const arrow = document.getElementById(id + '-arrow');
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (arrow) arrow.textContent = isOpen ? '\u25bc Learn more' : '\u25b2 Close';
+}
+
 function showTab(tab) {
-  ['home','idea','checkin','mapper','dashboard','roles'].forEach(t => {
+  ['home','idea','checkin','mapper','dashboard','roles','research'].forEach(t => {
     document.getElementById('tab-' + t).style.display = (t === tab) ? '' : 'none';
     document.getElementById('nav-' + t).classList.toggle('active', t === tab);
   });
@@ -1698,6 +2035,7 @@ function openCheckin(day) {
     45: [
       'Which team members not previously involved did the Pilot Partner bring in for a fresh-eyes review?',
       'What did those outside perspectives surface — blind spots, concerns, or new observations? Were you able to implement any updates?',
+      'What concerns or objections did the fresh reviewers raise? How are you addressing them?',
     ],
     60: [
       'What is the headline you want Level 5 to walk away with from this meeting?',
@@ -1754,6 +2092,13 @@ function openCheckin(day) {
         <label>What is your baseline? How long does this task take today without the tool?</label>
         <textarea id="d1-baseline" placeholder="Both Lead and Partner should document this independently. e.g. Approximately 2 hours per SOW draft." rows="3"></textarea>
         <p style="font-size:11px;color:#999;margin-top:5px;">Both co-owners should document their baseline independently before the pilot begins.</p>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Problem Statement</div>
+      <div class="field">
+        <label>What is the current friction or constraint that this idea solves?</label>
+        <textarea id="d1-friction-constraint" placeholder="Describe the situation as it exists today — the specific pain, bottleneck, or inefficiency this pilot is designed to address." rows="3"></textarea>
+        <p style="font-size:11px;color:#999;margin-top:5px;">This anchors your Day 90 story. The clearer you are about the problem today, the more compelling your recommendation will be at the end.</p>
       </div>
 
       <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Test Group</div>
@@ -1923,6 +2268,7 @@ async function submitCheckin(day) {
     const level5     = document.getElementById('d1-level5')?.value.trim() || 'Not yet identified';
     const hypothesis = document.getElementById('d1-hypothesis')?.value.trim() || '';
     const baseline   = document.getElementById('d1-baseline')?.value.trim() || '';
+    const frictionConstraint = document.getElementById('d1-friction-constraint')?.value.trim() || '';
     const testers    = document.getElementById('d1-testers')?.value.trim() || '';
     const dateLabels = ['Day 15','Day 30','Day 45','Day 60','Day 75','Day 90'];
     const dateIds    = ['d1-date15','d1-date30','d1-date45','d1-date60','d1-date75','d1-date90'];
@@ -1934,6 +2280,7 @@ async function submitCheckin(day) {
     const result = await smAddRow(SM.CHECKIN_SHEET, {
       [SM.CI.pilotName]: pilotName || 'Day 1 Kick-off',
       [SM.CI.pilotLead]: leadName,
+      [SM.CI.pilotPartner]: partName,
       [SM.CI.submitterEmail]: leadEmail,
       [SM.CI.checkInDay]: 'Day 1',
       [SM.CI.checkInType]: 'Written',
@@ -1942,6 +2289,7 @@ async function submitCheckin(day) {
       [SM.CI.response2]: 'Level 5 Reviewer: ' + level5,
       [SM.CI.response3]: 'Hypothesis: ' + hypothesis + ' | Baseline: ' + baseline,
       [SM.CI.response4]: 'Testers: ' + testers + ' | Milestone dates: ' + dates,
+      [SM.CI.xfNotes]: frictionConstraint ? 'Friction/Constraint: ' + frictionConstraint : '',
       [SM.CI.healthStatus]: 'Moving Forward',
       [SM.CI.submittedAt]: new Date().toISOString()
     });
@@ -2053,10 +2401,10 @@ const PS_PHASES = {
     bg: "#FAEEDA"
   },
   4: {
-    label: "Add a Tool",
+    label: "Automate",
     time: 7,
-    context: "<strong>Phase 4 — Add a Tool:</strong> Look at your friction points. Where could a tool help? Mark it with ★. You are not committing — you are imagining.",
-    prompt: "Now — look at your friction points. Click ★ Assign Tool in the toolbar, then click the steps a tool would cover. Name the tool, then click any highlighted step to describe what it does and what human oversight stays. You are not committing — you are imagining what could be different.",
+    context: "<strong>Phase 4 — Automate:</strong> Look at your friction points. Where could automation help? Mark it with ★. You are not committing — you are imagining.",
+    prompt: "Now — look at your friction points. Click ★ Assign Tool in the toolbar, then click the steps automation could cover. Name the approach, then click any highlighted step to describe what it does and what human oversight stays. This might be a template that saves time, a Smartsheet automation that reduces manual steps, a system integration that connects tools, an AI prompt that drafts a first version, or an AI agent that handles a full step. Start small. Automate what\'s broken.",
     color: "var(--bts-purple)",
     bg: "var(--bts-purple-light)"
   }
@@ -2101,7 +2449,7 @@ function setPhase(n) {
       card.innerHTML = `
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
           <span style="font-size:14px;">★</span>
-          <strong style="font-size:13px;">Phase 4 — Assign a Tool to Your Workflow</strong>
+          <strong style="font-size:13px;">Phase 4 — Add Automation to Your Workflow</strong>
         </div>
         <p style="margin-bottom:12px;font-size:12px;line-height:1.7;">You have mapped the workflow and named the friction. Now ask: <em>where could AI change this?</em> Use the Assign Tool feature to mark which steps a tool would cover — across any lane.</p>
         <div style="background:white;border-radius:8px;padding:12px 14px;border:1px solid rgba(108,92,231,0.2);">
@@ -2686,7 +3034,8 @@ function openPsDetailsPanel(nodeId) {
   const title = document.getElementById('ps-dp-title');
   const laneTag = document.getElementById('ps-dp-lane-tag');
   if (badge) badge.textContent = stepNum;
-  if (title) title.textContent = node.text;
+  if (title) title.value = node.text;
+  psPopulateLaneDropdown(node.lane);
   if (laneTag) { laneTag.textContent = laneLabel; laneTag.style.background = getLaneColors(node.lane).bg; laneTag.style.color = getLaneColors(node.lane).text; }
   const fields = { 'ps-dp-input': s.input, 'ps-dp-output': s.output, 'ps-dp-tool': s.tool, 'ps-dp-time': s.timeEst, 'ps-dp-notes': s.notes, 'ps-dp-friction-reason': s.frictionReason };
   Object.entries(fields).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val || ''; });
@@ -2878,6 +3227,59 @@ function psDpToolRoleSelect(role) {
   });
 }
 
+
+
+function psMoveStepToLane(newLaneId) {
+  if (!newLaneId || !psDpActiveNodeId) return;
+  const node = psCanvasNodes.find(n => n.id === psDpActiveNodeId);
+  if (!node || node.lane === newLaneId) return;
+  node.lane = newLaneId;
+  // Update structured step lane label
+  const s = psStructuredSteps.find(st => st.nodeId === psDpActiveNodeId);
+  if (s) s.lane = getLaneLabelById(newLaneId);
+  // Update lane tag in panel
+  const laneTag = document.getElementById('ps-dp-lane-tag');
+  if (laneTag) {
+    laneTag.textContent = getLaneLabelById(newLaneId).toUpperCase();
+    laneTag.style.background = getLaneColor(newLaneId);
+    laneTag.style.color = 'white';
+  }
+  // Reset dropdown
+  const sel = document.getElementById('ps-dp-move-lane');
+  if (sel) sel.value = '';
+  renderCanvas();
+}
+
+function psPopulateLaneDropdown(currentLaneId) {
+  const sel = document.getElementById('ps-dp-move-lane');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">↕ Move to lane...</option>';
+  const lanes = Array.from(document.querySelectorAll('#swim-lanes .swim-lane'));
+  lanes.forEach(lane => {
+    const laneId = lane.getAttribute('data-lane');
+    if (laneId === currentLaneId) return; // skip current lane
+    const label = lane.querySelector('.lane-label')?.textContent?.trim() || laneId;
+    const opt = document.createElement('option');
+    opt.value = laneId;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  });
+}
+
+function psUpdateStepName(newName) {
+  if (!psDpActiveNodeId) return;
+  // Update the node in psCanvasNodes
+  const node = psCanvasNodes.find(n => n.id === psDpActiveNodeId);
+  if (node) {
+    node.text = newName;
+    // Update the structured step name too
+    const s = psStructuredSteps.find(st => st.nodeId === psDpActiveNodeId);
+    if (s) s.name = newName;
+    // Re-render the canvas to reflect the new name
+    try { renderCanvas(); } catch(err) { console.error('renderCanvas error:', err); }
+  }
+}
+
 function psDpSync(field, value) {
   if (psDpActiveNodeId === null) return;
   const s = psStructuredSteps.find(s => s.nodeId === psDpActiveNodeId);
@@ -3062,7 +3464,7 @@ function renderStructuredSteps() {
         </div>
         <div class="field" style="margin-bottom:0;">
           <label>Step Type</label>
-          <select onchange="psUpdateStep(${i},'type',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);">
+          <select onchange="psUpdateStep(${i},'type',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:1em;font-family:var(--font);">
             ${['Task','Decision','Handoff','Wait'].map(t => `<option ${t===s.type?'selected':''}>${t}</option>`).join('')}
           </select>
         </div>
@@ -3079,8 +3481,9 @@ function renderStructuredSteps() {
           <input type="text" value="${s.tool}" placeholder="e.g. Salesforce, email, Smartsheet" onchange="psUpdateStep(${i},'tool',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
         </div>
         <div class="field" style="margin-bottom:0;">
-          <label>Time Estimate (mins)</label>
-          <input type="number" value="${s.timeEst}" placeholder="e.g. 15" onchange="psUpdateStep(${i},'timeEst',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
+          <label>Current Time</label>
+          <div class="field-hint" data-sop-exclude="true">How long does this step take today? Enter any unit — e.g. 5 min, 2 hours, 1 day, 1 week.</div>
+          <input type="text" value="${s.timeEst}" placeholder="e.g. 5 min, 2 hours, 1 day" onchange="psUpdateStep(${i},'timeEst',this.value)" style="width:100%;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);" />
         </div>
       </div>
       <div style="margin-top:10px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;">
@@ -3097,8 +3500,8 @@ function renderStructuredSteps() {
         </div>
       </div>
       <div class="field" style="margin-top:10px;margin-bottom:0;">
-        <label>Notes / Tacit Knowledge</label>
-        <textarea onchange="psUpdateStep(${i},'notes',this.value)" placeholder="What would a new person never know to ask about this step? What lives only in people's heads?" rows="2" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;">${s.notes}</textarea>
+        <label style="display:flex;align-items:center;gap:4px;">What do you do in this step? <span title="Write down any steps, notes, and/or knowledge that goes into this step here. Once you are finished, copy and paste this into ChatGPT or Claude and say: 'Review what I've written and identify any sub-steps that should be broken out as their own separate steps in a process map. For each one you find, name it clearly and explain why it deserves its own step.'" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#DDE1E6;color:#666;font-size:9px;font-weight:700;cursor:help;flex-shrink:0;margin-left:4px;" tabindex="0">?</span></label>
+        <textarea maxlength="3800" oninput="updateNotesCount(this,null)" onchange="psUpdateStep(${i},'notes',this.value)" placeholder="What would a new person never know to ask about this step? What lives only in people's heads?" rows="2" style="width:100%;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);resize:vertical;">${s.notes}</textarea>
       </div>
     </div>
   `).join('');
@@ -3121,7 +3524,9 @@ function psRemoveStep(i) {
 
 async function saveProcessStudio() {
   const toast = document.getElementById('mapper-toast');
-  const title = document.getElementById('workflow-title')?.value.trim() || 'Untitled Workflow';
+  const title          = document.getElementById('workflow-title')?.value.trim() || 'Untitled Workflow';
+  const workflowWhy     = document.getElementById('workflow-why')?.value.trim() || '';
+  const workflowProblem = document.getElementById('workflow-problem')?.value.trim() || '';
 
   if (!psCanvasNodes.filter(n => n.type === 'step').length) {
     toast.style.display = 'block';
@@ -3187,6 +3592,8 @@ async function saveProcessStudio() {
         groupId:     node.groupId || null,
         toolGroupId: node.toolGroupId || null,
         isStacked:   col.nodes.length > 1,
+        workflowWhy:     workflowWhy     || null,
+        workflowProblem: workflowProblem || null,
         toolGroup:   tg ? {
           id:       tg.id,
           toolName: tg.toolName,
@@ -3297,6 +3704,34 @@ async function loadProcessStudio() {
   select._workflowMap = workflowMap;
 }
 
+
+function populateVersionDropdown() {
+  const select  = document.getElementById('load-workflow-select');
+  const verSel  = document.getElementById('load-version-select');
+  const name    = select.value;
+  const wfMap   = select._workflowMap;
+  if (!name || !wfMap || !wfMap[name]) {
+    verSel.style.display = 'none';
+    return;
+  }
+  const sessions = Object.keys(wfMap[name].sessions).sort().reverse(); // newest first
+  if (sessions.length <= 1) {
+    verSel.style.display = 'none';
+    return;
+  }
+  verSel.innerHTML = '<option value="">Latest version</option>';
+  sessions.forEach((session, i) => {
+    const d = new Date(session);
+    const label = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+      + ' at ' + d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    const opt = document.createElement('option');
+    opt.value = session;
+    opt.textContent = (i === 0 ? '★ Latest — ' : 'v' + (sessions.length - i) + ' — ') + label;
+    verSel.appendChild(opt);
+  });
+  verSel.style.display = '';
+}
+
 async function confirmLoadWorkflow() {
   const select = document.getElementById('load-workflow-select');
   const status = document.getElementById('load-workflow-status');
@@ -3308,8 +3743,11 @@ async function confirmLoadWorkflow() {
 
   status.textContent = 'Loading...';
 
+  const verSel = document.getElementById('load-version-select');
+  const chosenSession = verSel?.value || null;
   const { latestSession, sessions } = wfMap[name];
-  const rows = sessions[latestSession] || [];
+  const sessionToLoad = chosenSession || latestSession;
+  const rows = sessions[sessionToLoad] || [];
 
   if (!rows.length) { status.textContent = 'No steps found for this workflow.'; return; }
 
@@ -3354,7 +3792,7 @@ async function confirmLoadWorkflow() {
     const laneId     = laneLabel.toLowerCase().replace(/[^a-z0-9]/g,'');
     const stepName   = row['Step Name']     || row['StepName'] || '(unnamed)';
     const stepType   = row['Step Type']     || 'Task';
-    const rawNotes   = row['Notes / Tacit Knowledge'] || row['Notes'] || '';
+    const rawNotes   = row['What do you do in this step?'] || row['Notes / Tacit Knowledge'] || row['Notes'] || '';
     const stepNum    = parseInt(row['Step Number'] || row['StepNum'] || idx+1);
 
     // Extract meta blob if present
@@ -3421,6 +3859,22 @@ async function confirmLoadWorkflow() {
   // Rebuild tool groups array
   psToolGroups = Object.values(toolGroupsMap);
 
+  // Restore workflow-level fields from first row's meta
+  const firstMeta = rows[0] ? (() => {
+    const raw = rows[0]['Notes'] || '';
+    const mi = raw.indexOf(PS_META_KEY);
+    if (mi < 0) return null;
+    try { return JSON.parse(raw.slice(mi + PS_META_KEY.length)); } catch(e) { return null; }
+  })() : null;
+  if (firstMeta?.workflowWhy) {
+    const whyEl = document.getElementById('workflow-why');
+    if (whyEl) whyEl.value = firstMeta.workflowWhy;
+  }
+  if (firstMeta?.workflowProblem) {
+    const probEl = document.getElementById('workflow-problem');
+    if (probEl) probEl.value = firstMeta.workflowProblem;
+  }
+
   // Close panel and render
   document.getElementById('load-workflow-panel').style.display = 'none';
   renderCanvas();
@@ -3455,7 +3909,7 @@ function psExportSummary() {
   psStructuredSteps.forEach(s => {
     lines.push('');
     lines.push('Step ' + s.num + ': ' + (s.name || '(unnamed)'));
-    lines.push('  Lane: ' + s.lane + ' | Type: ' + s.type + (s.timeEst ? ' | Time: ' + s.timeEst + ' min' : ''));
+    lines.push('  Lane: ' + s.lane + ' | Type: ' + s.type + (s.timeEst ? ' | Time: ' + s.timeEst : ''));
     if (s.input)          lines.push('  Input: ' + s.input);
     if (s.output)         lines.push('  Output: ' + s.output);
     if (s.tool)           lines.push('  Tool: ' + s.tool);
@@ -3529,640 +3983,6 @@ async function loadFromSmartsheet() {
   setTimeout(() => { toast.style.display = 'none'; }, 4500);
 }
 
-// ── SETUP / TOKEN MANAGEMENT ───────────────────────────────────────────────
-
-async function verifyToken(token) {
-  try {
-    const resp = await fetch('https://api.smartsheet.com/2.0/users/me', {
-      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }
-    });
-    return resp.status === 200;
-  } catch(e) { return false; }
-}
-
-async function activateToken() {
-  const token = document.getElementById('setup-token').value.trim();
-  const errEl  = document.getElementById('setup-error');
-  const loadEl = document.getElementById('setup-loading');
-  errEl.style.display = 'none';
-  if (!token) { errEl.textContent = 'Please paste your Smartsheet API token.'; errEl.style.display = 'block'; return; }
-  loadEl.style.display = 'block';
-  const valid = await verifyToken(token);
-  loadEl.style.display = 'none';
-  if (!valid) {
-    errEl.textContent = 'Token could not be verified. Check that you copied the full token from Smartsheet and try again.';
-    errEl.style.display = 'block';
-    return;
-  }
-  localStorage.setItem('sm_token', token);
-  SM_TOKEN = token;
-  show('screen-setup', false);
-  show('screen-login', true);
-}
-
-function checkSetup() {
-  if (!SM_TOKEN) {
-    show('screen-setup', true);
-  } else {
-    show('screen-login', true);
-  }
-}
-
-function launchPreview() {
-  launchApp({ name: 'Preview User', email: 'preview@bts.com', role: 'AI Champion' });
-}
-
-window.addEventListener('load', checkSetup);
-
-// ── LICENSE REQUEST ───────────────────────────────────────────────────────
-
-function openLicenseRequest() {
-  const existing = document.getElementById('license-modal');
-  if (existing) { existing.remove(); return; }
-
-  const leadName   = document.getElementById('d1-lead-name')?.value.trim() || (state.user?.name || '');
-  const leadEmail  = document.getElementById('d1-lead-email')?.value.trim() || (state.user?.email || '');
-  const hypothesis = document.getElementById('d1-hypothesis')?.value.trim() || '';
-  const baseline   = document.getElementById('d1-baseline')?.value.trim() || '';
-  const pilotName  = document.querySelector('#checkin-form .form-card input[type=text]')?.value.trim() || '';
-
-  const overlay = document.createElement('div');
-  overlay.id = 'license-modal';
-  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(36,40,43,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
-  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
-
-  overlay.innerHTML = `
-    <div style="background:white;border-radius:14px;padding:28px 32px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative;" onclick="event.stopPropagation()">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-        <h2 style="font-size:16px;font-weight:700;color:var(--bts-dark);">Request a New AI Tool License</h2>
-        <button onmousedown="document.getElementById('license-modal').remove()" style="background:none;border:none;font-size:18px;color:#999;cursor:pointer;padding:0;line-height:1;">&times;</button>
-      </div>
-      <p style="font-size:12px;color:#888;margin-bottom:6px;line-height:1.6;">Complete this form to request a license for a tool not yet approved. Your request goes to the AI Champion, who escalates to Level 5 and then IT.</p>
-      <div style="background:var(--bts-purple-light);border-left:3px solid var(--bts-purple);border-radius:0 8px 8px 0;padding:10px 13px;font-size:11px;color:var(--bts-purple);margin-bottom:20px;line-height:1.6;">
-        <strong>Approval path:</strong> You &rarr; AI Champion &rarr; Level 5 &rarr; IT &bull; <strong>1 license</strong> for Pilot Lead only
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;">Tool Details</div>
-      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">Name of the tool you are requesting</label><input type="text" id="lr-tool" placeholder="e.g. Otter.ai, Gamma, Fireflies.ai" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);outline:none;" /></div>
-      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">Tool website or brief description</label><input type="text" id="lr-tool-url" placeholder="e.g. otter.ai — AI meeting transcription" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);outline:none;" /></div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;margin-top:18px;">The Request</div>
-      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">The Pilot Lead will receive access to this tool for...</label><textarea id="lr-receive" rows="2" placeholder="e.g. a 90-day pilot to test AI-assisted meeting transcription for PMO check-ins" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);resize:vertical;outline:none;">${hypothesis ? 'a 90-day pilot: ' + hypothesis : ''}</textarea></div>
-      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">The Pilot Lead intends to use this tool for...</label><textarea id="lr-use" rows="2" placeholder="e.g. automatically transcribing and summarizing PMO check-in calls" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);resize:vertical;outline:none;"></textarea></div>
-      <div style="margin-bottom:14px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">We will measure impact by...</label><textarea id="lr-measure" rows="2" placeholder="e.g. comparing time spent on meeting documentation before and after" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);resize:vertical;outline:none;">${baseline ? 'comparing against our Day 1 baseline: ' + baseline : ''}</textarea></div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;margin-top:18px;">Timing</div>
-      <div style="margin-bottom:20px;"><label style="font-size:11px;font-weight:700;color:var(--bts-dark);display:block;margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase;">Requested start date <span style="font-weight:400;color:#999;">(within a week if possible)</span></label><input type="date" id="lr-start-date" style="width:100%;padding:8px 11px;border:1px solid #DDE1E6;border-radius:8px;font-size:13px;font-family:var(--font);outline:none;" /></div>
-
-      <div id="lr-preview" style="display:none;margin-bottom:16px;background:#F7F9FC;border:1px solid #E0E4E8;border-radius:10px;padding:14px 16px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;">Email Preview</div>
-        <div id="lr-email-body" style="font-size:11px;color:var(--bts-dark);line-height:1.8;white-space:pre-wrap;font-family:monospace;"></div>
-      </div>
-
-      <div style="display:flex;justify-content:flex-end;gap:10px;">
-        <button onmousedown="event.preventDefault();event.stopPropagation();document.getElementById('license-modal').remove();" style="background:transparent;border:1px solid #DDE1E6;border-radius:8px;padding:9px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--bts-dark);">Cancel</button>
-        <button onmousedown="event.preventDefault();event.stopPropagation();previewLicenseEmail();" style="background:var(--bts-blue-light);border:1px solid var(--bts-blue);border-radius:8px;padding:9px 18px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);color:var(--bts-blue);">Preview Email</button>
-        <button onmousedown="event.preventDefault();event.stopPropagation();copyLicenseEmail();" style="background:var(--bts-pink);border:none;border-radius:8px;padding:9px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);color:white;">Copy Email to Send</button>
-      </div>
-      <div id="lr-copy-confirm" style="display:none;text-align:center;font-size:12px;color:#1D9E75;font-weight:600;margin-top:10px;">&#10003; Email copied — paste into your email and send to the AI Champion.</div>
-    </div>
-  `;
-
-  document.body.appendChild(overlay);
-}
-
-function buildLicenseEmailText() {
-  const tool      = document.getElementById('lr-tool')?.value.trim() || '[Tool Name]';
-  const toolUrl   = document.getElementById('lr-tool-url')?.value.trim() || '';
-  const receive   = document.getElementById('lr-receive')?.value.trim() || '[describe purpose]';
-  const use       = document.getElementById('lr-use')?.value.trim() || '[describe intended use]';
-  const measure   = document.getElementById('lr-measure')?.value.trim() || '[describe success metric]';
-  const startDate = document.getElementById('lr-start-date')?.value || '[date TBD]';
-  const leadName  = document.getElementById('d1-lead-name')?.value.trim() || (state.user?.name || '[Pilot Lead Name]');
-  const leadEmail = document.getElementById('d1-lead-email')?.value.trim() || (state.user?.email || '[Pilot Lead Email]');
-  const pilotName = document.querySelector('#checkin-form .form-card input[type=text]')?.value.trim() || '[Pilot Name]';
-
-  const nl = String.fromCharCode(10);
-  const parts = [
-    'Subject: AI Tool License Request - ' + tool + ' | ' + pilotName,
-    '',
-    'Hi [AI Champion name],',
-    '',
-    'I am submitting a license request for a new AI tool as part of my active pilot.',
-    '',
-    'PILOT LEAD',
-    'Name: ' + leadName,
-    'Email: ' + leadEmail,
-    'Pilot: ' + pilotName,
-    '',
-    'TOOL REQUESTED',
-    'Tool: ' + tool,
-    toolUrl ? 'Website / Description: ' + toolUrl : null,
-    'Licenses requested: 1 (Pilot Lead only, for pilot use)',
-    'Requested start date: ' + startDate + ' (within a week if possible)',
-    '',
-    'THE CASE FOR THIS TOOL',
-    'The Pilot Lead will receive access to ' + tool + ' for ' + receive + '.',
-    '',
-    'The Pilot Lead intends to use ' + tool + ' for ' + use + '.',
-    '',
-    'We will measure impact by ' + measure + '.',
-    '',
-    'Please escalate to Level 5 and IT as appropriate.',
-    '',
-    'Thank you,',
-    leadName
-  ].filter(p => p !== null);
-  return parts.join(nl);
-}
-
-function previewLicenseEmail() {
-  const text = buildLicenseEmailText();
-  const preview = document.getElementById('lr-preview');
-  const body = document.getElementById('lr-email-body');
-  if (preview && body) {
-    body.textContent = text;
-    preview.style.display = '';
-    preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-}
-
-function copyLicenseEmail() {
-  const text = buildLicenseEmailText();
-  const doConfirm = () => {
-    const confirm = document.getElementById('lr-copy-confirm');
-    if (confirm) { confirm.style.display = ''; setTimeout(() => confirm.style.display = 'none', 5000); }
-  };
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(doConfirm).catch(() => fallbackCopy(text, doConfirm));
-  } else {
-    fallbackCopy(text, doConfirm);
-  }
-}
-
-function fallbackCopy(text, callback) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
-  document.body.appendChild(ta);
-  ta.focus(); ta.select();
-  try { document.execCommand('copy'); if (callback) callback(); } catch(e) {}
-  document.body.removeChild(ta);
-}
-
-document.addEventListener('keydown', e => { if (state) state._shiftHeld = e.shiftKey; });
-document.addEventListener('keyup',   e => { if (state) state._shiftHeld = false; });
-
-// ── Facilitator Tour ──────────────────────────────────────────────────────────
-
-const TOUR_STEPS = [
-  {
-    target: 'ps-stepper',
-    title: 'The four phases',
-    body: 'These phases guide your session from mapping what exists today, to visualising it clearly, simplifying it, and finally exploring where AI fits. Work through them in order — or revisit any phase at any time.',
-    position: 'below'
-  },
-  {
-    target: 'workflow-title',
-    title: 'Name your workflow',
-    body: 'Start here. Give the workflow a clear name so everyone in the room knows exactly what you\'re mapping today. Be specific — "SOW Creation" is better than "Our Process."',
-    position: 'below'
-  },
-  {
-    target: 'btn-add-step',
-    title: 'Adding steps',
-    body: 'Click "+ Step" then click any swim lane to place a step. Every workflow starts with one step at a time. Don\'t overthink the order — you can insert steps between existing ones by hovering and clicking the green + button.',
-    position: 'below'
-  },
-  {
-    target: 'swim-lanes',
-    title: 'Swim lanes',
-    body: 'Each lane represents a team or role. Steps live in the lane of whoever owns them. Use "+ Add Lane" to bring in other teams. Steps in the same column happen at the same time — use the ⊕ stack button to show that.',
-    position: 'above'
-  },
-  {
-    target: 'ps-phase-card',
-    title: 'Phase guidance',
-    body: 'This card gives your team a facilitation prompt for the current phase. It changes as you move through the phases — use it to keep the conversation focused and on track.',
-    position: 'below'
-  },
-  {
-    target: 'ps-details-panel-anchor',
-    title: 'Step details',
-    body: 'Click any step card on the canvas to open the details panel here. Capture the input, output, tool used, time estimate, and — most importantly — tacit knowledge. This is where the real intelligence lives.',
-    position: 'above'
-  },
-  {
-    target: 'mapper-legend',
-    title: 'Friction points',
-    body: 'Open a step\'s details and check "Friction?" to flag where the workflow is slow, confusing, or painful. The step card turns red on the canvas. Celebrate these — they\'re the most valuable thing your team can name.',
-    position: 'above'
-  },
-  {
-    target: 'ps-p4',
-    title: 'Phase 4 — Add a Tool',
-    body: 'When you\'re ready to explore AI, switch to Phase 4. Click "★ Assign Tool", select the steps the tool would cover across any lane, name the tool, and describe what it does. One tool can span multiple steps and multiple lanes.',
-    position: 'below'
-  },
-  {
-    target: 'mapper-toast-anchor',
-    title: 'Save to Smartsheet',
-    body: 'When your map is ready, hit "Save to Smartsheet." Every step becomes its own row — structured and searchable. This is how your session becomes a permanent team record and the foundation for our Standard Operating Procedure.',
-    position: 'above'
-  }
-];
-
-let tourStep = 0;
-
-function startTour() {
-  // Make sure we are on the mapper tab
-  showTab('mapper');
-  setTimeout(() => {
-    tourStep = 0;
-    document.getElementById('tour-overlay').style.display = 'block';
-    renderTourStep();
-  }, 300);
-}
-
-function endTour() {
-  document.getElementById('tour-overlay').style.display = 'none';
-  document.getElementById('tour-spotlight').style.display = 'none';
-  document.getElementById('tour-card').style.display = 'none';
-  // Remove any temp anchor elements
-  const anchor = document.getElementById('ps-details-panel-anchor');
-  if (anchor) anchor.remove();
-  const anchor2 = document.getElementById('mapper-toast-anchor');
-  if (anchor2) anchor2.remove();
-}
-
-function tourNext() {
-  tourStep++;
-  if (tourStep >= TOUR_STEPS.length) { endTour(); return; }
-  renderTourStep();
-}
-
-function renderTourStep() {
-  const step = TOUR_STEPS[tourStep];
-  const total = TOUR_STEPS.length;
-
-  // Update card text
-  document.getElementById('tour-step-label').textContent = 'STEP ' + (tourStep + 1) + ' OF ' + total;
-  document.getElementById('tour-title').textContent = step.title;
-  document.getElementById('tour-body').textContent = step.body;
-
-  // Update next button label
-  const nextBtn = document.getElementById('tour-next-btn');
-  nextBtn.textContent = tourStep === total - 1 ? 'Finish ✓' : 'Next →';
-
-  // Dots
-  const dotsEl = document.getElementById('tour-dots');
-  dotsEl.innerHTML = '';
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'tour-dot' + (i === tourStep ? ' active' : '');
-    dotsEl.appendChild(dot);
-  }
-
-  // Find target element
-  let targetEl = document.getElementById(step.target);
-
-  // Special anchors for elements that may not always exist
-  if (step.target === 'ps-details-panel-anchor') {
-    targetEl = document.getElementById('ps-details-panel');
-    if (!targetEl) targetEl = document.getElementById('mapper-legend');
-  }
-  if (step.target === 'mapper-toast-anchor') {
-    targetEl = document.querySelector('.btn-row');
-    if (!targetEl) targetEl = document.getElementById('mapper-toast');
-  }
-
-  if (!targetEl) {
-    // Skip this step if element not found
-    tourNext(); return;
-  }
-
-  // Scroll element into view
-  targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-  setTimeout(() => {
-    positionTourSpotlight(targetEl, step.position);
-  }, 350);
-}
-
-function positionTourSpotlight(el, position) {
-  const rect = el.getBoundingClientRect();
-  const PAD = 8;
-
-  const spotlight = document.getElementById('tour-spotlight');
-  spotlight.style.display = 'block';
-  spotlight.style.left   = (rect.left - PAD) + 'px';
-  spotlight.style.top    = (rect.top - PAD) + 'px';
-  spotlight.style.width  = (rect.width + PAD * 2) + 'px';
-  spotlight.style.height = (rect.height + PAD * 2) + 'px';
-
-  // Position card
-  const card = document.getElementById('tour-card');
-  card.style.display = 'block';
-  const CARD_W = 320;
-  const CARD_GAP = 16;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-
-  // Horizontal: try to centre on spotlight, keep within viewport
-  let cardLeft = rect.left + rect.width / 2 - CARD_W / 2;
-  cardLeft = Math.max(12, Math.min(cardLeft, vw - CARD_W - 12));
-
-  let cardTop;
-  if (position === 'below') {
-    cardTop = rect.bottom + PAD + CARD_GAP;
-    // If it would go off bottom, flip above
-    if (cardTop + 220 > vh) cardTop = rect.top - PAD - CARD_GAP - 220;
-  } else {
-    cardTop = rect.top - PAD - CARD_GAP - 220;
-    // If it would go off top, flip below
-    if (cardTop < 12) cardTop = rect.bottom + PAD + CARD_GAP;
-  }
-  cardTop = Math.max(12, Math.min(cardTop, vh - 240));
-
-  card.style.left = cardLeft + 'px';
-  card.style.top  = cardTop + 'px';
-}
-// ─────────────────────────────────────────────────────────────────────────────
-
-// ── PDF Map Export ────────────────────────────────────────────────────────────
-// Generates a printable landscape HTML page from the current canvas state
-// and opens it in a new window for PDF printing.
-
-function psExportMapPDF() {
-  if (!psCanvasNodes.length) {
-    alert('Add some steps to the canvas first before exporting.');
-    return;
-  }
-
-  const STEP_W   = 160;
-  const ARROW_W  = 28;
-  const COL_W    = STEP_W + ARROW_W;
-  const LANE_LBL = 70;
-  const MIN_FONT = 10; // px — never go below this
-  const PAGE_W   = 1056; // landscape A4 px approx (297mm @ 96dpi = 1122, use conservative 1056)
-  const CANVAS_W = PAGE_W - LANE_LBL - 40; // usable canvas width per page
-
-  // Build columns
-  const columns = [];
-  const gMap = {};
-  psCanvasNodes.forEach(node => {
-    const gid = node.groupId || node.id;
-    if (gMap[gid] !== undefined) columns[gMap[gid]].nodes.push(node);
-    else { gMap[gid] = columns.length; columns.push({ groupId: gid, nodes: [node] }); }
-  });
-  let stepCounter = 0;
-  columns.forEach(col => {
-    const countable = col.nodes.some(n => ['step','parallel','shared'].includes(n.type));
-    if (countable) stepCounter++;
-    col.stepNum = countable ? stepCounter : null;
-  });
-
-  const laneIds = [...new Set(psCanvasNodes.map(n => n.lane))];
-
-  // Calculate how many columns fit per page
-  const colsPerPage = Math.max(1, Math.floor(CANVAS_W / COL_W));
-  const totalPages  = Math.ceil(columns.length / colsPerPage);
-
-  // Helper: get lane label from DOM
-  function getLaneLabel(laneId) {
-    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-label`);
-    return el ? el.textContent.trim() : laneId.toUpperCase();
-  }
-
-  // Helper: get lane background color
-  function getLaneBg(laneId) {
-    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-body`);
-    if (!el) return '#FAFAFA';
-    return getComputedStyle(el).backgroundColor || '#FAFAFA';
-  }
-
-  function getLaneLabelBg(laneId) {
-    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-label`);
-    if (!el) return '#F0F0F0';
-    return getComputedStyle(el).backgroundColor || '#F0F0F0';
-  }
-
-  function getLaneLabelColor(laneId) {
-    const el = document.querySelector(`#swim-lanes .swim-lane[data-lane="${laneId}"] .lane-label`);
-    if (!el) return '#333';
-    return getComputedStyle(el).color || '#333';
-  }
-
-  // Build HTML pages
-  let pagesHtml = '';
-
-  for (let page = 0; page < totalPages; page++) {
-    const startCol = page * colsPerPage;
-    const endCol   = Math.min(startCol + colsPerPage, columns.length);
-    const pageCols = columns.slice(startCol, endCol);
-
-    // Find tool groups that have nodes in this page slice
-    const pageNodeIds = new Set(pageCols.flatMap(c => c.nodes.map(n => n.id)));
-    const pageTools   = psToolGroups.filter(tg => tg.nodeIds.some(nid => pageNodeIds.has(nid)));
-
-    // Build tool bracket row HTML
-    let toolBracketHtml = '';
-    if (pageTools.length) {
-      let bracketInner = '';
-      pageTools.forEach(tg => {
-        const colIndices = tg.nodeIds
-          .map(nid => pageCols.findIndex(c => c.nodes.some(n => n.id === nid)))
-          .filter(i => i > -1);
-        if (!colIndices.length) return;
-        const minC = Math.min(...colIndices);
-        const maxC = Math.max(...colIndices);
-        const left  = minC * COL_W;
-        const width = (maxC - minC + 1) * COL_W - 6;
-        bracketInner += `<div style="position:absolute;left:${left}px;width:${width}px;top:2px;height:18px;
-          background:#E1F5EE;border:1px solid #1D7279;border-radius:3px;
-          display:flex;align-items:center;padding:0 6px;
-          font-size:${MIN_FONT}px;font-weight:700;color:#1D7279;white-space:nowrap;overflow:hidden;">
-          ★ ${tg.toolName}</div>`;
-      });
-      toolBracketHtml = `
-        <div style="display:flex;margin-left:${LANE_LBL}px;">
-          <div style="position:relative;width:${pageCols.length * COL_W}px;height:26px;">
-            ${bracketInner}
-          </div>
-        </div>`;
-    }
-
-    // Build swim lane rows
-    let lanesHtml = '';
-    laneIds.forEach(lid => {
-      const hasNodes = pageCols.some(c => c.nodes.some(n => n.lane === lid));
-      const laneLabel = getLaneLabel(lid);
-      const laneBg    = getLaneBg(lid);
-      const lblBg     = getLaneLabelBg(lid);
-      const lblColor  = getLaneLabelColor(lid);
-
-      let cellsHtml = '';
-      pageCols.forEach((col, colIdx) => {
-        const node = col.nodes.find(n => n.lane === lid);
-        const isStacked = col.nodes.length > 1;
-
-        if (!node) {
-          // Spacer
-          cellsHtml += `<div style="display:inline-flex;align-items:center;flex-shrink:0;width:${COL_W}px;">
-            <div style="width:${STEP_W}px;height:44px;"></div>
-            <div style="width:${ARROW_W}px;"></div>
-          </div>`;
-          return;
-        }
-
-        const isFriction = node.type === 'friction';
-        const isStar     = node.type === 'star';
-        const isStep     = !isFriction && !isStar;
-        const num        = col.stepNum;
-        const s          = psStructuredSteps.find(st => st.nodeId === node.id) || {};
-        const isFrictionFlagged = s.friction === 'Yes';
-        const hasToolGrp = !!node.toolGroupId;
-
-        // Determine border color
-        let borderColor = '#DDE1E6';
-        let bgColor     = 'white';
-        if (isFrictionFlagged) { borderColor = '#E63F4F'; bgColor = '#FEF5F5'; }
-        else if (hasToolGrp)   { borderColor = '#1D7279'; }
-        else if (isStacked)    { borderColor = '#EF9F27'; bgColor = '#FFFBF2'; }
-
-        // Badge
-        const badgeBg = isStacked ? '#EF9F27' : '#CA1C68';
-        const badgeHtml = num ? `<span style="background:${badgeBg};color:white;font-size:8px;font-weight:700;
-          min-width:14px;height:14px;border-radius:50%;display:inline-flex;align-items:center;
-          justify-content:center;flex-shrink:0;margin-right:3px;padding:0 2px;">${num}</span>` : '';
-
-        // Icon
-        let iconHtml = '';
-        if (isFriction)       iconHtml = `<span style="color:#E63F4F;font-size:9px;margin-right:2px;">⚠</span>`;
-        else if (isStar)      iconHtml = `<span style="color:#1D7279;font-size:9px;margin-right:2px;">★</span>`;
-        else if (isStacked)   iconHtml = `<span style="color:#EF9F27;font-size:9px;margin-right:2px;">⊕</span>`;
-
-        // Arrow — show if lane has a node in a later column on this page
-        const hasNext = pageCols.slice(colIdx + 1).some(c => c.nodes.some(n => n.lane === lid));
-        const arrowHtml = hasNext
-          ? `<div style="width:${ARROW_W}px;display:inline-flex;align-items:center;justify-content:center;
-              color:#CCC;font-size:13px;flex-shrink:0;">→</div>`
-          : `<div style="width:${ARROW_W}px;flex-shrink:0;"></div>`;
-
-        // Top border accent for tool coverage
-        const topBorder = hasToolGrp ? `border-top:2px solid #1D7279;` : '';
-
-        cellsHtml += `<div style="display:inline-flex;align-items:center;flex-shrink:0;width:${COL_W}px;">
-          <div style="border:1px solid ${borderColor};${topBorder}border-radius:6px;padding:5px 7px;
-            font-size:${MIN_FONT}px;color:#24282B;background:${bgColor};
-            width:${STEP_W}px;min-width:${STEP_W}px;max-width:${STEP_W}px;box-sizing:border-box;
-            display:flex;align-items:center;overflow:hidden;">
-            ${iconHtml}${badgeHtml}
-            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">${node.text}</span>
-          </div>
-          ${arrowHtml}
-        </div>`;
-      });
-
-      lanesHtml += `<div style="display:flex;min-height:60px;border-bottom:1px solid #E8EBF0;">
-        <div style="width:${LANE_LBL}px;min-width:${LANE_LBL}px;background:${lblBg};color:${lblColor};
-          display:flex;align-items:center;justify-content:center;
-          font-size:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;
-          writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);
-          border-right:1px solid #E8EBF0;padding:6px 4px;">
-          ${laneLabel}
-        </div>
-        <div style="background:${laneBg};flex:1;padding:8px 6px;display:flex;align-items:center;
-          flex-wrap:nowrap;overflow:hidden;">
-          ${cellsHtml}
-        </div>
-      </div>`;
-    });
-
-    // Legend
-    const legendHtml = `
-      <div style="display:flex;gap:16px;padding:6px 10px;border-top:1px solid #E8EBF0;
-        background:#FAFBFC;flex-wrap:wrap;font-size:9px;color:#888;">
-        <span style="display:flex;align-items:center;gap:4px;">
-          <span style="width:3px;height:12px;background:#E63F4F;border-radius:2px;display:inline-block;"></span>
-          Friction point
-        </span>
-        <span style="display:flex;align-items:center;gap:4px;">
-          <span style="width:3px;height:12px;background:#1D7279;border-radius:2px;display:inline-block;"></span>
-          AI tool assigned
-        </span>
-        <span style="display:flex;align-items:center;gap:4px;">
-          <span style="width:3px;height:12px;background:#EF9F27;border-radius:2px;display:inline-block;"></span>
-          Concurrent steps
-        </span>
-        ${totalPages > 1 ? `<span style="margin-left:auto;">Page ${page+1} of ${totalPages}</span>` : ''}
-      </div>`;
-
-    pagesHtml += `
-      <div class="page" style="page-break-after:${page < totalPages - 1 ? 'always' : 'auto'};">
-        <div style="font-family:'Segoe UI',Arial,sans-serif;padding:16px 20px 0;">
-          <div style="display:flex;align-items:flex-end;justify-content:space-between;
-            border-bottom:2px solid #CA1C68;padding-bottom:8px;margin-bottom:10px;">
-            <div>
-              <div style="font-size:7px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#888;margin-bottom:2px;">
-                PMO AI Innovation Tool — Process Map
-              </div>
-              <div style="font-size:14px;font-weight:700;color:#24282B;">
-                ${document.getElementById('workflow-title')?.value || 'Workflow Map'}
-              </div>
-            </div>
-            <div style="text-align:right;font-size:8px;color:#888;">
-              <div>Exported: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
-              ${totalPages > 1 ? `<div style="margin-top:2px;font-weight:700;">Columns ${startCol+1}–${endCol} of ${columns.length}</div>` : ''}
-            </div>
-          </div>
-          ${toolBracketHtml}
-          <div style="border:1px solid #E8EBF0;border-radius:6px;overflow:hidden;margin-top:${pageTools.length ? '2px' : '0'};">
-            ${lanesHtml}
-            ${legendHtml}
-          </div>
-        </div>
-      </div>`;
-  }
-
-  // Open print window
-  const win = window.open('', '_blank');
-  win.document.write(`<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>${document.getElementById('workflow-title')?.value || 'Workflow Map'} — Process Map</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: white; }
-    @page { size: A4 landscape; margin: 8mm 10mm; }
-    @media print {
-      .page { page-break-after: always; }
-      .page:last-child { page-break-after: auto; }
-      .no-print { display: none !important; }
-    }
-    .no-print {
-      position: fixed; top: 12px; right: 12px;
-      background: #CA1C68; color: white; border: none;
-      border-radius: 7px; padding: 8px 18px;
-      font-size: 13px; font-weight: 700; cursor: pointer;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      box-shadow: 0 2px 8px rgba(202,28,104,0.3);
-    }
-  </style>
-</head>
-<body>
-  <button class="no-print" onclick="window.print()">🖨 Print / Save as PDF</button>
-  ${pagesHtml}
-<\/body>
-<\/html>`);
-  win.document.close();
-}
-
-// ── SOP Word Doc Export ───────────────────────────────────────────────────────
-// Serialises canvas state to JSON and sends it to a server-side generator.
-// Since we are running as a local HTML file, we use docx-js via a Blob approach.
-
 async function psExportSOPDoc() {
   if (!psCanvasNodes.length) {
     alert('Add some steps to the canvas first before exporting.');
@@ -4192,7 +4012,9 @@ async function psExportSOPDoc() {
       col.stepNum = countable ? stepCounter : null;
     });
 
-    const workflowTitle = document.getElementById('workflow-title')?.value?.trim() || 'Untitled Workflow';
+    const workflowTitle   = document.getElementById('workflow-title')?.value?.trim() || 'Untitled Workflow';
+    const workflowWhy     = document.getElementById('workflow-why')?.value?.trim() || '';
+    const workflowProblem = document.getElementById('workflow-problem')?.value?.trim() || '';
     const mappedBy      = state.user?.name || 'PMO Team';
     const mappedDate    = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
     const phaseLabel    = PS_PHASES[psCurrentPhase]?.label || 'Current State';
@@ -4209,7 +4031,28 @@ async function psExportSOPDoc() {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    let stepsHtml = '';
+    // Build step index for cover page
+    let stepIndexHtml = '';
+    columns.forEach(col => {
+      if (!col.stepNum) return;
+      col.nodes.forEach(node => {
+        if (!['step','parallel','shared'].includes(node.type)) return;
+        const s = psStructuredSteps.find(st => st.nodeId === node.id) || {};
+        const isFriction = s.friction === 'Yes';
+        const isToolCovered = psToolGroups.some(g => g.nodeIds.includes(node.id));
+        const laneLabel = (document.querySelector(`#swim-lanes .swim-lane[data-lane="${node.lane}"] .lane-label`)?.textContent?.trim() || node.lane || '').toUpperCase();
+        const frictionBadge = isFriction && !isToolCovered ? '<span style="color:#E63F4F;">&#9888; Friction</span>' : '';
+        const toolBadge = isToolCovered ? '<span style="color:#1D7279;">&#10003; Tool assigned</span>' : '';
+        stepIndexHtml += '<tr style="border-bottom:1px solid #F0F2F5;">'
+          + '<td style="padding:7px 8px;font-weight:bold;color:#CA1C68;width:60px;">Step ' + col.stepNum + '</td>'
+          + '<td style="padding:7px 8px;color:#24282B;font-weight:600;">' + escHtml(node.text) + '</td>'
+          + '<td style="padding:7px 8px;color:#888;font-size:9pt;">' + laneLabel + '</td>'
+          + '<td style="padding:7px 8px;text-align:right;font-size:9pt;">' + frictionBadge + toolBadge + '</td>'
+          + '</tr>';
+      });
+    });
+
+        let stepsHtml = '';
     columns.forEach(col => {
       if (!col.stepNum) return;
       col.nodes.forEach(node => {
@@ -4220,52 +4063,28 @@ async function psExportSOPDoc() {
         const laneLabel = (document.querySelector(`#swim-lanes .swim-lane[data-lane="${node.lane}"] .lane-label`)?.textContent?.trim() || node.lane || '').toUpperCase();
         const isStacked = col.nodes.length > 1;
 
-        stepsHtml += `
-          <div style="margin-bottom:24px;page-break-inside:avoid;">
-            <h2 style="font-family:Tenorite,Calibri,Arial;font-size:14pt;font-weight:bold;color:#CA1C68;
-              border-bottom:1px solid #E8EBF0;padding-bottom:6px;margin-bottom:10px;">
-              Step ${col.stepNum} — ${escHtml(node.text)}
-              ${isFriction ? '<span style="color:#E63F4F;font-size:11pt;margin-left:8px;">⚠ Friction point</span>' : ''}
-            </h2>
-            <p style="font-family:Tenorite,Calibri,Arial;font-size:10pt;color:#555;margin-bottom:10px;">
-              <strong>Lane:</strong> ${laneLabel}
-              ${isStacked ? ' &nbsp;|&nbsp; <span style="color:#EF9F27;">⊕ Concurrent step</span>' : ''}
-            </p>
-            <table style="width:100%;border-collapse:collapse;font-family:Tenorite,Calibri,Arial;font-size:10pt;">
-              <tr>
-                <td style="width:22%;background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Input</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.input)}</td>
-              </tr>
-              <tr>
-                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Output</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.output)}</td>
-              </tr>
-              <tr>
-                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Tool used</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.tool)}</td>
-              </tr>
-              <tr>
-                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Step type</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.type || 'Task')}</td>
-              </tr>
-              <tr>
-                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Time estimate</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${s.timeEst ? escHtml(s.timeEst) + ' mins' : NA}</td>
-              </tr>
-              ${isFriction ? `<tr>
-                <td style="background:#FEF5F5;padding:6px 8px;font-weight:bold;border:1px solid #E63F4F;color:#E63F4F;">Friction reason</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.frictionReason)}</td>
-              </tr>` : ''}
-              <tr>
-                <td style="background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Notes / Tacit knowledge</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${val(s.notes)}</td>
-              </tr>
-              ${toolGrp ? `<tr>
-                <td style="background:#E1F5EE;padding:6px 8px;font-weight:bold;border:1px solid #1D7279;color:#1D7279;">AI Tool: ${escHtml(toolGrp.toolName)}</td>
-                <td style="padding:6px 8px;border:1px solid #DDD;">${val(toolGrp.details || toolGrp.action)}</td>
-              </tr>` : ''}
-            </table>
-          </div>`;
+        stepsHtml += ''
+          + '<div style="margin-bottom:28px;font-family:Tenorite,Calibri,Arial;">'
+          + '<p style="font-size:14pt;font-weight:bold;color:#CA1C68;border-bottom:2px solid #CA1C68;padding-bottom:4px;margin:0 0 6px 0;font-family:Tenorite,Calibri,Arial;">'
+          + 'Step ' + col.stepNum + ' — ' + escHtml(node.text)
+          + (isFriction && !toolGrp ? ' <span style="color:#E63F4F;font-size:10pt;">⚠ Friction</span>' : '')
+          + (toolGrp && isFriction ? ' <span style="color:#1D7279;font-size:10pt;">✓ Friction addressed</span>' : '')
+          + '</p>'
+          + '<p style="font-size:10pt;color:#555;margin:0 0 6px 0;font-family:Tenorite,Calibri,Arial;">'
+          + '<strong>Lane:</strong> ' + laneLabel
+          + (isStacked ? ' &nbsp;|&nbsp; <span style="color:#EF9F27;">⊕ Concurrent step</span>' : '')
+          + '</p>'
+          + '<table style="width:100%;border-collapse:collapse;font-family:Tenorite,Calibri,Arial;font-size:10pt;margin-bottom:4px;">'
+          + '<tr><td style="width:140px;background:#F2F4F6;padding:5px 8px;font-weight:bold;border:1px solid #DDD;vertical-align:top;">Input</td><td style="padding:5px 8px;border:1px solid #DDD;">' + val(s.input) + '</td></tr>'
+          + '<tr><td style="background:#F2F4F6;padding:5px 8px;font-weight:bold;border:1px solid #DDD;vertical-align:top;">Output</td><td style="padding:5px 8px;border:1px solid #DDD;">' + val(s.output) + '</td></tr>'
+          + '<tr><td style="background:#F2F4F6;padding:5px 8px;font-weight:bold;border:1px solid #DDD;vertical-align:top;">Tool used</td><td style="padding:5px 8px;border:1px solid #DDD;">' + val(s.tool) + '</td></tr>'
+          + '<tr><td style="background:#F2F4F6;padding:5px 8px;font-weight:bold;border:1px solid #DDD;vertical-align:top;">Step type</td><td style="padding:5px 8px;border:1px solid #DDD;">' + val(s.type || 'Task') + '</td></tr>'
+          + '<tr><td style="background:#F2F4F6;padding:5px 8px;font-weight:bold;border:1px solid #DDD;vertical-align:top;">Time estimate</td><td style="padding:5px 8px;border:1px solid #DDD;">' + (s.timeEst ? escHtml(s.timeEst) : NA) + '</td></tr>'
+          + (isFriction ? '<tr><td style="background:#FEF5F5;padding:5px 8px;font-weight:bold;border:1px solid #E63F4F;color:#E63F4F;vertical-align:top;">Friction reason</td><td style="padding:5px 8px;border:1px solid #DDD;">' + val(s.frictionReason) + '</td></tr>' : '')
+          + '<tr><td style="background:#F2F4F6;padding:5px 8px;font-weight:bold;border:1px solid #DDD;vertical-align:top;">What do you do in this step?</td><td style="padding:5px 8px;border:1px solid #DDD;">' + val(s.notes) + '</td></tr>'
+          + (toolGrp ? '<tr><td style="background:#E1F5EE;padding:5px 8px;font-weight:bold;border:1px solid #1D7279;color:#1D7279;vertical-align:top;">AI Tool: ' + escHtml(toolGrp.toolName) + '</td><td style="padding:5px 8px;border:1px solid #DDD;">' + val(toolGrp.details || toolGrp.action) + '</td></tr>' : '')
+          + '</table>'
+          + '</div>';
       });
     });
 
@@ -4274,8 +4093,7 @@ async function psExportSOPDoc() {
     if (psToolGroups.length) {
       toolSummaryHtml = `
         <div style="page-break-before:always;">
-          <h1 style="font-family:Tenorite,Calibri,Arial;font-size:16pt;font-weight:bold;color:#24282B;
-            border-bottom:2px solid #1D7279;padding-bottom:8px;margin-bottom:16px;">AI Tool Summary</h1>
+          <div style="font-family:Tenorite,Calibri,Arial;font-size:16pt;font-weight:bold;color:#24282B;border-bottom:2px solid #1D7279;padding-bottom:8px;margin-bottom:16px;">AI Tool Summary</div>
           <p style="font-family:Tenorite,Calibri,Arial;font-size:10pt;color:#555;margin-bottom:16px;">
             The following AI tools were identified as candidates during the Phase 4 workflow review.
           </p>`;
@@ -4287,10 +4105,8 @@ async function psExportSOPDoc() {
         }).filter(Boolean);
 
         toolSummaryHtml += `
-          <div style="margin-bottom:20px;page-break-inside:avoid;">
-            <h2 style="font-family:Tenorite,Calibri,Arial;font-size:13pt;font-weight:bold;color:#1D7279;margin-bottom:8px;">
-              ★ ${escHtml(tg.toolName)}
-            </h2>
+          <div style="margin-bottom:20px;">
+            <p style="font-family:Tenorite,Calibri,Arial;font-size:13pt;font-weight:bold;color:#1D7279;margin-bottom:8px;margin-top:0;">★ ${escHtml(tg.toolName)}</p>
             <table style="width:100%;border-collapse:collapse;font-family:Tenorite,Calibri,Arial;font-size:10pt;">
               <tr>
                 <td style="width:22%;background:#EAEEF1;padding:6px 8px;font-weight:bold;border:1px solid #DDD;">Steps covered</td>
@@ -4333,30 +4149,55 @@ async function psExportSOPDoc() {
   <![endif]-->
 </head>
 <body>
-  <!-- Cover page -->
-  <div style="page-break-after:always;padding-top:80px;">
+  <!-- ── PART 1: COVER PAGE ── -->
+  <div style="page-break-after:always;padding-top:80px;min-height:90vh;position:relative;">
     <p style="font-size:9pt;font-weight:bold;letter-spacing:1px;color:#888;text-transform:uppercase;margin-bottom:6px;">
       PMO AI Innovation Tool
     </p>
-    <h1 style="font-size:22pt;color:#CA1C68;margin-bottom:4px;">Standard Operating Procedure</h1>
-    <p style="font-size:11pt;color:#24282B;margin-bottom:24px;">Process Workflow Documentation</p>
-    <div style="border-bottom:3px solid #CA1C68;margin-bottom:20px;"></div>
-    <table style="width:100%;font-size:10pt;">
-      <tr><td style="padding:6px 0;font-weight:bold;width:140px;">Workflow:</td><td style="color:#CA1C68;font-weight:bold;">${escHtml(workflowTitle)}</td></tr>
-      <tr><td style="padding:6px 0;font-weight:bold;">Mapped by:</td><td>${escHtml(mappedBy)}</td></tr>
-      <tr><td style="padding:6px 0;font-weight:bold;">Date:</td><td>${escHtml(mappedDate)}</td></tr>
-      <tr><td style="padding:6px 0;font-weight:bold;">Phase:</td><td>${escHtml(phaseLabel)}</td></tr>
-      <tr><td style="padding:6px 0;font-weight:bold;">Total steps:</td><td>${stepCounter}</td></tr>
-      ${psTeamMembers.length ? `<tr><td style="padding:6px 0;font-weight:bold;vertical-align:top;">Team members:</td><td>${psTeamMembers.map(e => escHtml(e)).join('<br>')}</td></tr>` : ''}
+    <p style="font-size:26pt;color:#CA1C68;margin-bottom:4px;font-weight:bold;font-family:Tenorite,Calibri,Arial;margin-top:0;">${escHtml(workflowTitle)}</p>
+    <p style="font-size:11pt;color:#24282B;margin-bottom:4px;">Standard Operating Procedure</p>
+    <div style="border-bottom:3px solid #CA1C68;margin-bottom:28px;margin-top:12px;"></div>
+
+    ${workflowWhy ? `
+    <div style="margin-bottom:24px;">
+      <p style="font-size:9pt;font-weight:bold;letter-spacing:0.8px;color:#888;text-transform:uppercase;margin-bottom:6px;">Why This Workflow?</p>
+      <p style="font-size:11pt;color:#24282B;line-height:1.7;margin:0;">${escHtml(workflowWhy)}</p>
+    </div>` : ''}
+
+    ${workflowProblem ? `
+    <div style="margin-bottom:28px;">
+      <p style="font-size:9pt;font-weight:bold;letter-spacing:0.8px;color:#888;text-transform:uppercase;margin-bottom:6px;">What Problem Does This Workflow Solve For?</p>
+      <p style="font-size:11pt;color:#24282B;line-height:1.7;margin:0;">${escHtml(workflowProblem)}</p>
+    </div>` : ''}
+
+    <div style="border-bottom:1px solid #E8EBF0;margin-bottom:20px;"></div>
+
+    <!-- Step Index -->
+    <p style="font-size:9pt;font-weight:bold;letter-spacing:0.8px;color:#888;text-transform:uppercase;margin-bottom:12px;">Workflow Steps</p>
+    <table style="width:100%;font-size:10pt;border-collapse:collapse;">
+      ${stepIndexHtml}
+    </table>
+
+    <table style="width:100%;font-size:9pt;margin-top:40px;">
+      <tr>
+        <td style="color:#888;">Mapped by: ${escHtml(mappedBy)}</td>
+        <td style="color:#888;">Date: ${escHtml(mappedDate)}</td>
+        <td style="color:#888;">Phase: ${escHtml(phaseLabel)}</td>
+        <td style="color:#888;">Total steps: ${stepCounter}</td>
+      </tr>
+      ${psTeamMembers.length ? `<tr><td colspan="4" style="color:#888;padding-top:4px;">Team: ${psTeamMembers.map(e => escHtml(e)).join(', ')}</td></tr>` : ''}
     </table>
     <p style="position:absolute;bottom:30px;right:30px;font-size:8pt;color:#999;">Copyright &copy; 2026 BTS</p>
   </div>
 
-  <!-- Steps heading -->
-  <h1 style="font-size:18pt;font-weight:bold;color:#24282B;border-bottom:2px solid #CA1C68;
-    padding-bottom:8px;margin-bottom:20px;">Workflow Steps</h1>
-
-  ${stepsHtml}
+  <!-- ── PART 2: STEP DETAIL CARDS ── -->
+  <div>
+    <p style="font-size:9pt;font-weight:bold;letter-spacing:1px;color:#888;text-transform:uppercase;margin-bottom:6px;">
+      ${escHtml(workflowTitle)}
+    </p>
+    <p style="font-size:16pt;font-weight:bold;color:#24282B;border-bottom:2px solid #CA1C68;padding-bottom:6px;margin-bottom:20px;font-family:Tenorite,Calibri,Arial;">Workflow Steps</p>
+    ${stepsHtml}
+  </div>
   ${toolSummaryHtml}
 <\/body>
 <\/html>`;
@@ -4366,7 +4207,8 @@ async function psExportSOPDoc() {
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
     a.href     = url;
-    a.download = (workflowTitle.replace(/\s+/g,'_') || 'Workflow') + '_SOP.doc';
+    const sopDate = new Date().toISOString().slice(0,10);
+    a.download = (workflowTitle.replace(/\s+/g,'_') || 'Workflow') + '_' + sopDate + '_SOP.doc';
     a.click();
     URL.revokeObjectURL(url);
 
@@ -4462,6 +4304,8 @@ const _origClearMapper = typeof clearMapper === 'function' ? clearMapper : null;
       <div class="tour-dots" id="tour-dots"></div>
       <div style="display:flex;align-items:center;gap:12px;">
         <button class="tour-skip" onclick="endTour()">Skip tour ✕</button>
+        <button id="tour-prev" onclick="tourPrev()" style="display:none;background:white;border:1px solid #DDE1E6;border-radius:7px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:var(--font);">← Back</button>
+        <button id="tour-next" onclick="tourNext()" style="background:var(--bts-purple);color:white;border:none;border-radius:7px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);">Next →</button>
         <button class="tour-next" id="tour-next-btn" onclick="tourNext()">Next →</button>
       </div>
     </div>
