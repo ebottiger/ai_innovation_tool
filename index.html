@@ -206,6 +206,16 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .success-toast { background: var(--bts-teal-light); border: 1px solid #9FE1CB; border-radius: 8px; padding: 12px 15px; font-size: 12px; color: #0F6E56; font-weight: 600; margin-bottom: 14px; display: none; }
 .info-box { background: var(--bts-blue-light); border-left: 3px solid var(--bts-blue); border-radius: 0 8px 8px 0; padding: 11px 14px; font-size: 12px; color: var(--bts-blue); margin-bottom: 16px; line-height: 1.6; }
 .note-box { background: var(--bts-purple-light); border-left: 3px solid var(--bts-purple); border-radius: 0 8px 8px 0; padding: 11px 14px; font-size: 12px; color: var(--bts-purple); margin-bottom: 16px; line-height: 1.6; }
+.cra-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
+.cra-btn { background: white; border: 1px solid #E8EBF0; border-top: 3px solid var(--bts-teal); border-radius: 10px; padding: 16px 10px; cursor: pointer; text-align: center; transition: all 0.15s; }
+.cra-btn:hover { border-color: var(--bts-teal); background: var(--bts-teal-light); }
+.cra-stage-num { font-size: 20px; margin-bottom: 4px; }
+.cra-stage-name { font-size: 12px; font-weight: 700; color: var(--bts-dark); line-height: 1.3; }
+.cra-stage-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; margin-top: 5px; text-transform: uppercase; color: var(--bts-teal); }
+.cra-checklist { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.cra-check-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; color: var(--bts-dark); line-height: 1.5; cursor: pointer; }
+.cra-check-item input { margin-top: 3px; accent-color: var(--bts-teal); cursor: pointer; }
+@media (max-width: 900px) { .cra-grid { grid-template-columns: repeat(2,1fr); } }
 .warn-box { background: #FAEEDA; border-left: 3px solid #EF9F27; border-radius: 0 8px 8px 0; padding: 11px 14px; font-size: 12px; color: #854F0B; margin-bottom: 16px; line-height: 1.6; }
 .link-btn { color: var(--bts-pink); text-decoration: none; font-weight: 600; font-size: 12px; }
 .link-btn:hover { text-decoration: underline; }
@@ -406,12 +416,11 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
   <div class="accent-bar"></div>
   <div class="nav-bar">
     <div class="nav-item active" id="nav-home" onclick="showTab('home')">Home</div>
-    <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Process Studio</div>
     <div class="nav-item" id="nav-idea" onclick="showTab('idea')">Log an Idea</div>
+    <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Process Studio</div>
     <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Check-In</div>
+    <div class="nav-item" id="nav-cra" onclick="showTab('cra')">Chain Reaction Accelerator</div>
     <div class="nav-item" id="nav-dashboard" onclick="showTab('dashboard')">Pilot Dashboard</div>
-    <div class="nav-item" id="nav-roles" onclick="showTab('roles')">Roles & Responsibilities</div>
-    <div class="nav-item" id="nav-research" onclick="showTab('research')">How Research Supports This Process</div>
   </div>
 
   <!-- ======= HOME TAB ======= -->
@@ -455,6 +464,15 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
           <span class="ac-what">When you click here, you'll select your pilot's current day milestone — Day 1, 15, 30, 45, 60, 75, or 90 — and complete a structured check-in that captures your progress, your wins, and where you need help. It saves directly to the backend.</span>
         </div>
       </div>
+      <div class="action-card" onclick="showTab('cra')">
+        <div class="ac-icon" style="font-size:17px;background:var(--bts-teal-light);">&#128163;</div>
+        <h3>Chain Reaction Accelerator</h3>
+        <p>Turn one proven flywheel into a team-wide diamond</p>
+        <div class="ac-hover-desc">
+          <span class="ac-brene">"One person figuring it out is a good start. It isn't the finish line. This is where we ask, honestly, what it would take for everyone to have what you have."</span>
+          <span class="ac-what">When you click here, you'll move a proven flywheel through five short stages — spark it, pressure-test it, decide if it's a diamond, roll it out to the team, and name who manages it going forward. Each stage takes 5 minutes or less and saves to its own Smartsheet backend. In Stage 1, you'll set your own goal date for each remaining phase — BTS recommends the whole process take no more than 90 days.</span>
+        </div>
+      </div>
       <div class="action-card" onclick="showTab('dashboard')">
         <div class="ac-icon ac-purple" style="font-size:17px">&#128202;</div>
         <h3>Pilot Dashboard</h3>
@@ -462,24 +480,6 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div class="ac-hover-desc">
           <span class="ac-brene">Available to AI Champions and team leadership. "Progress isn't always visible until someone makes it visible. This is how we see what's moving, what needs attention, and who might need a hand."</span>
           <span class="ac-what">When you click here, you'll see a real-time view of all active AI pilots — their health status, current phase, and any flags that need follow-up.</span>
-        </div>
-      </div>
-      <div class="action-card" onclick="showTab('roles')">
-        <div class="ac-icon" style="font-size:17px;background:var(--bts-pink-light);">&#128101;</div>
-        <h3>Roles &amp; Responsibilities</h3>
-        <p>Quick reference for pilot ownership</p>
-        <div class="ac-hover-desc">
-          <span class="ac-brene">"Clarity is kindness. When everyone knows their role, no one has to guess — and the work moves forward with confidence instead of confusion."</span>
-          <span class="ac-what">When you click here, you'll see a side-by-side comparison of the Pilot Lead, Pilot Partner, and Team Leadership responsibilities — including who owns each check-in milestone. Bookmark this page for quick reference throughout your pilot.</span>
-        </div>
-      </div>
-      <div class="action-card" onclick="showTab('research')">
-        <div class="ac-icon" style="font-size:17px;background:var(--bts-blue-light);">&#128270;</div>
-        <h3>How Research Supports This Process</h3>
-        <p>Why Map → Visualize → Simplify → Automate works</p>
-        <div class="ac-hover-desc">
-          <span class="ac-brene">"The sequence isn't a preference — it's a pattern. Three decades of evidence from McKinsey, BCG, MIT CISR, Bain, and HBR all converge on the same answer."</span>
-          <span class="ac-what">When you click here, you'll find four expandable cards — one for each phase — explaining the research behind why the order matters. Each card includes real citations and links to the original sources.</span>
         </div>
       </div>
     </div>
@@ -554,10 +554,370 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div class="checkin-btn written" onclick="openCheckin(75)"><div class="cb-day">75</div><div class="cb-type">Written</div><div class="cb-label">Final review</div></div>
         <div class="checkin-btn verbal" onclick="openCheckin(90)"><div class="cb-day">90</div><div class="cb-type">Verbal</div><div class="cb-label">Decision day</div></div>
       </div>
-      <div class="note-box">* <strong>Exception — Starting at Day 30:</strong> If your experiment phase already produced strong evidence and Team Leadership has explicitly approved early entry, you may begin your pilot at Day 30. This must be documented in writing before proceeding.</div>
+      <div class="warn-box">&#9203; <strong>Exception — Starting at Day 30:</strong> If your experiment phase already produced strong evidence and Team Leadership has explicitly approved early entry, you may begin at Day 30 &mdash; but Day 1 and Day 15 written updates must still be completed in writing first. See the note below for how the full timeline works.</div>
+      <div style="background:var(--bts-teal-light);border-left:4px solid var(--bts-teal);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:6px;">A note on pacing</div>
+        <div style="font-size:12.5px;color:var(--bts-dark);line-height:1.7;">
+          The every-15-day cadence is a <strong>recommendation, not a mandate</strong>. Check-ins can happen faster or take longer than every 15 days &mdash; BTS and Anthropic recommend the whole pilot take <strong>no more than 90 days</strong> total, but exactly how you pace the days in between is up to the Pilot Lead and Pilot Partner.<br><br>
+          Day 1 and Day 15 should <strong>always</strong> be completed in writing, even if your team is effectively starting at Day 30.<br><br>
+          Once you reach Day 90, move to the <strong>Chain Reaction Accelerator</strong> &mdash; start at <strong>Stage 3, Cut the Diamond</strong>.
+        </div>
+      </div>
+
+      <!-- ═══ Roles & Responsibilities (embedded) ═══ -->
+      <div style="border-top:1px solid #E8EBF0;margin-top:28px;padding-top:24px;">
+        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin-bottom:2px;">Roles &amp; Responsibilities</div>
+        <p style="font-size:12px;color:#888;margin-bottom:18px;">Quick reference for pilot ownership — based on the AI Pilot Playbook</p>
+
+        <div style="background:var(--bts-dark);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">The Two-Person Ownership Model</div>
+            <div style="font-size:12px;color:#B0B8C1;line-height:1.6;">Every pilot has exactly two owners — a Pilot Lead and a Pilot Partner. Co-ownership is <strong style="color:white;">never assigned</strong> — both people must volunteer. The role split exists to remove ambiguity, not divide accountability. Shared accountability without clear roles is how pilots quietly stall.</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;">
+          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-pink);overflow:hidden;">
+            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-pink);margin-bottom:4px;">Role 01</div>
+              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Lead</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the momentum, all seven check-ins, and the Day 90 presentation.</div>
+            </div>
+            <div style="padding:14px 18px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+                <li>Setting up the pilot and orienting the test group</li>
+                <li>Drafting and sending all written check-in updates to Team Leadership (Days 1, 15, 30, 45, 75)</li>
+                <li>Leading verbal check-ins at Days 60 and 90</li>
+                <li>Keeping the pilot on schedule across all seven milestones</li>
+                <li>Presenting findings verbally to Team Leadership at Day 90</li>
+                <li>Being the single point of contact Team Leadership calls if there is silence</li>
+              </ul>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leadership</div>
+              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#FEF8FB;border-radius:7px;padding:8px 10px;">Primary contact. Sends all check-ins. Team Leadership directs all questions and feedback to the Pilot Lead first.</div>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+              <div style="font-size:12px;color:var(--bts-pink);font-weight:600;background:#FEF8FB;border-radius:7px;padding:8px 10px;">If there is silence, Team Leadership reaches out to the Pilot Lead.</div>
+            </div>
+          </div>
+
+          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-teal);overflow:hidden;">
+            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:4px;">Role 02</div>
+              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Partner</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the validation, the challenge, and the continuity if the Lead is pulled away.</div>
+            </div>
+            <div style="padding:14px 18px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+                <li>Independently testing the tool and tracking their own usage data</li>
+                <li>Providing honest, unfiltered feedback — including when the tool is not working</li>
+                <li>Leading the Day 45 peer review (the "third eye" step)</li>
+                <li>Reviewing and co-signing the Day 90 findings before presentation</li>
+                <li>Stepping up to full Lead responsibilities if the Lead is unavailable</li>
+              </ul>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leadership</div>
+              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F0FBF8;border-radius:7px;padding:8px 10px;">Copied on all check-ins. Attends the Day 90 presentation. Steps in as primary contact only if the Lead is unavailable.</div>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+              <div style="font-size:12px;color:var(--bts-teal);font-weight:600;background:#F0FBF8;border-radius:7px;padding:8px 10px;">If the Pilot Lead is unavailable, the Pilot Partner becomes the Lead.</div>
+            </div>
+          </div>
+
+          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-purple);overflow:hidden;">
+            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-purple);margin-bottom:4px;">Role 03</div>
+              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Team Leadership</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Receives updates, provides feedback, coaches the co-owners, and makes the final call at Day 90.</div>
+            </div>
+            <div style="padding:14px 18px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+                <li>Receiving written check-in updates at Days 1, 15, 30, 45, and 75</li>
+                <li>Attending verbal check-ins at Days 60 and 90</li>
+                <li>Responding to written check-ins with feedback within one week</li>
+                <li>Making the final Standardize / Reevaluate / Table decision at Day 90</li>
+                <li>Approving any early pilot entry at Day 30 (exception only)</li>
+              </ul>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Not in the ownership seat</div>
+              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Team Leadership does not own the pilot. They are informed, not accountable for day-to-day execution. Approval comes at Day 90 only.</div>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+              <div style="font-size:12px;color:var(--bts-purple);font-weight:600;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Nothing becomes a Standard without explicit Team Leadership approval. No exceptions.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;padding:20px 22px;margin-bottom:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--bts-dark);margin-bottom:10px;">Why this model works for our team</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;">Our team operates in silos and people are frequently pulled into competing delivery priorities. A single owner is vulnerable — if they are pulled away, the pilot dies quietly. Two owners prevents that. And because co-ownership is always opted into rather than assigned, both people arrive with genuine commitment — not compliance.</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">But two willing owners without a clear role split creates a different problem: diffusion, where both people do less because each assumes the other has the lead. The Pilot Lead / Pilot Partner model keeps the redundancy of two owners while eliminating the ambiguity. The Lead is accountable for momentum. The Partner is accountable for honest validation. Together, they produce a richer, more credible Day 90 finding than either could alone — and Team Leadership gets two independent perspectives, not one advocate.</div>
+        </div>
+
+        <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;overflow:hidden;margin-bottom:20px;">
+          <div style="padding:14px 18px;border-bottom:1px solid #F0F2F5;background:#FAFBFC;">
+            <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Check-In Ownership at a Glance</div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:12px;">
+              <thead>
+                <tr style="background:#F5F6F8;">
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-dark);border-bottom:1px solid #E8EBF0;">Milestone</th>
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-pink);border-bottom:1px solid #E8EBF0;">Pilot Lead</th>
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-teal);border-bottom:1px solid #E8EBF0;">Pilot Partner</th>
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-purple);border-bottom:1px solid #E8EBF0;">Team Leadership</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 1</td>
+                  <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
+                  <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
+                  <td style="padding:10px 16px;color:#555;">Receives &amp; acknowledges</td>
+                </tr>
+                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 15</td>
+                  <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
+                  <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
+                  <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
+                </tr>
+                <tr style="border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 30</td>
+                  <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
+                  <td style="padding:10px 16px;color:#555;">Reviews &amp; adds perspective before send</td>
+                  <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
+                </tr>
+                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 45</td>
+                  <td style="padding:10px 16px;color:#555;">Supports</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Leads — brings in fresh perspectives ("third eye")</td>
+                  <td style="padding:10px 16px;color:#555;">Receives written summary</td>
+                </tr>
+                <tr style="border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Leads verbal check-in</td>
+                  <td style="padding:10px 16px;color:#555;">Attends &amp; contributes</td>
+                  <td style="padding:10px 16px;color:#555;">Attends &amp; gives verbal feedback</td>
+                </tr>
+                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60–75</td>
+                  <td style="padding:10px 16px;color:#555;">Leads cross-functional review</td>
+                  <td style="padding:10px 16px;color:#555;">Supports</td>
+                  <td style="padding:10px 16px;color:#555;">Monitors approval status</td>
+                </tr>
+                <tr style="border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 75</td>
+                  <td style="padding:10px 16px;color:#555;">Sends written readiness update</td>
+                  <td style="padding:10px 16px;color:#555;">Reviews before send</td>
+                  <td style="padding:10px 16px;color:#555;">Receives &amp; responds</td>
+                </tr>
+                <tr style="background:#FAFBFC;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 90</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Presents findings verbally</td>
+                  <td style="padding:10px 16px;color:#555;">Present to answer questions</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Makes final decision: Standardize / Reevaluate / Table</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="background:var(--bts-dark);border-radius:10px;padding:16px 22px;display:flex;gap:24px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-pink);margin-bottom:4px;">Non-negotiable</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">Co-ownership is never assigned. Both owners must volunteer. No pilot moves forward without two willing owners.</div>
+          </div>
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-teal);margin-bottom:4px;">Non-negotiable</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">Every idea starts at Experiment. There is no express lane to Pilot. Experiment → Pilot → Standard. No shortcuts.</div>
+          </div>
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-purple);margin-bottom:4px;">Non-negotiable</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">Nothing becomes a Standard without explicit Team Leadership approval. Approval comes at Day 90 only. No exceptions.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="checkin-form" style="display:none"></div>
+  </div>
+
+  <!-- ======= CHAIN REACTION ACCELERATOR TAB ======= -->
+  <div class="main" id="tab-cra" style="display:none">
+    <div id="cra-selector">
+      <div class="checkin-header">
+        <h2>Chain Reaction Accelerator</h2>
+        <p>Your flywheel already worked. This is how one win becomes a diamond the whole team runs on.</p>
+      </div>
+      <div class="note-box" style="background:var(--bts-teal-light);border-left-color:var(--bts-teal);color:#0F5A5F;">
+        This tab is an <strong>alternative to the Check-In tab</strong>, not a follow-on to it &mdash; pick the one path that fits how your team wants to work. Where Check-In follows Anthropic's 90-day pilot model, the Chain Reaction Accelerator follows BTS's own Flywheels &amp; Diamonds field guides. Start here once your team has already found a flywheel that's working. Five stages, five minutes each. Stages 1&ndash;2 are yours to run whenever you're ready. Stage 3 is a decision point. Stages 4&ndash;5 are for once Team Leadership has said yes.
+      </div>
+      <div class="note-box" style="background:var(--bts-purple-light);border-left-color:var(--bts-purple);color:var(--bts-purple);">
+        <strong>Is your flywheel actually ready?</strong> Here's what the field guides say to look for:
+        <ul style="margin:8px 0 0 18px;padding:0;line-height:1.7;">
+          <li>It's narrow &mdash; one small, specific improvement, not a sprawling initiative</li>
+          <li>It moves fast &mdash; each rotation takes a day, a week, or a month, never six</li>
+          <li>It created a real "wow" moment &mdash; someone felt the power of AI help them surpass a goal, not just meet one</li>
+          <li>It has results you can point to, even if the evidence is still informal</li>
+          <li>You've already told at least one person outside the immediate team about it</li>
+          <li>The team pairs people who know how to navigate BTS with fresh thinkers unconstrained by "how we've always done it"</li>
+        </ul>
+      </div>
+      <div class="cra-grid" id="cra-grid"></div>
+      <div class="note-box">Not sure this is ready yet? That's what Stage 2 is for &mdash; pressure-testing is supposed to surface cracks.</div>
+
+      <!-- ═══ Roles & Responsibilities (CRA-adapted) ═══ -->
+      <div style="border-top:1px solid #E8EBF0;margin-top:28px;padding-top:24px;">
+        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin-bottom:2px;">Roles &amp; Responsibilities</div>
+        <p style="font-size:12px;color:#888;margin-bottom:18px;">Quick reference for flywheel ownership — based on the Flywheels &amp; Diamonds field guides</p>
+
+        <div style="background:var(--bts-dark);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">The Single-Owner Submission Model</div>
+            <div style="font-size:12px;color:#B0B8C1;line-height:1.6;">The Flywheel Owner is the <strong style="color:white;">only</strong> one who ever submits a Chain Reaction Accelerator check-in. The Flywheel Partner and Team Leader are named at Stage 1 &mdash; Spark the Reaction, but neither one files an update themselves. This isn't about limiting who's involved — it's about keeping one clean, consistent record as the flywheel moves through five stages.</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;">
+          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-pink);overflow:hidden;">
+            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-pink);margin-bottom:4px;">Role 01</div>
+              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Flywheel Owner</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns every submission, from Stage 1 &mdash; Spark the Reaction through Stage 5 &mdash; Manage the Diamond.</div>
+            </div>
+            <div style="padding:14px 18px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+                <li>Submitting all five stage check-ins — the only one who ever does</li>
+                <li>Naming the Flywheel Partner and Team Leader at Stage 1 &mdash; Spark the Reaction</li>
+                <li>Setting goal dates for each remaining phase at Stage 1 &mdash; Spark the Reaction</li>
+                <li>Gathering and implementing cross-functional feedback at Stage 2 &mdash; Pressure-Test the Spark</li>
+                <li>Running the honest diamond checklist at Stage 3 &mdash; Cut the Diamond</li>
+                <li>Confirming the cutover date and coaching completion at Stage 4 &mdash; Institutionalize</li>
+                <li>Owning the diamond day-to-day at Stage 5 &mdash; Manage the Diamond, or naming who does</li>
+              </ul>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leader</div>
+              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#FEF8FB;border-radius:7px;padding:8px 10px;">Sends the Stage 1 &mdash; Spark the Reaction update directly to the Team Leader the moment a flywheel is identified. Every stage after that keeps the same record — the Team Leader is never guessing what stage this is at.</div>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+              <div style="font-size:12px;color:var(--bts-pink);font-weight:600;background:#FEF8FB;border-radius:7px;padding:8px 10px;">The Flywheel Owner is the only one who submits. Partner and Team Leader inform — they don't file.</div>
+            </div>
+          </div>
+
+          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-teal);overflow:hidden;">
+            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:4px;">Role 02</div>
+              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Flywheel Partner</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the pressure-testing and the presentation — never the paperwork.</div>
+            </div>
+            <div style="padding:14px 18px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+                <li>Being one of the first people the Owner tells when the flywheel works</li>
+                <li>Giving independent, unfiltered pressure-testing feedback at Stage 2 &mdash; Pressure-Test the Spark — actually running it, not watching a demo</li>
+                <li>Presenting the diamond as the new standard at Stage 3 &mdash; Cut the Diamond and Stage 4 &mdash; Institutionalize — because the person who built it shouldn't be the one selling it</li>
+                <li>Helping the Owner find the next tester or peer coach</li>
+              </ul>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leader</div>
+              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F0FBF8;border-radius:7px;padding:8px 10px;">Named at Stage 1 &mdash; Spark the Reaction and kept in the loop, but doesn't file check-ins directly — feedback flows to the Team Leader through the Owner, except when presenting at Stage 3 &mdash; Cut the Diamond.</div>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+              <div style="font-size:12px;color:var(--bts-teal);font-weight:600;background:#F0FBF8;border-radius:7px;padding:8px 10px;">The person who built it does not present it as the new standard. That's the Partner's job.</div>
+            </div>
+          </div>
+
+          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-purple);overflow:hidden;">
+            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-purple);margin-bottom:4px;">Role 03</div>
+              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Team Leader</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Receives updates, gives the mandate, and watches for renewal.</div>
+            </div>
+            <div style="padding:14px 18px;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
+              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
+                <li>Receiving the Stage 1 &mdash; Spark the Reaction update the moment a flywheel is identified</li>
+                <li>Staying informed through Stage 2 &mdash; Pressure-Test the Spark</li>
+                <li>Giving the explicit yes at Stage 3 &mdash; Cut the Diamond to move from voluntary to mandated</li>
+                <li>Approving the cutover date and new metrics at Stage 4 &mdash; Institutionalize</li>
+                <li>Watching for the renewal signal at Stage 5 &mdash; Manage the Diamond — is this diamond still earning its keep</li>
+              </ul>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Not in the ownership seat</div>
+              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Team Leader does not own the flywheel. They're informed at Stage 1 &mdash; Spark the Reaction, decide at Stage 3 &mdash; Cut the Diamond, and approve rollout at Stage 4 &mdash; Institutionalize.</div>
+              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
+              <div style="font-size:12px;color:var(--bts-purple);font-weight:600;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Nothing moves from voluntary to mandated without the Team Leader's explicit yes at Stage 3 &mdash; Cut the Diamond. No exceptions.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;padding:20px 22px;margin-bottom:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--bts-dark);margin-bottom:10px;">Why this model works, according to the field guides</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;">The field guides are clear that a flywheel spreads through people, not paperwork. The strongest flywheel teams pair someone who knows how to navigate the organization with a fresh thinker unconstrained by "how it's always been done" — that's the whole reason this model has both an Owner and a Partner, instead of one person carrying it alone.</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">The guides are just as clear that the person who builds something shouldn't be the one who declares it a diamond or sells it to the rest of the team — that's a structural blind spot, not a trust issue. That's why the Partner, not the Owner, pressure-tests it independently and presents it as the new standard. And because institutionalizing a diamond is treated as a real mandate rather than a suggestion, someone outside the work has to say so out loud — that's the Team Leader's explicit yes.</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">The five-stage check-ins don't create any of this — they just keep it honest and on schedule as the flywheel actually moves through it.</div>
+        </div>
+
+        <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;overflow:hidden;margin-bottom:20px;">
+          <div style="padding:14px 18px;border-bottom:1px solid #F0F2F5;background:#FAFBFC;">
+            <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Stage Ownership at a Glance</div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:12px;">
+              <thead>
+                <tr style="background:#F5F6F8;">
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-dark);border-bottom:1px solid #E8EBF0;">Stage</th>
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-pink);border-bottom:1px solid #E8EBF0;">Flywheel Owner</th>
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-teal);border-bottom:1px solid #E8EBF0;">Flywheel Partner</th>
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-purple);border-bottom:1px solid #E8EBF0;">Team Leader</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 1 &mdash; Spark the Reaction</td>
+                  <td style="padding:10px 16px;color:#555;">Submits check-in; names Partner &amp; Team Leader; sets phase goal dates</td>
+                  <td style="padding:10px 16px;color:#555;">Named as accountability partner</td>
+                  <td style="padding:10px 16px;color:#555;">Receives Stage 1 &mdash; Spark the Reaction update</td>
+                </tr>
+                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 2 &mdash; Pressure-Test the Spark</td>
+                  <td style="padding:10px 16px;color:#555;">Submits check-in; gathers &amp; implements cross-functional feedback</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Pressure-tests it independently — runs it, doesn't just watch; ensures feedback is implemented</td>
+                  <td style="padding:10px 16px;color:#555;">Informed only if flagged</td>
+                </tr>
+                <tr style="border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 3 &mdash; Cut the Diamond</td>
+                  <td style="padding:10px 16px;color:#555;">Submits check-in; runs the honest diamond checklist</td>
+                  <td style="padding:10px 16px;color:#555;">Prepares to present it as the new standard</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Gives explicit yes to mandate it</td>
+                </tr>
+                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 4 &mdash; Institutionalize</td>
+                  <td style="padding:10px 16px;color:#555;">Submits check-in; confirms cutover date &amp; coaching</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Presents the diamond to affected teams</td>
+                  <td style="padding:10px 16px;color:#555;">Approves cutover date &amp; new metrics</td>
+                </tr>
+                <tr style="background:#FAFBFC;">
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 5 &mdash; Manage the Diamond</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Submits ongoing check-ins; owns it day-to-day</td>
+                  <td style="padding:10px 16px;color:#555;">Rotates out, or continues supporting</td>
+                  <td style="padding:10px 16px;color:#555;">Monitors the renewal signal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="background:var(--bts-dark);border-radius:10px;padding:16px 22px;display:flex;gap:24px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-pink);margin-bottom:4px;">Non-negotiable</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">Only the Flywheel Owner submits. Partner and Team Leader inform — they don't file.</div>
+          </div>
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-teal);margin-bottom:4px;">Non-negotiable</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">The Owner never presents their own diamond as the new standard. That's the Partner's job.</div>
+          </div>
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-purple);margin-bottom:4px;">Non-negotiable</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">Nothing moves from voluntary to mandated without the Team Leader's explicit yes at Stage 3 &mdash; Cut the Diamond. No exceptions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="cra-form" style="display:none"></div>
   </div>
 
   <!-- ======= WORKFLOW MAPPER TAB ======= -->
@@ -572,6 +932,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       <div style="text-align:right;">
         <button id="btn-facilitator" onclick="toggleFacilitatorMode()" style="display:inline-flex;align-items:center;gap:6px;background:var(--bts-purple-light);border:1.5px solid var(--bts-purple);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.background='var(--bts-purple)';this.style.color='white'" onmouseout="if(!window.facilitatorOn){this.style.background='var(--bts-purple-light)';this.style.color='var(--bts-purple)'}">&#9654; Facilitator Mode</button>
         <button onclick="startTour()" style="display:inline-flex;align-items:center;gap:6px;background:white;border:1.5px solid var(--bts-purple);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.background='var(--bts-purple-light)'" onmouseout="this.style.background='white'">&#9432; Tour</button>
+        <button id="btn-research" onclick="openResearchModal()" style="display:inline-flex;align-items:center;gap:6px;background:white;border:1.5px solid var(--bts-purple);border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);transition:all 0.15s;" onmouseover="this.style.background='var(--bts-purple-light)'" onmouseout="this.style.background='white'">&#128270; Research</button>
         <p style="font-size:10px;color:#BBB;margin-top:4px;max-width:260px;line-height:1.5;">Optional. Designed for screen share. Turns on guided phase prompts and a countdown timer to help your group stay focused and moving. One person drives — everyone talks.</p>
       </div>
     </div>
@@ -892,193 +1253,11 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
   </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- ROLES & RESPONSIBILITIES TAB                                    -->
+<!-- HOW RESEARCH SUPPORTS THIS PROCESS — MODAL (launched from Process Studio) -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="main" id="tab-roles" style="display:none">
-  <div class="page-title">Roles &amp; Responsibilities</div>
-  <p class="page-sub">Quick reference for pilot ownership — based on the AI Pilot Playbook</p>
-
-  <!-- Intro banner -->
-  <div style="background:var(--bts-dark);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
-    <div>
-      <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">The Two-Person Ownership Model</div>
-      <div style="font-size:12px;color:#B0B8C1;line-height:1.6;">Every pilot has exactly two owners — a Pilot Lead and a Pilot Partner. Co-ownership is <strong style="color:white;">never assigned</strong> — both people must volunteer. The role split exists to remove ambiguity, not divide accountability. Shared accountability without clear roles is how pilots quietly stall.</div>
-    </div>
-  </div>
-
-  <!-- Comparison table -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;">
-
-    <!-- Pilot Lead -->
-    <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-pink);overflow:hidden;">
-      <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-pink);margin-bottom:4px;">Role 01</div>
-        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Lead</div>
-        <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the momentum, all seven check-ins, and the Day 90 presentation.</div>
-      </div>
-      <div style="padding:14px 18px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
-        <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
-          <li>Setting up the pilot and orienting the test group</li>
-          <li>Drafting and sending all written check-in updates to Team Leadership (Days 1, 15, 30, 45, 75)</li>
-          <li>Leading verbal check-ins at Days 60 and 90</li>
-          <li>Keeping the pilot on schedule across all seven milestones</li>
-          <li>Presenting findings verbally to Team Leadership at Day 90</li>
-          <li>Being the single point of contact Team Leadership calls if there is silence</li>
-        </ul>
-        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leadership</div>
-        <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#FEF8FB;border-radius:7px;padding:8px 10px;">Primary contact. Sends all check-ins. Team Leadership directs all questions and feedback to the Pilot Lead first.</div>
-        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-        <div style="font-size:12px;color:var(--bts-pink);font-weight:600;background:#FEF8FB;border-radius:7px;padding:8px 10px;">If there is silence, Team Leadership reaches out to the Pilot Lead.</div>
-      </div>
-    </div>
-
-    <!-- Pilot Partner -->
-    <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-teal);overflow:hidden;">
-      <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:4px;">Role 02</div>
-        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Partner</div>
-        <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the validation, the challenge, and the continuity if the Lead is pulled away.</div>
-      </div>
-      <div style="padding:14px 18px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
-        <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
-          <li>Independently testing the tool and tracking their own usage data</li>
-          <li>Providing honest, unfiltered feedback — including when the tool is not working</li>
-          <li>Leading the Day 45 peer review (the "third eye" step)</li>
-          <li>Reviewing and co-signing the Day 90 findings before presentation</li>
-          <li>Stepping up to full Lead responsibilities if the Lead is unavailable</li>
-        </ul>
-        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leadership</div>
-        <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F0FBF8;border-radius:7px;padding:8px 10px;">Copied on all check-ins. Attends the Day 90 presentation. Steps in as primary contact only if the Lead is unavailable.</div>
-        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-        <div style="font-size:12px;color:var(--bts-teal);font-weight:600;background:#F0FBF8;border-radius:7px;padding:8px 10px;">If the Pilot Lead is unavailable, the Pilot Partner becomes the Lead.</div>
-      </div>
-    </div>
-
-    <!-- Team Leadership -->
-    <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-purple);overflow:hidden;">
-      <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-purple);margin-bottom:4px;">Role 03</div>
-        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Team Leadership</div>
-        <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Receives updates, provides feedback, coaches the co-owners, and makes the final call at Day 90.</div>
-      </div>
-      <div style="padding:14px 18px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
-        <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
-          <li>Receiving written check-in updates at Days 1, 15, 30, 45, and 75</li>
-          <li>Attending verbal check-ins at Days 60 and 90</li>
-          <li>Responding to written check-ins with feedback within one week</li>
-          <li>Making the final Standardize / Reevaluate / Table decision at Day 90</li>
-          <li>Approving any early pilot entry at Day 30 (exception only)</li>
-        </ul>
-        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Not in the ownership seat</div>
-        <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Team Leadership does not own the pilot. They are informed, not accountable for day-to-day execution. Approval comes at Day 90 only.</div>
-        <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-        <div style="font-size:12px;color:var(--bts-purple);font-weight:600;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Nothing becomes a Standard without explicit Team Leadership approval. No exceptions.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Why this model works -->
-  <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;padding:20px 22px;margin-bottom:20px;">
-    <div style="font-size:13px;font-weight:700;color:var(--bts-dark);margin-bottom:10px;">Why this model works for our team</div>
-    <div style="font-size:12px;color:#555;line-height:1.8;">Our team operates in silos and people are frequently pulled into competing delivery priorities. A single owner is vulnerable — if they are pulled away, the pilot dies quietly. Two owners prevents that. And because co-ownership is always opted into rather than assigned, both people arrive with genuine commitment — not compliance.</div>
-    <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">But two willing owners without a clear role split creates a different problem: diffusion, where both people do less because each assumes the other has the lead. The Pilot Lead / Pilot Partner model keeps the redundancy of two owners while eliminating the ambiguity. The Lead is accountable for momentum. The Partner is accountable for honest validation. Together, they produce a richer, more credible Day 90 finding than either could alone — and Team Leadership gets two independent perspectives, not one advocate.</div>
-  </div>
-
-  <!-- Check-in ownership summary -->
-  <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;overflow:hidden;margin-bottom:20px;">
-    <div style="padding:14px 18px;border-bottom:1px solid #F0F2F5;background:#FAFBFC;">
-      <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Check-In Ownership at a Glance</div>
-    </div>
-    <div style="overflow-x:auto;">
-      <table style="width:100%;border-collapse:collapse;font-size:12px;">
-        <thead>
-          <tr style="background:#F5F6F8;">
-            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-dark);border-bottom:1px solid #E8EBF0;">Milestone</th>
-            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-pink);border-bottom:1px solid #E8EBF0;">Pilot Lead</th>
-            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-teal);border-bottom:1px solid #E8EBF0;">Pilot Partner</th>
-            <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-purple);border-bottom:1px solid #E8EBF0;">Team Leadership</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid #F0F2F5;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 1</td>
-            <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
-            <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
-            <td style="padding:10px 16px;color:#555;">Receives &amp; acknowledges</td>
-          </tr>
-          <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 15</td>
-            <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
-            <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
-            <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
-          </tr>
-          <tr style="border-bottom:1px solid #F0F2F5;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 30</td>
-            <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
-            <td style="padding:10px 16px;color:#555;">Reviews &amp; adds perspective before send</td>
-            <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
-          </tr>
-          <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 45</td>
-            <td style="padding:10px 16px;color:#555;">Supports</td>
-            <td style="padding:10px 16px;color:#555;font-weight:600;">Leads — brings in fresh perspectives ("third eye")</td>
-            <td style="padding:10px 16px;color:#555;">Receives written summary</td>
-          </tr>
-          <tr style="border-bottom:1px solid #F0F2F5;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60</td>
-            <td style="padding:10px 16px;color:#555;font-weight:600;">Leads verbal check-in</td>
-            <td style="padding:10px 16px;color:#555;">Attends &amp; contributes</td>
-            <td style="padding:10px 16px;color:#555;">Attends &amp; gives verbal feedback</td>
-          </tr>
-          <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60–75</td>
-            <td style="padding:10px 16px;color:#555;">Leads cross-functional review</td>
-            <td style="padding:10px 16px;color:#555;">Supports</td>
-            <td style="padding:10px 16px;color:#555;">Monitors approval status</td>
-          </tr>
-          <tr style="border-bottom:1px solid #F0F2F5;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 75</td>
-            <td style="padding:10px 16px;color:#555;">Sends written readiness update</td>
-            <td style="padding:10px 16px;color:#555;">Reviews before send</td>
-            <td style="padding:10px 16px;color:#555;">Receives &amp; responds</td>
-          </tr>
-          <tr style="background:#FAFBFC;">
-            <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 90</td>
-            <td style="padding:10px 16px;color:#555;font-weight:600;">Presents findings verbally</td>
-            <td style="padding:10px 16px;color:#555;">Present to answer questions</td>
-            <td style="padding:10px 16px;color:#555;font-weight:600;">Makes final decision: Standardize / Reevaluate / Table</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Key rules footer -->
-  <div style="background:var(--bts-dark);border-radius:10px;padding:16px 22px;display:flex;gap:24px;flex-wrap:wrap;">
-    <div style="flex:1;min-width:200px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-pink);margin-bottom:4px;">Non-negotiable</div>
-      <div style="font-size:12px;color:white;line-height:1.6;">Co-ownership is never assigned. Both owners must volunteer. No pilot moves forward without two willing owners.</div>
-    </div>
-    <div style="flex:1;min-width:200px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-teal);margin-bottom:4px;">Non-negotiable</div>
-      <div style="font-size:12px;color:white;line-height:1.6;">Every idea starts at Experiment. There is no express lane to Pilot. Experiment → Pilot → Standard. No shortcuts.</div>
-    </div>
-    <div style="flex:1;min-width:200px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-purple);margin-bottom:4px;">Non-negotiable</div>
-      <div style="font-size:12px;color:white;line-height:1.6;">Nothing becomes a Standard without explicit Team Leadership approval. Approval comes at Day 90 only. No exceptions.</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- HOW RESEARCH SUPPORTS THIS PROCESS TAB                         -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="main" id="tab-research" style="display:none">
+<div id="research-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(20,22,26,0.55);z-index:9500;padding:24px;overflow-y:auto;" onclick="if(event.target===this) closeResearchModal()">
+  <div id="research-modal-card" style="background:white;border-radius:14px;max-width:900px;width:100%;margin:2vh auto 4vh;padding:30px 34px 34px;position:relative;box-shadow:0 12px 48px rgba(0,0,0,0.35);">
+    <button onclick="closeResearchModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:26px;line-height:1;cursor:pointer;color:#999;padding:4px;" aria-label="Close" onmouseover="this.style.color='var(--bts-dark)'" onmouseout="this.style.color='#999'">&times;</button>
   <div class="page-title">How Research Supports This Process</div>
   <p class="page-sub">The Map → Visualize → Simplify → Automate sequence is grounded in decades of evidence. Click each card to learn why the order matters.</p>
 
@@ -1253,6 +1432,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     </div>
   </div>
 
+  </div>
 </div>
 
 </div>
@@ -1311,6 +1491,7 @@ const SM = {
   CHECKIN_SHEET:         '3292924612661124',
   WORKFLOW_SHEET:        '363688197312388',
   PROCESS_STEPS_SHEET:   '8451378574741380',
+  CRA_SHEET:             '7513834150383492',
   IDEA_FORM_URL:         'https://app.smartsheet.com/b/form/53fc168f1a8943a0aadbd9de79caf67b',
 
   // Pilot Registry column IDs (sheet: 5262356096438148)
@@ -1345,6 +1526,7 @@ const SM = {
     xfNotes:          2974396659830660,
     day90Rec:         7477996287201156,
     submittedAt:      1848496752988036,
+    godoState:        485733121167236,
   },
 
   // Workflow Maps column IDs (sheet: 363688197312388)
@@ -1378,6 +1560,31 @@ const SM = {
     submittedByEmail: 5519389010202500,
     submittedAt:      3267589196517252,
     version:          64507505577860,
+  },
+
+  // Chain Reaction Accelerator column IDs (sheet: 7513834150383492)
+  // Created 2026-07-29, PMO AI Innovation Tool folder. Partner/Team Leader columns added 2026-07-29.
+  CRA: {
+    flywheelName:      4793967168491396,
+    flywheelOwner:     2542167354806148,
+    ownerEmail:        7045766982176644,
+    flywheelPartner:   5986245526458244,
+    partnerEmail:      3734445712772996,
+    teamLeader:        8238045340143492,
+    teamLeaderEmail:   919695945666436,
+    stage:             1416267447963524,
+    role:              5919867075334020,
+    response1:         3668067261648772,
+    response2:         8171666889019268,
+    response3:         853317494542212,
+    response4:         5356917121912708,
+    momentumStatus:    3105117308227460,
+    teamsAdopting:     7608716935597956,
+    diamondChecklist:  1979217401384836,
+    notes:             6482817028755332,
+    submittedBy:       4231017215070084,
+    submittedByEmail:  8734616842440580,
+    submittedAt:       149630052765572,
   },
 
   // Role sheet — minimal (email + role only)
@@ -1512,8 +1719,36 @@ async function saveCheckinToSmartsheet(day, pilotName, role, responses, healthSt
     [SM.CI.xfNotes]:       xfNotes || '',
     [SM.CI.day90Rec]:      day90Rec || 'N/A',
     [SM.CI.submittedAt]:   new Date().toISOString(),
+    [SM.CI.godoState]:     JSON.stringify(getLiveGodoItems(day)),
   };
+  resetLiveGodoItems(day);
   return addSmartsheetRow(SM.CHECKIN_SHEET, cells);
+}
+
+async function saveCRAToSmartsheet(data) {
+  const cells = {
+    [SM.CRA.flywheelName]:     data.flywheelName,
+    [SM.CRA.flywheelOwner]:    data.flywheelOwner,
+    [SM.CRA.ownerEmail]:       data.ownerEmail,
+    [SM.CRA.flywheelPartner]:  data.flywheelPartner || '',
+    [SM.CRA.partnerEmail]:     data.partnerEmail || '',
+    [SM.CRA.teamLeader]:       data.teamLeader || '',
+    [SM.CRA.teamLeaderEmail]:  data.teamLeaderEmail || '',
+    [SM.CRA.stage]:            CRA_STAGES.find(s => s.key === data.stage)?.name || ('Stage ' + data.stage),
+    [SM.CRA.role]:             data.role,
+    [SM.CRA.response1]:        data.responses[0] || '',
+    [SM.CRA.response2]:        data.responses[1] || '',
+    [SM.CRA.response3]:        data.responses[2] || '',
+    [SM.CRA.response4]:        data.responses[3] || '',
+    [SM.CRA.momentumStatus]:   data.momentumStatus,
+    [SM.CRA.teamsAdopting]:    data.teamsAdopting || '',
+    [SM.CRA.diamondChecklist]: data.diamondChecklist || '',
+    [SM.CRA.notes]:            data.godoNotes || '',
+    [SM.CRA.submittedBy]:      state.user?.name || data.flywheelOwner || '',
+    [SM.CRA.submittedByEmail]: state.user?.email || data.ownerEmail || '',
+    [SM.CRA.submittedAt]:      new Date().toISOString(),
+  };
+  return addSmartsheetRow(SM.CRA_SHEET, cells);
 }
 
 async function saveWorkflowToSmartsheet(title, tool, lanesUsed, mapJSON) {
@@ -1708,44 +1943,6 @@ function show(id, visible) {
   if (!el) return;
   if (visible) { el.classList.add('active'); }
   else { el.classList.remove('active'); }
-}
-
-function getPilotDot(pilotData) {
-  // 1. Day 90 outcome overrides everything
-  const outcome = pilotData.day90outcome || '';
-  if (outcome === 'standardize') return { color: '#1C4C87', title: 'Standardized' };
-  if (outcome === 'reevaluate')  return { color: '#CA1C68', title: 'Reevaluating' };
-  if (outcome === 'table')       return { color: '#AAA',    title: 'Tabled' };
-
-  // 2. Most recent health status overrides timeliness
-  const lastHealth = pilotData.lastHealthStatus || '';
-  if (lastHealth === 'Asking for Help')  return { color: '#E53E3E', title: 'Asking for Help' };
-  if (lastHealth === 'Needs Attention')  return { color: '#EF9F27', title: 'Needs Attention' };
-  if (lastHealth === 'Moving Forward')   return { color: '#1D9E75', title: 'Moving Forward' };
-
-  // 3. Fall back to timeliness if no health status yet
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  const dayNums = [1,15,30,45,60,75,90];
-  const checkins = pilotData.checkins || {};
-  let worstDays = 0;
-
-  for (const d of dayNums) {
-    const targetStr = pilotData.milestones?.[d];
-    if (!targetStr) continue;
-    const target = new Date(targetStr);
-    target.setHours(0,0,0,0);
-    if (today <= target) continue;
-    const submitted = checkins[d] ? new Date(checkins[d]) : null;
-    if (!submitted) {
-      const daysLate = Math.floor((today - target) / 86400000);
-      worstDays = Math.max(worstDays, daysLate);
-    }
-  }
-
-  if (worstDays === 0) return { color: '#1D9E75', title: 'Moving Forward' };
-  if (worstDays <= 14) return { color: '#EF9F27', title: 'Needs Attention' };
-  return { color: '#E53E3E', title: 'Asking for Help' };
 }
 
 async function renderDashboard() {
@@ -2021,6 +2218,12 @@ const TOUR_STEPS = [
     position: 'below'
   },
   {
+    target: 'btn-research',
+    title: 'How research supports this',
+    body: 'Curious why we map before we automate? Click here anytime to see the research behind this order — McKinsey, BCG, MIT CISR, and more, one card per phase.',
+    position: 'below'
+  },
+  {
     target: 'mapper-toolbar',
     title: 'Your toolbar',
     body: 'This is your command center. Add steps, load a previously saved workflow, or clear the canvas and start fresh. Everything the facilitator needs is here.',
@@ -2065,7 +2268,7 @@ const TOUR_STEPS = [
   {
     target: 'ps-dp-type',
     title: 'Step type',
-    body: 'Is this a task, a decision, a handoff, or a wait? Naming the type helps the team see where flow gets interrupted — decisions and waits are often hidden time thieves.',
+    body: 'Is this a task, a decision, a handoff, or a wait? Naming the type helps the team see where flow gets interrupted — decisions and waits are often hidden time thieves. Mark a step Decision and this panel expands: name each possible outcome, then say where it goes — a step number later in this workflow, or an entirely different workflow, even one nobody has mapped yet. Decision steps show a diamond icon on the canvas with a pill underneath for each outcome. An outcome pointing to an unmapped workflow shows as a dashed pill until that workflow gets saved — then it resolves on its own.',
     position: 'above'
   },
   {
@@ -2271,16 +2474,27 @@ function toggleResearch(id) {
 }
 
 function showTab(tab) {
-  ['home','idea','checkin','mapper','dashboard','roles','research'].forEach(t => {
+  ['home','idea','checkin','cra','mapper','dashboard'].forEach(t => {
     document.getElementById('tab-' + t).style.display = (t === tab) ? '' : 'none';
     document.getElementById('nav-' + t).classList.toggle('active', t === tab);
   });
   if (tab === 'checkin') { document.getElementById('checkin-selector').style.display = ''; document.getElementById('checkin-form').style.display = 'none'; }
+  if (tab === 'cra') { document.getElementById('cra-selector').style.display = ''; document.getElementById('cra-form').style.display = 'none'; renderCRAGrid(); }
   if (tab === 'dashboard') renderDashboard();
   if (tab === 'mapper') { initProcessStudio(); renderStructuredSteps(); renderUnmappedReferencesPanel(); setTimeout(() => { document.getElementById('export-bar').style.display = ''; }, 150); }
   else { const eb = document.getElementById('export-bar'); if (eb) eb.style.display = 'none'; }
   if (tab === 'idea') setupIdeaClassifier();
 }
+
+// The "How Research Supports This Process" content now lives as a modal, launched
+// from a button in Process Studio (and still reachable from the Home page card).
+function openResearchModal() {
+  document.getElementById('research-modal-overlay').style.display = 'block';
+}
+function closeResearchModal() {
+  document.getElementById('research-modal-overlay').style.display = 'none';
+}
+
 
 function setupIdeaClassifier() {
   document.getElementById('q-priority').addEventListener('change', classifyIdea);
@@ -2357,45 +2571,75 @@ const GODO_TEMPLATES = {
 const NEXT_CHECKIN = { 1: 15, 15: 30, 30: 45, 45: 60, 60: 75, 75: 90, 90: null };
 const PREV_CHECKIN = { 15: 1, 30: 15, 45: 30, 60: 45, 75: 60, 90: 75 };
 
-// Storage key for Go-Do state
-function godoKey(pilotName, day) {
-  return 'godo_' + (pilotName || 'pilot').replace(/\s+/g,'_') + '_day' + day;
+// In-memory-only store for the CURRENT day's own Go-Do checklist — this day hasn't
+// been submitted yet, so there is no Smartsheet row to attach state to. It lives only
+// for as long as the form is open and is captured into Smartsheet at submit time.
+// This is never written to browser storage; it disappears the moment the tab closes.
+let _liveGodoItems = {};
+
+function getLiveGodoItems(day) {
+  if (!_liveGodoItems[day]) {
+    _liveGodoItems[day] = (GODO_TEMPLATES[day] || []).map(text => ({ text, checked: false, custom: false }));
+  }
+  return _liveGodoItems[day];
 }
 
-function saveGodosForDay(pilotName, day, items) {
-  // items: array of { text, checked, custom }
-  try { localStorage.setItem(godoKey(pilotName, day), JSON.stringify(items)); } catch(e) {}
+function resetLiveGodoItems(day) {
+  delete _liveGodoItems[day];
 }
 
-function loadGodosForDay(pilotName, day) {
-  try {
-    const raw = localStorage.getItem(godoKey(pilotName, day));
-    return raw ? JSON.parse(raw) : null;
-  } catch(e) { return null; }
+// Looks up the already-submitted Go-Do checklist row for a pilot + day in Smartsheet.
+// Returns { rowId, items } if that day has been submitted, or null otherwise.
+async function ciLookupGodoRow(pilotName, day) {
+  const name = (pilotName || '').trim().toLowerCase();
+  if (!name) return null;
+  const rows = await smGetSheet(SM.CHECKIN_SHEET);
+  const row = rows.find(r =>
+    (r['Submission'] || '').trim().toLowerCase() === name && r['Check-In Day'] === ('Day ' + day)
+  );
+  if (!row) return null;
+  let items = [];
+  try { items = JSON.parse(row['Go-Do State'] || '[]'); } catch(e) { items = []; }
+  return { rowId: row._rowId, items };
 }
 
-function buildGodoItems(day, pilotName) {
-  // Load saved state or build fresh from template
-  const saved = loadGodosForDay(pilotName, day);
-  if (saved) return saved;
-  return (GODO_TEMPLATES[day] || []).map(text => ({ text, checked: false, custom: false }));
+// Merges saved checked state with the current template wording (so wording fixes
+// always take effect immediately, never frozen at whatever text existed at save time).
+function refreshGodoWording(day, savedItems) {
+  const template = (GODO_TEMPLATES[day] || []).map(text => ({ text, checked: false, custom: false }));
+  if (!savedItems || !savedItems.length) return template;
+  return savedItems.map((item, idx) => {
+    if (item.custom) return item;
+    const freshText = (template[idx] && template[idx].text) || item.text;
+    return { text: freshText, checked: item.checked, custom: false };
+  });
 }
 
-// Render previous day Go-Do checklist (appears at top of current check-in)
-function renderPrevGodoChecklist(currentDay, pilotName) {
+// Persists the Go-Do checklist state for an already-submitted day back to Smartsheet.
+async function ciSaveGodoState(rowId, items) {
+  if (!rowId) return;
+  try { await smUpdateRow(SM.CHECKIN_SHEET, rowId, { [SM.CI.godoState]: JSON.stringify(items) }); } catch(e) {}
+}
+
+// Render previous day Go-Do checklist (appears at top of current check-in) —
+// reads live from the previous day's Smartsheet row.
+async function renderPrevGodoChecklist(currentDay, pilotName) {
   const prevDay = PREV_CHECKIN[currentDay];
   if (!prevDay) return '';
-  const items = buildGodoItems(prevDay, pilotName);
+  const godoRow = await ciLookupGodoRow(pilotName, prevDay);
+  if (!godoRow) return '';
+  const items = refreshGodoWording(prevDay, godoRow.items);
   if (!items.length) return '';
+  const rowId = godoRow.rowId;
 
   const nextLabel = 'Day ' + currentDay;
-  const allChecked = items.every(i => i.checked);
   const unchecked = items.filter(i => !i.checked).length;
+  const escapedPilotName = (pilotName || '').replace(/'/g, "\\'");
 
   const itemsHTML = items.map((item, idx) => `
     <div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #F5F6F8;">
       <input type="checkbox" id="prev-godo-${idx}" ${item.checked ? 'checked' : ''}
-        onchange="togglePrevGodo(${prevDay},'${(pilotName||'').replace(/'/g,"\'")}',${idx},this.checked)"
+        onchange="togglePrevGodo(${rowId},${prevDay},'${escapedPilotName}',${idx},this.checked)"
         style="margin-top:2px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
       <label for="prev-godo-${idx}" style="font-size:12px;color:${item.checked ? '#AAA' : 'var(--bts-dark)'};cursor:pointer;line-height:1.5;${item.checked ? 'text-decoration:line-through;' : ''}">
         ${item.text}
@@ -2415,10 +2659,12 @@ function renderPrevGodoChecklist(currentDay, pilotName) {
     </div>`;
 }
 
-function togglePrevGodo(day, pilotName, idx, checked) {
-  const items = buildGodoItems(day, pilotName);
+async function togglePrevGodo(rowId, day, pilotName, idx, checked) {
+  const godoRow = await ciLookupGodoRow(pilotName, day);
+  if (!godoRow) return;
+  const items = refreshGodoWording(day, godoRow.items);
   if (items[idx]) items[idx].checked = checked;
-  saveGodosForDay(pilotName, day, items);
+  await ciSaveGodoState(rowId, items);
   // Update label styling without re-rendering
   const label = document.querySelector(`label[for="prev-godo-${idx}"]`);
   if (label) {
@@ -2429,16 +2675,17 @@ function togglePrevGodo(day, pilotName, idx, checked) {
   }
 }
 
-// Render Go-Do section for current day (appears after submit)
-function renderGodoSection(day, pilotName) {
+// Render Go-Do section for current day (appears after submit) — purely in-memory
+// until this day's own form is submitted, at which point it is captured into Smartsheet.
+function renderGodoSection(day) {
   const nextDay = NEXT_CHECKIN[day];
   if (!nextDay) return ''; // Day 90 has no next check-in
-  const items = buildGodoItems(day, pilotName);
+  const items = getLiveGodoItems(day);
 
   const itemsHTML = items.map((item, idx) => `
     <div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #F0F2F5;" id="godo-row-${idx}">
-      <input type="checkbox" id="godo-${idx}"
-        onchange="toggleGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}',${idx},this.checked)"
+      <input type="checkbox" id="godo-${idx}" ${item.checked ? 'checked' : ''}
+        onchange="toggleGodo(${day},${idx},this.checked)"
         style="margin-top:3px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
       <label for="godo-${idx}" style="font-size:12px;color:var(--bts-dark);cursor:pointer;line-height:1.5;flex:1;">${item.text}</label>
     </div>`).join('');
@@ -2455,27 +2702,25 @@ function renderGodoSection(day, pilotName) {
         <input type="text" id="godo-custom-input-${day}" placeholder="Add a custom action..."
           style="flex:1;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);outline:none;"
           onfocus="this.style.borderColor='var(--bts-teal)'" onblur="this.style.borderColor='#DDE1E6'"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();event.stopPropagation();addCustomGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}');}" />
-        <button onclick="event.preventDefault();event.stopPropagation();addCustomGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}');"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();event.stopPropagation();addCustomGodo(${day});}" />
+        <button onclick="event.preventDefault();event.stopPropagation();addCustomGodo(${day});"
           style="background:var(--bts-teal);color:white;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;">+ Add</button>
       </div>
     </div>`;
 }
 
-function toggleGodo(day, pilotName, idx, checked) {
-  const items = buildGodoItems(day, pilotName);
+function toggleGodo(day, idx, checked) {
+  const items = getLiveGodoItems(day);
   if (items[idx]) items[idx].checked = checked;
-  saveGodosForDay(pilotName, day, items);
 }
 
-function addCustomGodo(day, pilotName) {
+function addCustomGodo(day) {
   const input = document.getElementById('godo-custom-input-' + day);
   if (!input) return;
   const text = input.value.trim();
   if (!text) return;
-  const items = buildGodoItems(day, pilotName);
+  const items = getLiveGodoItems(day);
   items.push({ text, checked: false, custom: true });
-  saveGodosForDay(pilotName, day, items);
   input.value = '';
   // Append new item to list without full re-render
   const container = document.getElementById('godo-items-' + day);
@@ -2485,20 +2730,11 @@ function addCustomGodo(day, pilotName) {
     row.style.cssText = 'display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #F0F2F5;';
     row.id = 'godo-row-' + idx;
     row.innerHTML = `<input type="checkbox" id="godo-${idx}"
-      onchange="toggleGodo(${day},'${(pilotName||'').replace(/'/g,"\'")}',${idx},this.checked)"
+      onchange="toggleGodo(${day},${idx},this.checked)"
       style="margin-top:3px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
       <label for="godo-${idx}" style="font-size:12px;color:var(--bts-dark);cursor:pointer;line-height:1.5;flex:1;">${text}</label>`;
     container.appendChild(row);
   }
-}
-
-// Collect current Go-Do state for save
-function collectGodoState(day, pilotName) {
-  const items = loadGodosForDay(pilotName, day);
-  if (!items) return '';
-  const checked = items.filter(i => i.checked).map(i => '✓ ' + i.text);
-  const unchecked = items.filter(i => !i.checked).map(i => '☐ ' + i.text);
-  return [...checked, ...unchecked].join(' | ');
 }
 
 function openCheckin(day) {
@@ -2695,20 +2931,17 @@ function openCheckin(day) {
     </div>`;
 
   // Render prev Go-Do checklist and current Go-Do section immediately on load
+  resetLiveGodoItems(day);
   setTimeout(() => {
     const pilotNameEl = document.getElementById('ci-pilot-name');
     const prevContainer = document.getElementById('prev-godo-container');
     const godoContainer = document.getElementById('godo-container-' + day);
 
-    function refreshAll() {
+    async function refreshAll() {
       const pn = pilotNameEl?.value.trim() || '';
-      if (prevContainer) prevContainer.innerHTML = renderPrevGodoChecklist(day, pn);
+      if (prevContainer) prevContainer.innerHTML = await renderPrevGodoChecklist(day, pn);
       if (godoContainer) {
-        godoContainer.innerHTML = renderGodoSection(day, pn);
-        // Initialise storage for this day if not already saved
-        if (!loadGodosForDay(pn, day)) {
-          saveGodosForDay(pn, day, buildGodoItems(day, pn));
-        }
+        godoContainer.innerHTML = renderGodoSection(day);
       }
     }
 
@@ -2725,6 +2958,18 @@ function selectStatus(el, status) {
 function backToCheckinSelector() {
   document.getElementById('checkin-selector').style.display = '';
   document.getElementById('checkin-form').style.display = 'none';
+}
+
+// Looks up the Pilot Lead's name from that pilot's own Day 1 row in Smartsheet —
+// used to sign the auto-drafted email on Days 15-90 without depending on browser storage.
+async function ciLookupPilotLead(pilotName) {
+  const name = (pilotName || '').trim().toLowerCase();
+  if (!name) return '';
+  const rows = await smGetSheet(SM.CHECKIN_SHEET);
+  const day1Row = rows.find(r =>
+    (r['Submission'] || '').trim().toLowerCase() === name && r['Check-In Day'] === 'Day 1'
+  );
+  return day1Row ? (day1Row['Pilot Lead'] || '') : '';
 }
 
 async function submitCheckin(day) {
@@ -2750,19 +2995,6 @@ async function submitCheckin(day) {
     const dates       = dateLabels.map((lbl,i) => lbl + ': ' + (dateValues[i] || 'TBD')).join(' | ');
     const pilotName   = document.getElementById('ci-pilot-name')?.value.trim() || formCard?.querySelector('input[type=text]')?.value.trim() || '';
 
-    // Save pilot data locally for dashboard dot logic
-    const pilotKey = 'pilot_' + pilotName.replace(/\s+/g,'_');
-    const pilotData = {
-      name: pilotName, leadName, leadEmail, partName, partEmail,
-      leaderEmail, level5, submittedAt: new Date().toISOString(),
-      milestones: {}
-    };
-    dayNums.forEach((d,i) => { pilotData.milestones[d] = dateValues[i] || ''; });
-    localStorage.setItem(pilotKey, JSON.stringify(pilotData));
-    // Also store in pilot index
-    const pilotIndex = JSON.parse(localStorage.getItem('pilot_index') || '[]');
-    if (!pilotIndex.includes(pilotKey)) { pilotIndex.push(pilotKey); localStorage.setItem('pilot_index', JSON.stringify(pilotIndex)); }
-
     toast.style.display = 'block';
     toast.textContent = 'Submitting Day 1 kick-off...';
     toast.style.background = '#E6F1FB'; toast.style.borderColor = '#B5D4F4'; toast.style.color = '#1C4C86';
@@ -2785,8 +3017,10 @@ async function submitCheckin(day) {
         const txt = pill.textContent.trim();
         return txt || 'Moving Forward';
       })(),
-      [SM.CI.submittedAt]: new Date().toISOString()
+      [SM.CI.submittedAt]: new Date().toISOString(),
+      [SM.CI.godoState]: JSON.stringify(getLiveGodoItems(1))
     });
+    resetLiveGodoItems(1);
     toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
     toast.textContent = result.ok
       ? 'Day 1 kick-off saved. Opening email update...'
@@ -2833,19 +3067,6 @@ async function submitCheckin(day) {
 
   const result = await saveCheckinToSmartsheet(day, pilotName, role, responses, healthStatus, xfNotes, day90Rec);
 
-  // Save check-in timestamp, health status and Day 90 outcome to localStorage for dashboard dot logic
-  try {
-    const pilotKey = 'pilot_' + pilotName.replace(/\s+/g,'_');
-    const saved = JSON.parse(localStorage.getItem(pilotKey) || '{}');
-    if (!saved.checkins) saved.checkins = {};
-    saved.checkins[day] = new Date().toISOString();
-    if (healthStatus && healthStatus !== 'Moving Forward' || healthStatus === 'Moving Forward') {
-      saved.lastHealthStatus = healthStatus;
-    }
-    if (day === 90 && day90Rec && day90Rec !== 'N/A') saved.day90outcome = day90Rec;
-    localStorage.setItem(pilotKey, JSON.stringify(saved));
-  } catch(e) {}
-
   if (result.ok) {
     toast.style.background = '';
     toast.style.borderColor = '';
@@ -2859,8 +3080,7 @@ async function submitCheckin(day) {
   }
 
   // Open mailto for team leadership
-  const pilotKey = 'pilot_' + pilotName.replace(/\s+/g,'_');
-  const savedPilot = JSON.parse(localStorage.getItem(pilotKey) || '{}');
+  const leadName = await ciLookupPilotLead(pilotName);
   const emailSubject = encodeURIComponent(pilotName + ' Status - Check In Day ' + day);
   // Full question text for each check-in day — matches the form prompts exactly
   const CI_QUESTIONS = {
@@ -2914,13 +3134,380 @@ async function submitCheckin(day) {
     xfNotesLine +
     responsesText +
     (day === 90 ? '\n\nDay 90 Recommendation: ' + day90Rec : '') +
-    '\n\n[Add any additional notes here]\n\nBest,\n' + (savedPilot.leadName || '')
+    '\n\n[Add any additional notes here]\n\nBest,\n' + (leadName || '')
   );
   setTimeout(() => {
     window.location.href = 'mailto:?subject=' + emailSubject + '&body=' + emailBody;
   }, 800);
 
   setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 3500);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// CHAIN REACTION ACCELERATOR
+// Built directly from the Flywheels & Diamonds field guides (FG002–FG004).
+// Picks up where the Day 90 Check-In leaves off: one proven flywheel.
+// Five stages, each designed to take 5 minutes or less.
+// Own Smartsheet backend: SM.CRA_SHEET (see SM.CRA column map).
+// ══════════════════════════════════════════════════════════════════════════
+
+const CRA_STAGES = [
+  {
+    key: 1,
+    icon: '&#128293;', // fire
+    name: 'Spark the Reaction',
+    tag: 'Voluntary &middot; Peer-led',
+    label: 'A successful flywheel has been identified',
+    intro: 'One flywheel worked. That is the whole spark. This stage is not about convincing anyone &mdash; it is about telling the truth of what happened, out loud, to a few people who trust you.',
+    prompts: [
+      'How has your flywheel experimentation worked so far?',
+      'What are you using AI for right now?',
+      'What are your wins?'
+    ],
+    promptHints: [
+      'Who was involved, what worked, what didn\'t',
+      '',
+      ''
+    ]
+  },
+  {
+    key: 2,
+    icon: '&#128269;', // magnifying glass
+    name: 'Pressure-Test the Spark',
+    tag: 'Voluntary &middot; Multi-team',
+    label: 'See if it holds up outside your own hands',
+    intro: 'A flywheel that only works for the person who built it is a habit. One that survives someone else running it is something worth looking at closely. Cracking under pressure here is a normal, useful outcome &mdash; not a failure.',
+    prompts: [
+      'Which other people or teams have tried it since Stage 1? What happened?',
+      'Did anything crack, break, or need explaining that you did not expect?',
+      'If a stranger to this workflow tried it today with no help from you, could they succeed? What is missing if not?'
+    ]
+  },
+  {
+    key: 3,
+    icon: '&#128142;', // gem
+    name: 'Cut the Diamond',
+    tag: 'Decision point',
+    label: 'Put it under the loupe before you call it a diamond',
+    intro: 'This is the honest gut-check, not a formality. A diamond is not just something that worked twice &mdash; it is something that would be ridiculous not to do this way everywhere. Take the full five minutes here.',
+    prompts: [
+      'What steps still exist only because "that is how it has always been done"? What did you question and remove?',
+      'What is now faster, simpler, or automated compared to when this started?',
+      'Say it plainly: is this cost-effective, technically sound, and something you would defend in front of Team Leadership as a new standard?'
+    ],
+    checklist: [
+      'This screams "this is a diamond" &mdash; a genuinely better way to work',
+      'It has real value: margin, growth, customer joy, or team joy',
+      'It has been pressure-tested with more than one team',
+      'It is technically sound and secure',
+      'It has vocal champions who have actually used the new way',
+      'It is cost-effective, including token costs',
+      'It would be ridiculous not to do it this way'
+    ]
+  },
+  {
+    key: 4,
+    icon: '&#128227;', // megaphone
+    name: 'Institutionalize',
+    tag: 'Team rollout &middot; Not voluntary',
+    label: 'This is the part that becomes the new way of working',
+    intro: 'Everything up to now was voluntary. This is not &mdash; and that is by design. Great diamonds deserve great adoption. Be both inspiration and clear leader here: the why is loud, the standard is clear, and the old way gets a real sunset date.',
+    prompts: [
+      'Which teams are affected &mdash; direct and cross-functional &mdash; and what changes for them?',
+      'Who will present this as a peer showing how they use it, and what coaching (technical and role-level) does the team need?',
+      'What is the cutover date, and what happens to the old way after it?'
+    ]
+  },
+  {
+    key: 5,
+    icon: '&#129517;', // compass
+    name: 'Manage the Diamond',
+    tag: 'Ongoing &middot; Named owner',
+    label: 'Diamonds need a keeper, not a launch party',
+    intro: 'The riskiest moment for a diamond is the week after everyone stops watching it. Someone has to own it going forward &mdash; listening for what is breaking, what needs renewing, and when the old way can finally be retired for good. This is not a one-time form: the Diamond Owner should come back and answer these on a consistent, ongoing basis. Management is ongoing.',
+    prompts: [
+      'Who owns this diamond now that it is live, day to day?',
+      'What are you hearing from the team using it &mdash; both the good and the hard parts?',
+      'Is this diamond still earning its keep, or has a newer AI capability made it obsolete?',
+      'If it is still earning its keep, how are you measuring it against its original cost and benefit &mdash; treating it like a contractor, not a fixture?'
+    ]
+  }
+];
+
+// Action items to complete before the next stage's check-in.
+// Stage 5 has no "next" stage — it is ongoing, so its list frames continuous upkeep instead.
+// Sourced from FG002 (Chain Reaction / Embed Diamonds / Renew Diamonds) and FG003 Spark 5 (Applaud) —
+// see chat for the line-by-line mapping. The one exception is flagged inline below.
+const CRA_GODO_TEMPLATES = {
+  1: [
+    'Share it in a team meeting or on your team Slack channel',
+    'You are ready to act as a peer coach for the next person who wants to try it'
+  ],
+  2: [
+    'Get feedback from more than one team or person — not just the first tester. Every team that this flywheel touches should share feedback before the next stage',
+    'Implement that feedback and find a resolution before calling it ready',
+    'Each time it looks finished again, run it past a new pair of eyes before moving to Stage 3'
+  ],
+  3: [
+    'Get Team Leadership\'s explicit yes to move from voluntary to mandated',
+    'Confirm your Flywheel Partner — not you — is ready to present it as the new standard',
+    'Propose a cutover date for retiring the old way'
+  ],
+  4: [
+    'Confirm the cutover date has passed and the old way is retired',
+    'Make sure every affected team has had technical and role coaching',
+    'Set and communicate the new metrics this diamond will be measured against'
+  ],
+  5: [
+    'If it\'s time to retire or upgrade it, do that now rather than letting it linger'
+  ]
+};
+
+function renderCRAGrid() {
+  const grid = document.getElementById('cra-grid');
+  if (!grid) return;
+  grid.innerHTML = CRA_STAGES.map(s => `
+    <div class="cra-btn" onclick="openCRA(${s.key})">
+      <div class="cra-stage-num">${s.icon}</div>
+      <div class="cra-stage-name">${s.key}. ${s.name}</div>
+      <div class="cra-stage-tag">${s.tag}</div>
+    </div>
+  `).join('');
+}
+
+function openCRA(stageKey) {
+  document.getElementById('cra-selector').style.display = 'none';
+  const form = document.getElementById('cra-form');
+  form.style.display = '';
+  const stage = CRA_STAGES.find(s => s.key === stageKey);
+  if (!stage) return;
+
+  const promptsHTML = stage.prompts.map((q, i) => `
+    <div class="field">
+      <label>${q}</label>
+      ${stage.promptHints && stage.promptHints[i] ? `<p style="font-size:11px;color:#999;margin-top:-2px;margin-bottom:6px;">${stage.promptHints[i]}</p>` : ''}
+      <textarea id="cra-response-${i}" placeholder="Keep it short — a few sentences is plenty." rows="2"></textarea>
+    </div>
+  `).join('');
+
+  const checklistHTML = stage.checklist ? `
+    <div class="field">
+      <label>Diamond checklist &mdash; check what is true today</label>
+      <div class="cra-checklist" id="cra-checklist">
+        ${stage.checklist.map((c, i) => `
+          <label class="cra-check-item"><input type="checkbox" id="cra-check-${i}" value="${c.replace(/"/g,'&quot;')}" /> ${c}</label>
+        `).join('')}
+      </div>
+    </div>
+  ` : '';
+
+  const teamsHTML = stage.key === 2 ? `
+    <div class="field">
+      <label>Cross-functional feedback</label>
+      <p style="font-size:11px;color:#888;margin-top:-2px;margin-bottom:8px;">Has any team this flywheel touches given feedback? Has it been implemented? Name who you talked to on each team.</p>
+      <textarea id="cra-teams" rows="2" placeholder="e.g. Finance — talked to Jordan, feedback implemented | Sales — talked to Casey, pending — or N/A if no other teams are affected"></textarea>
+    </div>
+  ` : stage.key === 4 ? `
+    <div class="field">
+      <label>Have you presented, or have a date set to present, this diamond to all teams it touches?</label>
+      <p style="font-size:11px;color:#888;margin-top:-2px;margin-bottom:8px;">List dates below next to each team.</p>
+      <textarea id="cra-teams" rows="2" placeholder="e.g. Finance — presented 8/12 | Sales — scheduled for 8/20 | Ops — N/A, not affected"></textarea>
+    </div>
+  ` : '';
+
+  const phaseDatesHTML = stage.key === 1 ? `
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Phase Goal Dates</div>
+    <p style="font-size:12px;color:#888;margin-bottom:12px;">Set a target completion date for each remaining phase. BTS recommends the whole process take no more than 90 days &mdash; how you split that time across phases is up to your team.</p>
+    <div class="form-row">
+      <div class="field"><label>Stage 2 &mdash; Pressure-Test the Spark</label><input type="date" id="cra-phase-date-2" /></div>
+      <div class="field"><label>Stage 3 &mdash; Cut the Diamond</label><input type="date" id="cra-phase-date-3" /></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>Stage 4 &mdash; Institutionalize</label><input type="date" id="cra-phase-date-4" /></div>
+      <div class="field"><label>Stage 5 &mdash; Manage the Diamond</label><input type="date" id="cra-phase-date-5" /></div>
+    </div>
+  ` : '';
+
+  const peopleHTML = stage.key === 1 ? `
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Flywheel Partner</div>
+    <div class="form-row">
+      <div class="field"><label>Partner name</label><input type="text" id="cra-partner-name" placeholder="Partner's full name" /></div>
+      <div class="field"><label>Partner email</label><input type="email" id="cra-partner-email" placeholder="partner@bts.com" /></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Team Leader</div>
+    <div class="form-row">
+      <div class="field"><label>Team Leader name</label><input type="text" id="cra-leader-name" placeholder="Team Leader's full name" /></div>
+      <div class="field"><label>Team Leader email</label><input type="email" id="cra-leader-email" placeholder="leader@bts.com" /></div>
+    </div>
+  ` : '';
+
+  const nextStage = CRA_STAGES.find(s => s.key === stage.key + 1);
+  const godoItems = CRA_GODO_TEMPLATES[stage.key] || [];
+  const godoTitle = nextStage
+    ? `Before Stage ${nextStage.key} &mdash; ${nextStage.name}`
+    : 'Ongoing, now that this diamond is live';
+  const godoHTML = godoItems.length ? `
+    <div class="field">
+      <label>${godoTitle}</label>
+      <div class="cra-checklist" id="cra-godo-checklist">
+        ${godoItems.map((item, i) => `
+          <label class="cra-check-item"><input type="checkbox" id="cra-godo-${i}" value="${item.replace(/"/g,'&quot;')}" /> ${item}</label>
+        `).join('')}
+      </div>
+    </div>
+  ` : '';
+
+  form.innerHTML = `
+    <button class="back-btn" onclick="backToCRASelector()">&#8592; Back to Chain Reaction Accelerator</button>
+    <div class="form-card">
+      <h3>Stage ${stage.key} &mdash; ${stage.name}</h3>
+      <p class="form-sub">${stage.label} &middot; Takes 5 minutes or less.</p>
+      <div class="note-box" style="background:var(--bts-teal-light);border-left-color:var(--bts-teal);color:#0F5A5F;">${stage.intro}</div>
+      <div class="field"><label>Flywheel / diamond name</label><input type="text" id="cra-flywheel-name" placeholder="e.g. Digital Operator Tool" /></div>
+      <div class="form-row">
+        <div class="field"><label>Your name</label><input type="text" id="cra-owner-name" placeholder="Your full name" /></div>
+        <div class="field"><label>Your email</label><input type="email" id="cra-owner-email" placeholder="your@bts.com" /></div>
+      </div>
+      ${peopleHTML}
+      ${promptsHTML}
+      ${phaseDatesHTML}
+      ${checklistHTML}
+      ${teamsHTML}
+      <div class="field">
+        <label>Momentum</label>
+        <div class="status-row" id="cra-status-row">
+          <div class="status-pill sp-green selected" onclick="selectStatus(this,'green')">Moving Forward</div>
+          <div class="status-pill sp-amber" onclick="selectStatus(this,'amber')">Needs Attention</div>
+          <div class="status-pill sp-red" onclick="selectStatus(this,'red')">Asking for Help</div>
+        </div>
+      </div>
+      ${godoHTML}
+      <div class="success-toast" id="cra-toast">Saved. Momentum logged for this diamond.</div>
+      <div class="btn-row">
+        <button class="btn-sec" onclick="backToCRASelector()">Cancel</button>
+        <button class="btn-submit" onclick="submitCRA(${stage.key})">Submit Stage ${stage.key}</button>
+      </div>
+    </div>
+  `;
+}
+
+function backToCRASelector() {
+  document.getElementById('cra-selector').style.display = '';
+  document.getElementById('cra-form').style.display = 'none';
+}
+
+// Looks up the Team Leader / Flywheel Partner for a flywheel from whatever CRA row
+// already has them saved (normally the Stage 1 submission). Used so Stages 2–5 can
+// auto-address their emails without depending on browser storage.
+async function craLookupContacts(flywheelName) {
+  const name = (flywheelName || '').trim().toLowerCase();
+  if (!name) return null;
+  const rows = await smGetSheet(SM.CRA_SHEET);
+  const matches = rows.filter(r => (r['Flywheel Name'] || '').trim().toLowerCase() === name && r['Team Leader Email']);
+  if (!matches.length) return null;
+  matches.sort((a, b) => new Date(b['Submitted At'] || 0) - new Date(a['Submitted At'] || 0));
+  const latest = matches[0];
+  return {
+    flywheelPartner: latest['Flywheel Partner'] || '',
+    partnerEmail: latest['Partner Email'] || '',
+    teamLeader: latest['Team Leader'] || '',
+    teamLeaderEmail: latest['Team Leader Email'] || ''
+  };
+}
+
+async function submitCRA(stageKey) {
+  const toast = document.getElementById('cra-toast');
+  const formCard = document.querySelector('#cra-form .form-card');
+  if (!formCard) return;
+
+  const flywheelName = document.getElementById('cra-flywheel-name')?.value.trim() || '';
+  const role = 'Flywheel Owner'; // The Flywheel Owner is the only one who submits these check-ins.
+  const ownerName = document.getElementById('cra-owner-name')?.value.trim() || '';
+  const ownerEmail = document.getElementById('cra-owner-email')?.value.trim() || '';
+
+  let flywheelPartner = document.getElementById('cra-partner-name')?.value.trim() || '';
+  let partnerEmail = document.getElementById('cra-partner-email')?.value.trim() || '';
+  let teamLeader = document.getElementById('cra-leader-name')?.value.trim() || '';
+  let teamLeaderEmail = document.getElementById('cra-leader-email')?.value.trim() || '';
+
+  // Team Leader / Partner are only collected on Stage 1's form. For every other stage,
+  // pull the values live from the Stage 1 row already saved in Smartsheet.
+  if (stageKey !== 1 && !teamLeaderEmail && flywheelName) {
+    const contacts = await craLookupContacts(flywheelName);
+    if (contacts) {
+      flywheelPartner = contacts.flywheelPartner;
+      partnerEmail = contacts.partnerEmail;
+      teamLeader = contacts.teamLeader;
+      teamLeaderEmail = contacts.teamLeaderEmail;
+    }
+  }
+
+  const responses = Array.from(formCard.querySelectorAll('[id^="cra-response-"]')).map(t => t.value.trim());
+  let phaseDatesText = '';
+  if (stageKey === 1) {
+    const dateIds = ['cra-phase-date-2', 'cra-phase-date-3', 'cra-phase-date-4', 'cra-phase-date-5'];
+    const dateLabels = CRA_STAGES.slice(1).map(s => s.name);
+    const dateValues = dateIds.map(id => document.getElementById(id)?.value || '');
+    phaseDatesText = dateLabels.map((lbl, i) => lbl + ': ' + (dateValues[i] || 'TBD')).join(' | ');
+    responses[3] = phaseDatesText;
+  }
+  const statusPill = formCard.querySelector('#cra-status-row .status-pill.selected');
+  const momentumStatus = statusPill ? statusPill.textContent.trim() : 'Moving Forward';
+  const teamsAdopting = document.getElementById('cra-teams')?.value.trim() || '';
+  const checklistChecked = Array.from(formCard.querySelectorAll('#cra-checklist input:checked')).map(c => c.value);
+  const diamondChecklist = checklistChecked.length ? checklistChecked.join(' | ') : '';
+  const godoChecked = Array.from(formCard.querySelectorAll('#cra-godo-checklist input:checked')).map(c => c.value);
+  const godoNotes = godoChecked.length ? 'Completed before next stage: ' + godoChecked.join(' | ') : '';
+
+  toast.style.display = 'block';
+  toast.textContent = 'Submitting...';
+  toast.style.background = '#E1F5EE'; toast.style.borderColor = '#9FE1CB'; toast.style.color = '#0F6E56';
+
+  const result = await saveCRAToSmartsheet({
+    stage: stageKey, flywheelName, flywheelOwner: ownerName, ownerEmail,
+    flywheelPartner, partnerEmail, teamLeader, teamLeaderEmail,
+    role, responses, momentumStatus, teamsAdopting, diamondChecklist, godoNotes
+  });
+
+  toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
+  toast.textContent = result.ok
+    ? 'Saved. Momentum logged for this diamond.'
+    : 'Saved locally. Backend not connected yet.';
+
+  // Every stage auto-addresses its update to the Team Leader named at Stage 1 (CC'ing the Partner).
+  if (teamLeaderEmail) {
+    let emailSubject, emailBody;
+    if (stageKey === 1) {
+      emailSubject = encodeURIComponent(flywheelName + ' — Chain Reaction Accelerator, Stage 1');
+      emailBody = encodeURIComponent(
+        'Hi,\n\nOur flywheel has worked, and we are starting the Chain Reaction Accelerator to help it spread:\n\n' +
+        'Flywheel: ' + flywheelName + '\n' +
+        'Flywheel Owner: ' + ownerName + '\n' +
+        'Flywheel Partner: ' + flywheelPartner + '\n\n' +
+        'How our flywheel experimentation has worked so far: ' + (responses[0] || '') + '\n' +
+        'What we are using AI for right now: ' + (responses[1] || '') + '\n' +
+        'Our wins: ' + (responses[2] || '') + '\n\n' +
+        'Goal dates for the remaining phases:\n  ' + phaseDatesText.split(' | ').join('\n  ') + '\n\n' +
+        '[Add any additional notes here]\n\nBest,\n' + ownerName
+      );
+    } else {
+      const stageObj = CRA_STAGES.find(s => s.key === stageKey);
+      emailSubject = encodeURIComponent(flywheelName + ' — Chain Reaction Accelerator, Stage ' + stageKey + ' (' + stageObj.name + ')');
+      let bodyLines = ['Hi,', '', 'Update on ' + flywheelName + ' — Stage ' + stageKey + ', ' + stageObj.name + ':', ''];
+      stageObj.prompts.forEach((q, i) => { bodyLines.push(q); bodyLines.push(responses[i] || ''); bodyLines.push(''); });
+      if (teamsAdopting) bodyLines.push('Teams: ' + teamsAdopting, '');
+      if (diamondChecklist) bodyLines.push('Diamond checklist: ' + diamondChecklist, '');
+      bodyLines.push('Momentum: ' + momentumStatus, '', '[Add any additional notes here]', '', 'Best,', ownerName);
+      emailBody = encodeURIComponent(bodyLines.join('\n'));
+    }
+    setTimeout(() => {
+      window.location.href = 'mailto:' + encodeURIComponent(teamLeaderEmail) +
+        (partnerEmail ? '?cc=' + encodeURIComponent(partnerEmail) : '') +
+        (partnerEmail ? '&subject=' : '?subject=') + emailSubject + '&body=' + emailBody;
+    }, 800);
+  }
+
+  setTimeout(() => { toast.style.display = 'none'; backToCRASelector(); }, teamLeaderEmail ? 2600 : 2200);
 }
 
 // Stub functions to prevent reference errors
@@ -5588,7 +6175,7 @@ const _origClearMapper = typeof clearMapper === 'function' ? clearMapper : null;
   <div id="tour-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.0);z-index:9000;pointer-events:none;"></div>
   <div id="tour-spotlight" style="display:none;position:fixed;z-index:9001;border-radius:10px;box-shadow:0 0 0 4000px rgba(0,0,0,0.7);pointer-events:none;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);outline:2.5px solid #6C5CE7;"></div>
   <div id="tour-card" style="display:none;position:fixed;z-index:9002;background:white;border-radius:12px;padding:20px 22px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.28);pointer-events:all;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);">
-    <div class="tour-step-label" id="tour-step-label">STEP 1 OF 28</div>
+    <div class="tour-step-label" id="tour-step-label">STEP 1 OF 29</div>
     <div class="tour-title" id="tour-title"></div>
     <div class="tour-body" id="tour-body"></div>
     <div style="margin-top:14px;">
