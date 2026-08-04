@@ -195,9 +195,15 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 .sp-green { background: #E1F5EE; color: #0F6E56; }
 .sp-amber { background: #FAEEDA; color: #854F0B; }
 .sp-red { background: #FCEBEB; color: #A32D2D; }
+.sp-blue { background: #E1EAF5; color: #1C4C87; }
+.sp-magenta { background: #FBE1EC; color: #CA1C68; }
+.sp-gray { background: #F0F0F0; color: #6B7280; }
 .status-pill.selected.sp-green { border-color: #1D9E75; }
 .status-pill.selected.sp-amber { border-color: #EF9F27; }
 .status-pill.selected.sp-red { border-color: #E24B4A; }
+.status-pill.selected.sp-blue { border-color: #1C4C87; }
+.status-pill.selected.sp-magenta { border-color: #CA1C68; }
+.status-pill.selected.sp-gray { border-color: #9CA3AF; }
 .btn-row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
 .btn-sec { background: transparent; border: 1px solid #DDE1E6; border-radius: 8px; padding: 9px 18px; font-size: 12px; cursor: pointer; color: var(--bts-dark); font-family: var(--font); font-weight: 600; }
 .btn-sec:hover { background: var(--bts-grey); }
@@ -416,11 +422,9 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
   <div class="accent-bar"></div>
   <div class="nav-bar">
     <div class="nav-item active" id="nav-home" onclick="showTab('home')">Home</div>
-    <div class="nav-item" id="nav-idea" onclick="showTab('idea')">Log an Idea</div>
     <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Process Studio</div>
-    <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Check-In</div>
+    <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Workflow Flywheels Check-In</div>
     <div class="nav-item" id="nav-cra" onclick="showTab('cra')">Chain Reaction Accelerator</div>
-    <div class="nav-item" id="nav-dashboard" onclick="showTab('dashboard')">Pilot Dashboard</div>
   </div>
 
   <!-- ======= HOME TAB ======= -->
@@ -436,15 +440,6 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 
     <div class="section-label">Where would you like to go?</div>
     <div class="action-grid" style="grid-template-columns:repeat(3,1fr);">
-      <div class="action-card" onclick="showTab('idea')">
-        <div class="ac-icon ac-pink" style="font-size:17px">&#128161;</div>
-        <h3>Log a New Idea</h3>
-        <p>Submit an AI or automation idea to the intake form</p>
-        <div class="ac-hover-desc">
-          <span class="ac-brene">"Every big change starts with someone willing to say 'what if.' This is that place. Don't edit yourself before you begin — just put the idea down."</span>
-          <span class="ac-what">When you click here, you'll answer a few quick questions to see if your idea is ready to move forward. If it is, you'll complete a form that submits it directly to the Enablement AI Idea intake in Smartsheet — where it gets reviewed by the AI Champion and team leadership.</span>
-        </div>
-      </div>
       <div class="action-card" onclick="showTab('mapper')">
         <div class="ac-icon ac-teal" style="font-size:17px">&#128195;</div>
         <h3>Process Studio</h3>
@@ -457,29 +452,20 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
       <div class="action-card" onclick="showTab('checkin')">
         <div class="ac-icon ac-blue" style="font-size:17px">&#9989;</div>
-        <h3>Submit a Check-In</h3>
-        <p>Day 1, 15, 30, 45, 60, 75, or 90 pilot update</p>
+        <h3>Workflow Flywheels Check-In</h3>
+        <p>Track your task force through Map Current State, Visualize, Simplify, Automate</p>
         <div class="ac-hover-desc">
           <span class="ac-brene">"Showing up and telling the truth about where you are takes courage. This isn't a status report — it's a chance to say what's actually happening so the right people can support you."</span>
-          <span class="ac-what">When you click here, you'll select your pilot's current day milestone — Day 1, 15, 30, 45, 60, 75, or 90 — and complete a structured check-in that captures your progress, your wins, and where you need help. It saves directly to the backend.</span>
+          <span class="ac-what">When you click here, you'll say which phase your task force is in and give a quick status update — what's working, what's stuck, and when you're meeting next. It saves directly to the backend and updates the Workflow Dashboard at the top of that tab.</span>
         </div>
       </div>
       <div class="action-card" onclick="showTab('cra')">
         <div class="ac-icon" style="font-size:17px;background:var(--bts-teal-light);">&#128163;</div>
         <h3>Chain Reaction Accelerator</h3>
-        <p>Turn one proven flywheel into a team-wide diamond</p>
+        <p>Turn one proven flywheel into the team's new standard</p>
         <div class="ac-hover-desc">
           <span class="ac-brene">"One person figuring it out is a good start. It isn't the finish line. This is where we ask, honestly, what it would take for everyone to have what you have."</span>
-          <span class="ac-what">When you click here, you'll move a proven flywheel through five short stages — spark it, pressure-test it, decide if it's a diamond, roll it out to the team, and name who manages it going forward. Each stage takes 5 minutes or less and saves to its own Smartsheet backend. In Stage 1, you'll set your own goal date for each remaining phase — BTS recommends the whole process take no more than 90 days.</span>
-        </div>
-      </div>
-      <div class="action-card" onclick="showTab('dashboard')">
-        <div class="ac-icon ac-purple" style="font-size:17px">&#128202;</div>
-        <h3>Pilot Dashboard</h3>
-        <p>View health status of all active pilots</p>
-        <div class="ac-hover-desc">
-          <span class="ac-brene">Available to AI Champions and team leadership. "Progress isn't always visible until someone makes it visible. This is how we see what's moving, what needs attention, and who might need a hand."</span>
-          <span class="ac-what">When you click here, you'll see a real-time view of all active AI pilots — their health status, current phase, and any flags that need follow-up.</span>
+          <span class="ac-what">When you click here, you'll move a proven flywheel through five short stages — spark it, pressure-test it, decide if it's ready to become the standard, roll it out to the team, and name who manages it going forward. Each stage takes 5 minutes or less and saves to its own Smartsheet backend. In Stage 1, you'll set your own goal date for each remaining phase — BTS recommends the whole process take no more than 90 days.</span>
         </div>
       </div>
     </div>
@@ -491,263 +477,95 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     </div>
   </div>
 
-  <!-- ======= IDEA TAB ======= -->
-  <div class="main" id="tab-idea" style="display:none">
-    <div class="page-title">Log a New AI Idea</div>
-    <p class="page-sub">Every idea starts here. Submit via the AI Idea Intake Form in Smartsheet — it takes less than five minutes.</p>
-
-    <div class="info-box">
-      The <strong>AI Idea Intake Form</strong> is the official entry point for all AI and automation ideas — whether you thought of it independently, it came up in an AI Innovation Lab session, or it was assigned top-down. Unlogged ideas do not exist in the pipeline.
-    </div>
-
-    <div class="form-card">
-      <h3>Before you submit — quick classification</h3>
-      <p class="form-sub">Answer these two questions so you can classify your idea correctly in the form.</p>
-
-      <div class="field">
-        <label>Is this tied to a current business priority?</label>
-        <select id="q-priority">
-          <option value="">Select...</option>
-          <option value="yes">Yes — clearly aligned</option>
-          <option value="maybe">Possibly — not yet confirmed</option>
-          <option value="no">Not yet — more of an exploration</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Does it meaningfully improve how we work?</label>
-        <select id="q-improves">
-          <option value="">Select...</option>
-          <option value="yes">Yes — I can describe how</option>
-          <option value="maybe">Possibly — needs more testing</option>
-          <option value="no">Unclear</option>
-        </select>
-      </div>
-      <div id="classification-result" style="display:none;margin-top:14px"></div>
-    </div>
-
-    <div class="sm-embed-note">
-      <p>&#128279; Your idea will be logged in <strong>Smartsheet</strong> and reviewed at the next planning cycle. The AI Champion reviews all submissions and will follow up within one week.</p>
-    </div>
-    <a href="https://app.smartsheet.com/b/form/53fc168f1a8943a0aadbd9de79caf67b" target="_blank" class="sm-form-btn">
-      &#x1F4CB;&nbsp; Open AI Idea Intake Form in Smartsheet
-    </a>
-    <p style="font-size:11px;color:#BBB;text-align:center;margin-top:10px">Opens in a new tab &bull; Smartsheet form powered by BTS</p>
-  </div>
-
   <!-- ======= CHECK-IN TAB ======= -->
   <div class="main" id="tab-checkin" style="display:none">
-    <div id="checkin-selector">
-      <div class="checkin-header">
-        <h2>Submit a Pilot Check-In</h2>
-        <p>Select your current pilot day to open the right check-in form</p>
-      </div>
-      <div class="legend-row">
-        <div class="legend-item"><div class="legend-bar lb-blue"></div> Written update to Team Leadership</div>
-        <div class="legend-item"><div class="legend-bar lb-pink"></div> Verbal check-in with Team Leadership</div>
-      </div>
-      <div class="checkin-grid">
-        <div class="checkin-btn written" onclick="openCheckin(1)"><div class="cb-day">1</div><div class="cb-type">Written</div><div class="cb-label">Kick-off</div></div>
-        <div class="checkin-btn written" onclick="openCheckin(15)"><div class="cb-day">15</div><div class="cb-type">Written</div><div class="cb-label">Early signal</div></div>
-        <div class="checkin-btn written" onclick="openCheckin(30)"><div class="cb-day">30</div><div class="cb-type">Written</div><div class="cb-label">Mid-check</div></div>
-        <div class="checkin-btn written" onclick="openCheckin(45)"><div class="cb-day">45</div><div class="cb-type">Written</div><div class="cb-label">Peer review</div></div>
-        <div class="checkin-btn verbal" onclick="openCheckin(60)"><div class="cb-day">60</div><div class="cb-type">Verbal</div><div class="cb-label">Live check-in</div></div>
-        <div class="checkin-btn written" onclick="openCheckin(75)"><div class="cb-day">75</div><div class="cb-type">Written</div><div class="cb-label">Final review</div></div>
-        <div class="checkin-btn verbal" onclick="openCheckin(90)"><div class="cb-day">90</div><div class="cb-type">Verbal</div><div class="cb-label">Decision day</div></div>
-      </div>
-      <div class="warn-box">&#9203; <strong>Exception — Starting at Day 30:</strong> If your experiment phase already produced strong evidence and Team Leadership has explicitly approved early entry, you may begin at Day 30 &mdash; but Day 1 and Day 15 written updates must still be completed in writing first. See the note below for how the full timeline works.</div>
-      <div style="background:var(--bts-teal-light);border-left:4px solid var(--bts-teal);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;">
-        <div style="font-size:11px;font-weight:800;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:6px;">A note on pacing</div>
-        <div style="font-size:12.5px;color:var(--bts-dark);line-height:1.7;">
-          The every-15-day cadence is a <strong>recommendation, not a mandate</strong>. Check-ins can happen faster or take longer than every 15 days &mdash; BTS and Anthropic recommend the whole pilot take <strong>no more than 90 days</strong> total, but exactly how you pace the days in between is up to the Pilot Lead and Pilot Partner.<br><br>
-          Day 1 and Day 15 should <strong>always</strong> be completed in writing, even if your team is effectively starting at Day 30.<br><br>
-          Once you reach Day 90, move to the <strong>Chain Reaction Accelerator</strong> &mdash; start at <strong>Stage 3, Cut the Diamond</strong>.
-        </div>
-      </div>
+    <div class="page-title">Workflow Flywheels Check-In</div>
+    <p class="page-sub">Track your task force through mapping &mdash; Current State &rarr; Visualize &rarr; Simplify &rarr; Automate.</p>
 
-      <!-- ═══ Roles & Responsibilities (embedded) ═══ -->
+    <div class="note-box" style="background:var(--bts-teal-light);border-left-color:var(--bts-teal);color:#0F5A5F;">
+      This tab can be used to track your task force through four phases &mdash; Map Current State, Visualize, Simplify, Automate &mdash; at whatever pace works for your team. Whether to use this tab as your tracking tool is up to your team. Once you've found something that clearly works and you're ready to make it the new standard, that's when you move to the <strong>Chain Reaction Accelerator</strong>.
+    </div>
+
+    <!-- ═══ WORKFLOW DASHBOARD (top of tab) ═══ -->
+    <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin-bottom:12px;">Workflow Dashboard</div>
+    <div class="dash-metrics">
+      <div class="dash-metric">
+        <div class="dm-label">Active Task Forces</div>
+        <div class="dm-value" id="wfc-dash-active">0</div>
+        <div class="dm-sub">submitting check-ins</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dm-label">Moving Forward</div>
+        <div class="dm-value" id="wfc-dash-green" style="color:#1D9E75">0</div>
+        <div class="dm-sub">on track</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dm-label">Needs Attention</div>
+        <div class="dm-value" id="wfc-dash-attn" style="color:#EF9F27">0</div>
+        <div class="dm-sub">at risk or overdue</div>
+      </div>
+    </div>
+
+    <div style="background:white;border:1px solid #E8EBF0;border-radius:10px;padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;">
+      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#1D9E75;flex-shrink:0;"></span>Moving Forward</span>
+      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#EF9F27;flex-shrink:0;"></span>Needs Attention</span>
+      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#1C4C87;flex-shrink:0;"></span>Standardized</span>
+      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#CA1C68;flex-shrink:0;"></span>Reevaluating</span>
+      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#9CA3AF;flex-shrink:0;"></span>Tabled</span>
+    </div>
+
+    <div class="dash-table-wrap">
+      <div class="dt-head" style="grid-template-columns:1.4fr 1fr 1.3fr 0.8fr 0.7fr 0.9fr 1fr;">
+        <span>Task Force</span>
+        <span>Team Leader</span>
+        <span>Team Members</span>
+        <span>Phase</span>
+        <span>Check-Ins</span>
+        <span>Next Meeting</span>
+        <span>Status</span>
+      </div>
+      <div id="wfc-dash-rows">
+        <div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">No check-ins yet — task forces appear here after their first check-in is submitted.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;margin-bottom:36px;">
+      <button class="btn-sec" onclick="renderWFDashboard()" id="btn-load-wfc" style="color:var(--bts-teal);border-color:var(--bts-teal)">&#8635; Load Task Forces</button>
+    </div>
+
+    <div style="border-top:1px solid #E8EBF0;margin-bottom:28px;"></div>
+
+    <!-- ═══ CHECK-IN SELECTOR ═══ -->
+    <div id="wfc-selector">
+      <div class="page-title" style="font-size:19px;">Submit a Check-In</div>
+      <p class="page-sub">A quick update on where your task force stands — every two weeks or so, whatever pace works for your team.</p>
+      <div class="field">
+        <label>Task Force Name</label>
+        <input type="text" id="wfc-taskforce-name" placeholder="e.g. Digital Operator Request" />
+      </div>
+      <button class="btn-submit" onclick="openWFCheckinForm()">Start Check-In</button>
+
       <div style="border-top:1px solid #E8EBF0;margin-top:28px;padding-top:24px;">
-        <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin-bottom:2px;">Roles &amp; Responsibilities</div>
-        <p style="font-size:12px;color:#888;margin-bottom:18px;">Quick reference for pilot ownership — based on the AI Pilot Playbook</p>
-
-        <div style="background:var(--bts-dark);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
-          <div>
-            <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">The Two-Person Ownership Model</div>
-            <div style="font-size:12px;color:#B0B8C1;line-height:1.6;">Every pilot has exactly two owners — a Pilot Lead and a Pilot Partner. Co-ownership is <strong style="color:white;">never assigned</strong> — both people must volunteer. The role split exists to remove ambiguity, not divide accountability. Shared accountability without clear roles is how pilots quietly stall.</div>
-          </div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;">
-          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-pink);overflow:hidden;">
-            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
-              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-pink);margin-bottom:4px;">Role 01</div>
-              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Lead</div>
-              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the momentum, all seven check-ins, and the Day 90 presentation.</div>
-            </div>
-            <div style="padding:14px 18px;">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
-              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
-                <li>Setting up the pilot and orienting the test group</li>
-                <li>Drafting and sending all written check-in updates to Team Leadership (Days 1, 15, 30, 45, 75)</li>
-                <li>Leading verbal check-ins at Days 60 and 90</li>
-                <li>Keeping the pilot on schedule across all seven milestones</li>
-                <li>Presenting findings verbally to Team Leadership at Day 90</li>
-                <li>Being the single point of contact Team Leadership calls if there is silence</li>
-              </ul>
-              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leadership</div>
-              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#FEF8FB;border-radius:7px;padding:8px 10px;">Primary contact. Sends all check-ins. Team Leadership directs all questions and feedback to the Pilot Lead first.</div>
-              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-              <div style="font-size:12px;color:var(--bts-pink);font-weight:600;background:#FEF8FB;border-radius:7px;padding:8px 10px;">If there is silence, Team Leadership reaches out to the Pilot Lead.</div>
-            </div>
-          </div>
-
-          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-teal);overflow:hidden;">
-            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
-              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:4px;">Role 02</div>
-              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Pilot Partner</div>
-              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the validation, the challenge, and the continuity if the Lead is pulled away.</div>
-            </div>
-            <div style="padding:14px 18px;">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
-              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
-                <li>Independently testing the tool and tracking their own usage data</li>
-                <li>Providing honest, unfiltered feedback — including when the tool is not working</li>
-                <li>Leading the Day 45 peer review (the "third eye" step)</li>
-                <li>Reviewing and co-signing the Day 90 findings before presentation</li>
-                <li>Stepping up to full Lead responsibilities if the Lead is unavailable</li>
-              </ul>
-              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leadership</div>
-              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F0FBF8;border-radius:7px;padding:8px 10px;">Copied on all check-ins. Attends the Day 90 presentation. Steps in as primary contact only if the Lead is unavailable.</div>
-              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-              <div style="font-size:12px;color:var(--bts-teal);font-weight:600;background:#F0FBF8;border-radius:7px;padding:8px 10px;">If the Pilot Lead is unavailable, the Pilot Partner becomes the Lead.</div>
-            </div>
-          </div>
-
-          <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-purple);overflow:hidden;">
-            <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
-              <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-purple);margin-bottom:4px;">Role 03</div>
-              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Team Leadership</div>
-              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Receives updates, provides feedback, coaches the co-owners, and makes the final call at Day 90.</div>
-            </div>
-            <div style="padding:14px 18px;">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
-              <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
-                <li>Receiving written check-in updates at Days 1, 15, 30, 45, and 75</li>
-                <li>Attending verbal check-ins at Days 60 and 90</li>
-                <li>Responding to written check-ins with feedback within one week</li>
-                <li>Making the final Standardize / Reevaluate / Table decision at Day 90</li>
-                <li>Approving any early pilot entry at Day 30 (exception only)</li>
-              </ul>
-              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Not in the ownership seat</div>
-              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Team Leadership does not own the pilot. They are informed, not accountable for day-to-day execution. Approval comes at Day 90 only.</div>
-              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-              <div style="font-size:12px;color:var(--bts-purple);font-weight:600;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Nothing becomes a Standard without explicit Team Leadership approval. No exceptions.</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;padding:20px 22px;margin-bottom:20px;">
-          <div style="font-size:13px;font-weight:700;color:var(--bts-dark);margin-bottom:10px;">Why this model works for our team</div>
-          <div style="font-size:12px;color:#555;line-height:1.8;">Our team operates in silos and people are frequently pulled into competing delivery priorities. A single owner is vulnerable — if they are pulled away, the pilot dies quietly. Two owners prevents that. And because co-ownership is always opted into rather than assigned, both people arrive with genuine commitment — not compliance.</div>
-          <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">But two willing owners without a clear role split creates a different problem: diffusion, where both people do less because each assumes the other has the lead. The Pilot Lead / Pilot Partner model keeps the redundancy of two owners while eliminating the ambiguity. The Lead is accountable for momentum. The Partner is accountable for honest validation. Together, they produce a richer, more credible Day 90 finding than either could alone — and Team Leadership gets two independent perspectives, not one advocate.</div>
-        </div>
-
-        <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;overflow:hidden;margin-bottom:20px;">
-          <div style="padding:14px 18px;border-bottom:1px solid #F0F2F5;background:#FAFBFC;">
-            <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Check-In Ownership at a Glance</div>
-          </div>
-          <div style="overflow-x:auto;">
-            <table style="width:100%;border-collapse:collapse;font-size:12px;">
-              <thead>
-                <tr style="background:#F5F6F8;">
-                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-dark);border-bottom:1px solid #E8EBF0;">Milestone</th>
-                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-pink);border-bottom:1px solid #E8EBF0;">Pilot Lead</th>
-                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-teal);border-bottom:1px solid #E8EBF0;">Pilot Partner</th>
-                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-purple);border-bottom:1px solid #E8EBF0;">Team Leadership</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 1</td>
-                  <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
-                  <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
-                  <td style="padding:10px 16px;color:#555;">Receives &amp; acknowledges</td>
-                </tr>
-                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 15</td>
-                  <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
-                  <td style="padding:10px 16px;color:#555;">Co-contributes perspective</td>
-                  <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
-                </tr>
-                <tr style="border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 30</td>
-                  <td style="padding:10px 16px;color:#555;">Drafts &amp; sends written update</td>
-                  <td style="padding:10px 16px;color:#555;">Reviews &amp; adds perspective before send</td>
-                  <td style="padding:10px 16px;color:#555;">Responds within 1 week</td>
-                </tr>
-                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 45</td>
-                  <td style="padding:10px 16px;color:#555;">Supports</td>
-                  <td style="padding:10px 16px;color:#555;font-weight:600;">Leads — brings in fresh perspectives ("third eye")</td>
-                  <td style="padding:10px 16px;color:#555;">Receives written summary</td>
-                </tr>
-                <tr style="border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60</td>
-                  <td style="padding:10px 16px;color:#555;font-weight:600;">Leads verbal check-in</td>
-                  <td style="padding:10px 16px;color:#555;">Attends &amp; contributes</td>
-                  <td style="padding:10px 16px;color:#555;">Attends &amp; gives verbal feedback</td>
-                </tr>
-                <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 60–75</td>
-                  <td style="padding:10px 16px;color:#555;">Leads cross-functional review</td>
-                  <td style="padding:10px 16px;color:#555;">Supports</td>
-                  <td style="padding:10px 16px;color:#555;">Monitors approval status</td>
-                </tr>
-                <tr style="border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 75</td>
-                  <td style="padding:10px 16px;color:#555;">Sends written readiness update</td>
-                  <td style="padding:10px 16px;color:#555;">Reviews before send</td>
-                  <td style="padding:10px 16px;color:#555;">Receives &amp; responds</td>
-                </tr>
-                <tr style="background:#FAFBFC;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Day 90</td>
-                  <td style="padding:10px 16px;color:#555;font-weight:600;">Presents findings verbally</td>
-                  <td style="padding:10px 16px;color:#555;">Present to answer questions</td>
-                  <td style="padding:10px 16px;color:#555;font-weight:600;">Makes final decision: Standardize / Reevaluate / Table</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div style="background:var(--bts-dark);border-radius:10px;padding:16px 22px;display:flex;gap:24px;flex-wrap:wrap;">
-          <div style="flex:1;min-width:200px;">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-pink);margin-bottom:4px;">Non-negotiable</div>
-            <div style="font-size:12px;color:white;line-height:1.6;">Co-ownership is never assigned. Both owners must volunteer. No pilot moves forward without two willing owners.</div>
-          </div>
-          <div style="flex:1;min-width:200px;">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-teal);margin-bottom:4px;">Non-negotiable</div>
-            <div style="font-size:12px;color:white;line-height:1.6;">Every idea starts at Experiment. There is no express lane to Pilot. Experiment → Pilot → Standard. No shortcuts.</div>
-          </div>
-          <div style="flex:1;min-width:200px;">
-            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-purple);margin-bottom:4px;">Non-negotiable</div>
-            <div style="font-size:12px;color:white;line-height:1.6;">Nothing becomes a Standard without explicit Team Leadership approval. Approval comes at Day 90 only. No exceptions.</div>
-          </div>
+        <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;padding:20px 22px;">
+          <div style="font-size:13px;font-weight:700;color:var(--bts-dark);margin-bottom:10px;">Why check-ins exist at all</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;">Good work can disappear if nobody's watching for it &mdash; not because anyone did anything wrong, just because life is loud and it's easy to lose track. Check-ins exist so the team can see itself: what's being worked on right now, how far it's actually come, and where it's headed next. They're also how we hold each other accountable, gently but for real, so the work doesn't quietly get lost in everything else pulling at your attention. Showing up to say "here's where we are" takes a small kind of courage &mdash; and it's exactly what keeps momentum real instead of assumed.</div>
         </div>
       </div>
     </div>
 
-    <div id="checkin-form" style="display:none"></div>
+    <div id="wfc-form" style="display:none"></div>
   </div>
+
 
   <!-- ======= CHAIN REACTION ACCELERATOR TAB ======= -->
   <div class="main" id="tab-cra" style="display:none">
     <div id="cra-selector">
       <div class="checkin-header">
         <h2>Chain Reaction Accelerator</h2>
-        <p>Your flywheel already worked. This is how one win becomes a diamond the whole team runs on.</p>
+        <p>Your flywheel already worked. This is how one win becomes the standard the whole team runs on.</p>
       </div>
       <div class="note-box" style="background:var(--bts-teal-light);border-left-color:var(--bts-teal);color:#0F5A5F;">
-        This tab is an <strong>alternative to the Check-In tab</strong>, not a follow-on to it &mdash; pick the one path that fits how your team wants to work. Where Check-In follows Anthropic's 90-day pilot model, the Chain Reaction Accelerator follows BTS's own Flywheels &amp; Diamonds field guides. Start here once your team has already found a flywheel that's working. Five stages, five minutes each. Stages 1&ndash;2 are yours to run whenever you're ready. Stage 3 is a decision point. Stages 4&ndash;5 are for once Team Leadership has said yes.
+        This tab is for once a flywheel already works &mdash; not for finding or simplifying one. If your team is still moving through Map Current State, Visualize, Simplify, Automate, that's what the <strong>Workflow Flywheels Check-In tab</strong> is for. Once a workflow has proven itself there, this is how one win becomes a chain reaction: not just a one-off improvement, but a new standard the whole team runs on. Five stages, five minutes each. Stages 1&ndash;2 are yours to run whenever you're ready. Stage 3 is a decision point. Stages 4&ndash;5 are for once Team Leadership has said yes.
       </div>
       <div class="note-box" style="background:var(--bts-purple-light);border-left-color:var(--bts-purple);color:var(--bts-purple);">
         <strong>Is your flywheel actually ready?</strong> Here's what the field guides say to look for:
@@ -763,15 +581,63 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       <div class="cra-grid" id="cra-grid"></div>
       <div class="note-box">Not sure this is ready yet? That's what Stage 2 is for &mdash; pressure-testing is supposed to surface cracks.</div>
 
+      <!-- ═══ FLYWHEEL DASHBOARD ═══ -->
+      <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin:28px 0 12px;">Workflow Dashboard</div>
+      <div class="dash-metrics">
+        <div class="dash-metric">
+          <div class="dm-label">Active Flywheels</div>
+          <div class="dm-value" id="cra-dash-active">0</div>
+          <div class="dm-sub">submitting check-ins</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dm-label">Moving Forward</div>
+          <div class="dm-value" id="cra-dash-green" style="color:#1D9E75">0</div>
+          <div class="dm-sub">on track</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dm-label">Needs Attention</div>
+          <div class="dm-value" id="cra-dash-attn" style="color:#EF9F27">0</div>
+          <div class="dm-sub">at risk or blocked</div>
+        </div>
+      </div>
+
+      <div style="background:white;border:1px solid #E8EBF0;border-radius:10px;padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#1D9E75;flex-shrink:0;"></span>Moving Forward</span>
+        <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#EF9F27;flex-shrink:0;"></span>Needs Attention</span>
+        <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#1C4C87;flex-shrink:0;"></span>Standardized</span>
+        <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#CA1C68;flex-shrink:0;"></span>Reevaluating</span>
+        <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#9CA3AF;flex-shrink:0;"></span>Tabled</span>
+      </div>
+
+      <div class="dash-table-wrap">
+        <div class="dt-head" style="grid-template-columns:1.6fr 1.2fr 1.4fr 0.8fr 1.3fr;">
+          <span>Flywheel</span>
+          <span>Owner</span>
+          <span>Stage</span>
+          <span>Check-Ins</span>
+          <span>Status</span>
+        </div>
+        <div id="cra-dash-rows">
+          <div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">No check-ins yet — flywheels appear here after their first stage check-in is submitted.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;margin-bottom:8px;">
+        <button class="btn-sec" onclick="renderCRADashboard()" id="btn-load-cra-dash" style="color:var(--bts-teal);border-color:var(--bts-teal)">&#8635; Load Flywheels</button>
+      </div>
+
       <!-- ═══ Roles & Responsibilities (CRA-adapted) ═══ -->
       <div style="border-top:1px solid #E8EBF0;margin-top:28px;padding-top:24px;">
         <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin-bottom:2px;">Roles &amp; Responsibilities</div>
-        <p style="font-size:12px;color:#888;margin-bottom:18px;">Quick reference for flywheel ownership — based on the Flywheels &amp; Diamonds field guides</p>
+        <p style="font-size:12px;color:#888;margin-bottom:12px;">Quick reference for flywheel ownership — based on the Flywheels &amp; Diamonds field guides</p>
+        <div style="background:var(--bts-teal-light);border-left:4px solid var(--bts-teal);border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:18px;">
+          <div style="font-size:12px;color:var(--bts-dark);line-height:1.7;">These roles are a <strong>recommendation, not a requirement</strong>. They're grounded in research on what actually keeps a chain reaction moving &mdash; clear accountability and a shared understanding of who does what, so momentum doesn't stall waiting on someone to take the lead. Use what's helpful; adapt the rest to how your team actually works.</div>
+        </div>
 
         <div style="background:var(--bts-dark);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
           <div>
             <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">The Single-Owner Submission Model</div>
-            <div style="font-size:12px;color:#B0B8C1;line-height:1.6;">The Flywheel Owner is the <strong style="color:white;">only</strong> one who ever submits a Chain Reaction Accelerator check-in. The Flywheel Partner and Team Leader are named at Stage 1 &mdash; Spark the Reaction, but neither one files an update themselves. This isn't about limiting who's involved — it's about keeping one clean, consistent record as the flywheel moves through five stages.</div>
+            <div style="font-size:12px;color:#B0B8C1;line-height:1.6;">The Flywheel Owner is the <strong style="color:white;">only</strong> one who ever submits a Chain Reaction Accelerator check-in. Team Members and the Team Leader are named at Stage 1 &mdash; Spark the Reaction, but neither files an update themselves. This isn't about limiting who's involved — it's about keeping one clean, consistent record as the flywheel moves through five stages.</div>
           </div>
         </div>
 
@@ -780,44 +646,42 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
             <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
               <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-pink);margin-bottom:4px;">Role 01</div>
               <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Flywheel Owner</div>
-              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns every submission, from Stage 1 &mdash; Spark the Reaction through Stage 5 &mdash; Manage the Diamond.</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns every submission, from Stage 1 &mdash; Spark the Reaction through Stage 5 &mdash; Manage the Standard.</div>
             </div>
             <div style="padding:14px 18px;">
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
               <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
                 <li>Submitting all five stage check-ins — the only one who ever does</li>
-                <li>Naming the Flywheel Partner and Team Leader at Stage 1 &mdash; Spark the Reaction</li>
+                <li>Naming Team Members and the Team Leader at Stage 1 &mdash; Spark the Reaction</li>
                 <li>Setting goal dates for each remaining phase at Stage 1 &mdash; Spark the Reaction</li>
                 <li>Gathering and implementing cross-functional feedback at Stage 2 &mdash; Pressure-Test the Spark</li>
-                <li>Running the honest diamond checklist at Stage 3 &mdash; Cut the Diamond</li>
+                <li>Running the honest standard-readiness checklist at Stage 3 &mdash; Set the Standard</li>
                 <li>Confirming the cutover date and coaching completion at Stage 4 &mdash; Institutionalize</li>
-                <li>Owning the diamond day-to-day at Stage 5 &mdash; Manage the Diamond, or naming who does</li>
+                <li>Owning it day-to-day at Stage 5 &mdash; Manage the Standard, or naming who does</li>
               </ul>
               <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leader</div>
               <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#FEF8FB;border-radius:7px;padding:8px 10px;">Sends the Stage 1 &mdash; Spark the Reaction update directly to the Team Leader the moment a flywheel is identified. Every stage after that keeps the same record — the Team Leader is never guessing what stage this is at.</div>
               <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-              <div style="font-size:12px;color:var(--bts-pink);font-weight:600;background:#FEF8FB;border-radius:7px;padding:8px 10px;">The Flywheel Owner is the only one who submits. Partner and Team Leader inform — they don't file.</div>
+              <div style="font-size:12px;color:var(--bts-pink);font-weight:600;background:#FEF8FB;border-radius:7px;padding:8px 10px;">The Flywheel Owner is the only one who submits. Team Members and Team Leader inform — they don't file.</div>
             </div>
           </div>
 
           <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;border-top:4px solid var(--bts-teal);overflow:hidden;">
             <div style="padding:16px 18px 12px;border-bottom:1px solid #F0F2F5;">
               <div style="font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--bts-teal);margin-bottom:4px;">Role 02</div>
-              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Flywheel Partner</div>
-              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Owns the pressure-testing and the presentation — never the paperwork.</div>
+              <div style="font-size:16px;font-weight:800;color:var(--bts-dark);">Team Members</div>
+              <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.5;">Do the pressure-testing and the presenting — never the paperwork.</div>
             </div>
             <div style="padding:14px 18px;">
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Owns</div>
               <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
-                <li>Being one of the first people the Owner tells when the flywheel works</li>
-                <li>Giving independent, unfiltered pressure-testing feedback at Stage 2 &mdash; Pressure-Test the Spark — actually running it, not watching a demo</li>
-                <li>Presenting the diamond as the new standard at Stage 3 &mdash; Cut the Diamond and Stage 4 &mdash; Institutionalize — because the person who built it shouldn't be the one selling it</li>
+                <li>Being among the first to hear when the flywheel works</li>
+                <li>Giving independent, unfiltered pressure-testing feedback at Stage 2 &mdash; Pressure-Test the Spark — actually running it, not watching a demo, from every team this flywheel touches</li>
+                <li>Presenting it as the new standard at Stage 3 &mdash; Set the Standard and Stage 4 &mdash; Institutionalize — because the person who built it shouldn't be the one selling it</li>
                 <li>Helping the Owner find the next tester or peer coach</li>
               </ul>
-              <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Relationship to Team Leader</div>
-              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F0FBF8;border-radius:7px;padding:8px 10px;">Named at Stage 1 &mdash; Spark the Reaction and kept in the loop, but doesn't file check-ins directly — feedback flows to the Team Leader through the Owner, except when presenting at Stage 3 &mdash; Cut the Diamond.</div>
               <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-              <div style="font-size:12px;color:var(--bts-teal);font-weight:600;background:#F0FBF8;border-radius:7px;padding:8px 10px;">The person who built it does not present it as the new standard. That's the Partner's job.</div>
+              <div style="font-size:12px;color:var(--bts-teal);font-weight:600;background:#F0FBF8;border-radius:7px;padding:8px 10px;">The person who built it does not present it as the new standard. That's a job for someone else on the team.</div>
             </div>
           </div>
 
@@ -832,22 +696,22 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
               <ul style="margin:0;padding:0 0 0 16px;font-size:12px;color:var(--bts-dark);line-height:1.8;">
                 <li>Receiving the Stage 1 &mdash; Spark the Reaction update the moment a flywheel is identified</li>
                 <li>Staying informed through Stage 2 &mdash; Pressure-Test the Spark</li>
-                <li>Giving the explicit yes at Stage 3 &mdash; Cut the Diamond to move from voluntary to mandated</li>
+                <li>Giving the explicit yes at Stage 3 &mdash; Set the Standard to move from voluntary to mandated</li>
                 <li>Approving the cutover date and new metrics at Stage 4 &mdash; Institutionalize</li>
-                <li>Watching for the renewal signal at Stage 5 &mdash; Manage the Diamond — is this diamond still earning its keep</li>
+                <li>Watching for the renewal signal at Stage 5 &mdash; Manage the Standard — is this still earning its keep</li>
               </ul>
               <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:8px;">Not in the ownership seat</div>
-              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Team Leader does not own the flywheel. They're informed at Stage 1 &mdash; Spark the Reaction, decide at Stage 3 &mdash; Cut the Diamond, and approve rollout at Stage 4 &mdash; Institutionalize.</div>
+              <div style="font-size:12px;color:var(--bts-dark);line-height:1.6;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Team Leader does not own the flywheel. They're informed at Stage 1 &mdash; Spark the Reaction, decide at Stage 3 &mdash; Set the Standard, and approve rollout at Stage 4 &mdash; Institutionalize.</div>
               <div style="margin-top:14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#AAA;margin-bottom:6px;">The Rule</div>
-              <div style="font-size:12px;color:var(--bts-purple);font-weight:600;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Nothing moves from voluntary to mandated without the Team Leader's explicit yes at Stage 3 &mdash; Cut the Diamond. No exceptions.</div>
+              <div style="font-size:12px;color:var(--bts-purple);font-weight:600;background:#F5F3FF;border-radius:7px;padding:8px 10px;">Nothing moves from voluntary to mandated without the Team Leader's explicit yes at Stage 3 &mdash; Set the Standard. No exceptions.</div>
             </div>
           </div>
         </div>
 
         <div style="background:white;border-radius:12px;border:1px solid #E8EBF0;padding:20px 22px;margin-bottom:20px;">
           <div style="font-size:13px;font-weight:700;color:var(--bts-dark);margin-bottom:10px;">Why this model works, according to the field guides</div>
-          <div style="font-size:12px;color:#555;line-height:1.8;">The field guides are clear that a flywheel spreads through people, not paperwork. The strongest flywheel teams pair someone who knows how to navigate the organization with a fresh thinker unconstrained by "how it's always been done" — that's the whole reason this model has both an Owner and a Partner, instead of one person carrying it alone.</div>
-          <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">The guides are just as clear that the person who builds something shouldn't be the one who declares it a diamond or sells it to the rest of the team — that's a structural blind spot, not a trust issue. That's why the Partner, not the Owner, pressure-tests it independently and presents it as the new standard. And because institutionalizing a diamond is treated as a real mandate rather than a suggestion, someone outside the work has to say so out loud — that's the Team Leader's explicit yes.</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;">The field guides are clear that a flywheel spreads through people, not paperwork. The strongest flywheel teams don't leave one person to build, test, and sell an idea alone &mdash; that's the whole reason this model brings in team members beyond just the Owner, instead of one person carrying it end to end.</div>
+          <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">The guides are just as clear that the person who builds something shouldn't be the one who declares it the new standard or sells it to the rest of the team — that's a structural blind spot, not a trust issue. That's why someone else on the team, not the Owner, pressure-tests it independently and presents it as the new standard. And because institutionalizing it is treated as a real mandate rather than a suggestion, someone outside the work has to say so out loud — that's the Team Leader's explicit yes.</div>
           <div style="font-size:12px;color:#555;line-height:1.8;margin-top:8px;">The five-stage check-ins don't create any of this — they just keep it honest and on schedule as the flywheel actually moves through it.</div>
         </div>
 
@@ -861,37 +725,37 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
                 <tr style="background:#F5F6F8;">
                   <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-dark);border-bottom:1px solid #E8EBF0;">Stage</th>
                   <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-pink);border-bottom:1px solid #E8EBF0;">Flywheel Owner</th>
-                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-teal);border-bottom:1px solid #E8EBF0;">Flywheel Partner</th>
+                  <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-teal);border-bottom:1px solid #E8EBF0;">Team Members</th>
                   <th style="padding:10px 16px;text-align:left;font-weight:700;color:var(--bts-purple);border-bottom:1px solid #E8EBF0;">Team Leader</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style="border-bottom:1px solid #F0F2F5;">
                   <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 1 &mdash; Spark the Reaction</td>
-                  <td style="padding:10px 16px;color:#555;">Submits check-in; names Partner &amp; Team Leader; sets phase goal dates</td>
-                  <td style="padding:10px 16px;color:#555;">Named as accountability partner</td>
+                  <td style="padding:10px 16px;color:#555;">Submits check-in; names Team Members &amp; Team Leader; sets phase goal dates</td>
+                  <td style="padding:10px 16px;color:#555;">Named</td>
                   <td style="padding:10px 16px;color:#555;">Receives Stage 1 &mdash; Spark the Reaction update</td>
                 </tr>
                 <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
                   <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 2 &mdash; Pressure-Test the Spark</td>
-                  <td style="padding:10px 16px;color:#555;">Submits check-in; gathers &amp; implements cross-functional feedback</td>
-                  <td style="padding:10px 16px;color:#555;font-weight:600;">Pressure-tests it independently — runs it, doesn't just watch; ensures feedback is implemented</td>
+                  <td style="padding:10px 16px;color:#555;">Submits check-in; gathers &amp; implements cross-team feedback</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Pressure-tests it independently — every team this touches gives feedback, not just the first tester</td>
                   <td style="padding:10px 16px;color:#555;">Informed only if flagged</td>
                 </tr>
                 <tr style="border-bottom:1px solid #F0F2F5;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 3 &mdash; Cut the Diamond</td>
-                  <td style="padding:10px 16px;color:#555;">Submits check-in; runs the honest diamond checklist</td>
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 3 &mdash; Set the Standard</td>
+                  <td style="padding:10px 16px;color:#555;">Submits check-in; runs the honest standard-readiness checklist</td>
                   <td style="padding:10px 16px;color:#555;">Prepares to present it as the new standard</td>
                   <td style="padding:10px 16px;color:#555;font-weight:600;">Gives explicit yes to mandate it</td>
                 </tr>
                 <tr style="background:#FAFBFC;border-bottom:1px solid #F0F2F5;">
                   <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 4 &mdash; Institutionalize</td>
                   <td style="padding:10px 16px;color:#555;">Submits check-in; confirms cutover date &amp; coaching</td>
-                  <td style="padding:10px 16px;color:#555;font-weight:600;">Presents the diamond to affected teams</td>
+                  <td style="padding:10px 16px;color:#555;font-weight:600;">Presents it, and how it works, to affected teams</td>
                   <td style="padding:10px 16px;color:#555;">Approves cutover date &amp; new metrics</td>
                 </tr>
                 <tr style="background:#FAFBFC;">
-                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 5 &mdash; Manage the Diamond</td>
+                  <td style="padding:10px 16px;font-weight:600;color:var(--bts-dark);">Stage 5 &mdash; Manage the Standard</td>
                   <td style="padding:10px 16px;color:#555;font-weight:600;">Submits ongoing check-ins; owns it day-to-day</td>
                   <td style="padding:10px 16px;color:#555;">Rotates out, or continues supporting</td>
                   <td style="padding:10px 16px;color:#555;">Monitors the renewal signal</td>
@@ -904,15 +768,15 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <div style="background:var(--bts-dark);border-radius:10px;padding:16px 22px;display:flex;gap:24px;flex-wrap:wrap;">
           <div style="flex:1;min-width:200px;">
             <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-pink);margin-bottom:4px;">Non-negotiable</div>
-            <div style="font-size:12px;color:white;line-height:1.6;">Only the Flywheel Owner submits. Partner and Team Leader inform — they don't file.</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">Only the Flywheel Owner submits. Team Members and Team Leader inform — they don't file.</div>
           </div>
           <div style="flex:1;min-width:200px;">
             <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-teal);margin-bottom:4px;">Non-negotiable</div>
-            <div style="font-size:12px;color:white;line-height:1.6;">The Owner never presents their own diamond as the new standard. That's the Partner's job.</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">The Owner never presents their own work as the new standard. That's a job for someone else on the team.</div>
           </div>
           <div style="flex:1;min-width:200px;">
             <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--bts-purple);margin-bottom:4px;">Non-negotiable</div>
-            <div style="font-size:12px;color:white;line-height:1.6;">Nothing moves from voluntary to mandated without the Team Leader's explicit yes at Stage 3 &mdash; Cut the Diamond. No exceptions.</div>
+            <div style="font-size:12px;color:white;line-height:1.6;">Nothing moves from voluntary to mandated without the Team Leader's explicit yes at Stage 3 &mdash; Set the Standard. No exceptions.</div>
           </div>
         </div>
       </div>
@@ -1199,58 +1063,6 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
     <div class="success-toast" id="mapper-toast" style="margin-top:12px;"></div>
   </div>
 
-  <!-- ======= DASHBOARD TAB ======= -->
-  <div class="main" id="tab-dashboard" style="display:none">
-    <div class="page-title">Pilot Health Dashboard</div>
-    <p class="page-sub">Real-time view of all active AI pilots across BTS</p>
-
-    <div class="dash-metrics">
-      <div class="dash-metric">
-        <div class="dm-label">Active Pilots</div>
-        <div class="dm-value" id="dash-active">0</div>
-        <div class="dm-sub">this month's cohort</div>
-      </div>
-      <div class="dash-metric">
-        <div class="dm-label">Moving Forward</div>
-        <div class="dm-value" id="dash-green" style="color:#1D9E75">0</div>
-        <div class="dm-sub">on track</div>
-      </div>
-      <div class="dash-metric">
-        <div class="dm-label">Needs Attention</div>
-        <div class="dm-value" id="dash-attn" style="color:#EF9F27">0</div>
-        <div class="dm-sub">at risk or blocked</div>
-      </div>
-    </div>
-
-    <!-- Dot legend -->
-    <div style="background:white;border:1px solid #E8EBF0;border-radius:10px;padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;">
-      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#1D9E75;flex-shrink:0;"></span>Moving Forward</span>
-      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#EF9F27;flex-shrink:0;"></span>Needs Attention</span>
-      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#E53E3E;flex-shrink:0;"></span>Asking for Help</span>
-      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#1C4C87;flex-shrink:0;"></span>Standardized</span>
-      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#CA1C68;flex-shrink:0;"></span>Reevaluating</span>
-      <span style="font-size:13px;color:#555;display:inline-flex;align-items:center;gap:7px;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#AAA;flex-shrink:0;"></span>Tabled</span>
-    </div>
-
-    <div class="dash-table-wrap">
-      <div class="dt-head">
-        <span>Pilot</span>
-        <span>Co-Owners</span>
-        <span>Day</span>
-        <span>Days Active</span>
-        <span>Status</span>
-        <span>Progress</span>
-      </div>
-      <div id="dash-rows">
-        <div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">No pilots yet — pilots appear here after a Day 1 check-in is submitted.</div>
-      </div>
-    </div>
-
-    <div style="margin-top:16px;">
-      <button class="btn-sec" onclick="loadFromSmartsheet()" id="btn-load-sm" style="color:var(--bts-teal);border-color:var(--bts-teal)">&#8635; Load Pilots</button>
-    </div>
-    <div class="success-toast" id="sm-load-toast" style="margin-top:12px"></div>
-  </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- HOW RESEARCH SUPPORTS THIS PROCESS — MODAL (launched from Process Studio) -->
@@ -1435,6 +1247,14 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
   </div>
 </div>
 
+<!-- ═══ WORKFLOW CHECK-IN HISTORY MODAL (X-close only, no click-outside) ═══ -->
+<div id="wfc-history-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(20,22,26,0.55);z-index:9600;padding:24px;overflow-y:auto;">
+  <div style="background:white;border-radius:14px;max-width:600px;width:100%;margin:4vh auto;padding:28px 32px 32px;position:relative;box-shadow:0 12px 48px rgba(0,0,0,0.35);">
+    <button onclick="closeWFCheckinHistory()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:26px;line-height:1;cursor:pointer;color:#999;padding:4px;" aria-label="Close" onmouseover="this.style.color='var(--bts-dark)'" onmouseout="this.style.color='#999'">&times;</button>
+    <div id="wfc-history-modal-content"></div>
+  </div>
+</div>
+
 </div>
 
 <script>
@@ -1492,6 +1312,7 @@ const SM = {
   WORKFLOW_SHEET:        '363688197312388',
   PROCESS_STEPS_SHEET:   '8451378574741380',
   CRA_SHEET:             '7513834150383492',
+  WFC_SHEET:             '1766162416226180',
   IDEA_FORM_URL:         'https://app.smartsheet.com/b/form/53fc168f1a8943a0aadbd9de79caf67b',
 
   // Pilot Registry column IDs (sheet: 5262356096438148)
@@ -1563,13 +1384,12 @@ const SM = {
   },
 
   // Chain Reaction Accelerator column IDs (sheet: 7513834150383492)
-  // Created 2026-07-29, PMO AI Innovation Tool folder. Partner/Team Leader columns added 2026-07-29.
+  // Created 2026-07-29, PMO AI Innovation Tool folder. Team Members/Team Leader columns added 2026-07-29; Scribe added later.
   CRA: {
     flywheelName:      4793967168491396,
     flywheelOwner:     2542167354806148,
     ownerEmail:        7045766982176644,
-    flywheelPartner:   5986245526458244,
-    partnerEmail:      3734445712772996,
+    teamMembers:       5986245526458244,
     teamLeader:        8238045340143492,
     teamLeaderEmail:   919695945666436,
     stage:             1416267447963524,
@@ -1585,6 +1405,25 @@ const SM = {
     submittedBy:       4231017215070084,
     submittedByEmail:  8734616842440580,
     submittedAt:       149630052765572,
+  },
+
+  // Workflow Flywheels Check-Ins column IDs (sheet: 1766162416226180)
+  WFC: {
+    taskForceName:     4296195910700932,
+    teamLeaderName:    8799795538071428,
+    teamLeaderEmail:   214808748396420,
+    teamMembers:       4718408375766916,
+    scribe:            2466608562081668,
+    checkInNumber:     6970208189452164,
+    phase:             1340708655239044,
+    statusUpdate:      5844308282609540,
+    issues:            3592508468924292,
+    otherTeams:        8096108096294788,
+    nextMeetingDate:   777758701817732,
+    momentum:          5281358329188228,
+    submittedBy:       3029558515502980,
+    submittedByEmail:  7533158142873476,
+    submittedAt:       1903658608660356,
   },
 
   // Role sheet — minimal (email + role only)
@@ -1683,46 +1522,25 @@ async function addSmartsheetRow(sheetId, columnMap) { return smAddRow(sheetId, c
 // Role lookup uses getUserRole() — AI Champion hardcoded, all others default to "User".
 // The minimal Role sheet in Smartsheet can be used to promote specific users if needed.
 
-// ── Pilot Registry ────────────────────────────────────────────────────────────
-async function savePilotToSmartsheet(pilot) {
-  const now = new Date();
+async function saveWFCheckinToSmartsheet(data) {
   const cells = {
-    [SM.PR.pilotName]:    pilot.name,
-    [SM.PR.pilotLead]:    pilot.lead,
-    [SM.PR.pilotPartner]: pilot.partner || '',
-    [SM.PR.leadEmail]:    state.user?.email || '',
-    [SM.PR.startDate]:    now.toISOString().split('T')[0],
-    [SM.PR.currentDay]:   String(pilot.day),
-    [SM.PR.healthStatus]: pilot.status === 'green' ? 'Moving Forward' : pilot.status === 'amber' ? 'Needs Attention' : 'Asking for Help',
-    [SM.PR.entryPoint]:   pilot.entryPoint || 'Day 1 Standard',
-    [SM.PR.hypothesis]:   pilot.hypothesis || '',
-    [SM.PR.baseline]:     pilot.baseline || '',
-    [SM.PR.day90Outcome]: 'Pending',
+    [SM.WFC.taskForceName]:    data.taskForceName,
+    [SM.WFC.teamLeaderName]:   data.teamLeaderName || '',
+    [SM.WFC.teamLeaderEmail]:  data.teamLeaderEmail || '',
+    [SM.WFC.teamMembers]:      data.teamMembers || '',
+    [SM.WFC.scribe]:           data.scribe || '',
+    [SM.WFC.checkInNumber]:    data.checkInNumber,
+    [SM.WFC.phase]:            data.phase,
+    [SM.WFC.statusUpdate]:     data.statusUpdate || '',
+    [SM.WFC.issues]:           data.issues || '',
+    [SM.WFC.otherTeams]:       data.otherTeams || '',
+    [SM.WFC.nextMeetingDate]:  data.nextMeetingDate || '',
+    [SM.WFC.momentum]:         data.momentum,
+    [SM.WFC.submittedBy]:      data.submittedBy || '',
+    [SM.WFC.submittedByEmail]: data.submittedByEmail || '',
+    [SM.WFC.submittedAt]:      new Date().toISOString(),
   };
-  return addSmartsheetRow(SM.PILOT_REGISTRY_SHEET, cells);
-}
-
-async function saveCheckinToSmartsheet(day, pilotName, role, responses, healthStatus, xfNotes, day90Rec) {
-  const isVerbal = day === 60 || day === 90;
-  const cells = {
-    [SM.CI.pilotName]:     pilotName,
-    [SM.CI.pilotLead]:     state.user?.name || '',
-    [SM.CI.submitterEmail]: state.user?.email || '',
-    [SM.CI.checkInDay]:    'Day ' + day,
-    [SM.CI.checkInType]:   isVerbal ? 'Verbal' : 'Written',
-    [SM.CI.role]:          role,
-    [SM.CI.response1]:     responses[0] || '',
-    [SM.CI.response2]:     responses[1] || '',
-    [SM.CI.response3]:     responses[2] || '',
-    [SM.CI.response4]:     responses[3] || '',
-    [SM.CI.healthStatus]:  healthStatus,
-    [SM.CI.xfNotes]:       xfNotes || '',
-    [SM.CI.day90Rec]:      day90Rec || 'N/A',
-    [SM.CI.submittedAt]:   new Date().toISOString(),
-    [SM.CI.godoState]:     JSON.stringify(getLiveGodoItems(day)),
-  };
-  resetLiveGodoItems(day);
-  return addSmartsheetRow(SM.CHECKIN_SHEET, cells);
+  return addSmartsheetRow(SM.WFC_SHEET, cells);
 }
 
 async function saveCRAToSmartsheet(data) {
@@ -1730,8 +1548,7 @@ async function saveCRAToSmartsheet(data) {
     [SM.CRA.flywheelName]:     data.flywheelName,
     [SM.CRA.flywheelOwner]:    data.flywheelOwner,
     [SM.CRA.ownerEmail]:       data.ownerEmail,
-    [SM.CRA.flywheelPartner]:  data.flywheelPartner || '',
-    [SM.CRA.partnerEmail]:     data.partnerEmail || '',
+    [SM.CRA.teamMembers]:      data.teamMembers || '',
     [SM.CRA.teamLeader]:       data.teamLeader || '',
     [SM.CRA.teamLeaderEmail]:  data.teamLeaderEmail || '',
     [SM.CRA.stage]:            CRA_STAGES.find(s => s.key === data.stage)?.name || ('Stage ' + data.stage),
@@ -1762,10 +1579,6 @@ async function saveWorkflowToSmartsheet(title, tool, lanesUsed, mapJSON) {
     [SM.WF.savedAt]:      new Date().toISOString(),
   };
   return addSmartsheetRow(SM.WORKFLOW_SHEET, cells);
-}
-
-async function loadPilotsFromSmartsheet() {
-  return smGetSheet(SM.PILOT_REGISTRY_SHEET);
 }
 
 // ── AUTH HELPERS ──────────────────────────────────────────────────────────
@@ -1809,12 +1622,6 @@ function launchApp(user) {
   // Hide login overlay, reveal app
   const overlay = document.getElementById('login-overlay');
   if (overlay) overlay.style.display = 'none';
-  const navDash = document.getElementById('nav-dashboard');
-  if (navDash && (user.role === 'AI Champion')) {
-    navDash.style.fontWeight = '800';
-    navDash.style.color = 'var(--bts-pink)';
-  }
-  try { renderDashboard(); } catch(e) {}
   try { renderHomePilots(); } catch(e) {}
   } catch(err) { console.error('launchApp error:', err); }
 }
@@ -1943,194 +1750,6 @@ function show(id, visible) {
   if (!el) return;
   if (visible) { el.classList.add('active'); }
   else { el.classList.remove('active'); }
-}
-
-async function renderDashboard() {
-  const rowsEl = document.getElementById('dash-rows');
-  const activeEl = document.getElementById('dash-active');
-  const greenEl = document.getElementById('dash-green');
-  const attnEl = document.getElementById('dash-attn');
-  if (!rowsEl) return;
-
-  // Show loading state
-  rowsEl.innerHTML = '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">Loading pilots from Smartsheet...</div>';
-
-  try {
-    // Fetch all check-in rows from Smartsheet via Lambda
-    const headers = await smHeaders();
-    const sheetId = SM.CHECKIN_SHEET || '3292924612661124';
-    const resp = await fetch(`${SM_BASE}/sheets/${sheetId}`, { headers });
-    if (!resp.ok) throw new Error('Failed to load check-in data');
-    const data = await resp.json();
-
-    const allRows = data.rows || [];
-    const cols = {};
-    (data.columns || []).forEach(c => { cols[c.title] = c.id; });
-
-    // Helper: get cell value by column title
-    function cellVal(row, colTitle) {
-      const colId = cols[colTitle];
-      if (!colId) return '';
-      const cell = (row.cells || []).find(c => c.columnId === colId);
-      return cell?.value ?? cell?.displayValue ?? '';
-    }
-
-    if (allRows.length === 0) {
-      rowsEl.innerHTML = '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">No pilots yet — pilots appear here after a Day 1 check-in is submitted.</div>';
-      if (activeEl) activeEl.textContent = '0';
-      if (greenEl) greenEl.textContent = '0';
-      if (attnEl) attnEl.textContent = '0';
-      return;
-    }
-
-    // Group rows by pilot name (Submission column), keep most recent per pilot
-    const pilotMap = {};
-    const DAY_ORDER = ['Day 1','Day 15','Day 30','Day 45','Day 60','Day 75','Day 90'];
-
-    allRows.forEach(row => {
-      const name = cellVal(row, 'Submission');
-      if (!name) return;
-      const key = name.trim().toLowerCase();
-      if (!pilotMap[key]) {
-        pilotMap[key] = { name, rows: [] };
-      }
-      pilotMap[key].rows.push(row);
-    });
-
-    const STATUS_COLORS = {
-      'Moving Forward': '#1D9E75',
-      'On track':       '#1D9E75',
-      'Needs Attention': '#F5A623',
-      'Asking for Help': '#E53E3E',
-      'Standardized':   '#3B82F6',
-      'Reevaluating':   '#CA1C68',
-      'Tabled':         '#9CA3AF',
-    };
-    const ALL_DAYS = ['Day 1','Day 15','Day 30','Day 45','Day 60','Day 75','Day 90'];
-
-    let green = 0, attn = 0;
-
-    const rows = Object.values(pilotMap).map(pilot => {
-      // Sort rows by DAY_ORDER to find the most recent check-in
-      const sorted = [...pilot.rows].sort((a, b) => {
-        const da = DAY_ORDER.indexOf(cellVal(a, 'Check-In Day'));
-        const db = DAY_ORDER.indexOf(cellVal(b, 'Check-In Day'));
-        return db - da; // descending — most recent first
-      });
-
-      const latest = sorted[0];
-      const currentDay = cellVal(latest, 'Check-In Day') || 'Day 1';
-      const selfReportedStatus = cellVal(latest, 'Health Status') || 'Moving Forward';
-      const leadName = cellVal(latest, 'Pilot Lead') || '';
-      const partName = cellVal(latest, 'Pilot Partner') || '';
-
-      // Calculate days active + get Day 1 row (needed for overdue detection too)
-      const day1Row = pilot.rows.find(r => cellVal(r, 'Check-In Day') === 'Day 1');
-
-      // ── Overdue detection ─────────────────────────────────────────────
-      // Parse milestone dates from Day 1 Response 4 string
-      // Format: "...| Milestone dates: Day 15: 2026-06-25 | Day 30: 2026-07-10 | ..."
-      const milestoneDates = {}; // { 15: Date, 30: Date, ... }
-      if (day1Row) {
-        const resp4 = cellVal(day1Row, 'Response 4') || '';
-        const milestoneSection = resp4.split('Milestone dates:')[1] || '';
-        const milestoneRegex = /Day (\d+):\s*(\d{4}-\d{2}-\d{2})/g;
-        let match;
-        while ((match = milestoneRegex.exec(milestoneSection)) !== null) {
-          const dayNum = parseInt(match[1]);
-          const dateVal = new Date(match[2] + 'T00:00:00'); // force midnight local
-          milestoneDates[dayNum] = dateVal;
-        }
-      }
-
-      // Check if any milestone is overdue and not yet submitted
-      const submittedDayNums = new Set(
-        pilot.rows.map(r => {
-          const d = cellVal(r, 'Check-In Day'); // e.g. "Day 15"
-          const n = d ? parseInt(d.replace('Day ', '')) : null;
-          return n;
-        }).filter(Boolean)
-      );
-
-      const todayMidnight = new Date();
-      todayMidnight.setHours(0, 0, 0, 0);
-
-      // Never flag as overdue if Day 90 has been submitted — pilot is complete
-      const pilotComplete = submittedDayNums.has(90);
-      let isOverdue = false;
-      if (!pilotComplete) {
-        for (const [dayNum, milestoneDate] of Object.entries(milestoneDates)) {
-          const num = parseInt(dayNum);
-          if (!submittedDayNums.has(num) && todayMidnight > milestoneDate) {
-            isOverdue = true;
-            break;
-          }
-        }
-      }
-
-      // Final status logic:
-      // 1. If Day 90 submitted with a recommendation — show that outcome
-      // 2. If overdue and not already worse — show Needs Attention
-      // 3. Otherwise — show self-reported status
-      const day90Row = pilot.rows.find(r => cellVal(r, 'Check-In Day') === 'Day 90');
-      const day90Rec = day90Row ? (cellVal(day90Row, 'Day 90 Recommendation') || '').toLowerCase().trim() : '';
-      const DAY90_STATUS = { 'standardize': 'Standardized', 'standardized': 'Standardized', 'reevaluate': 'Reevaluating', 'reevaluating': 'Reevaluating', 'table': 'Tabled', 'tabled': 'Tabled' };
-      const worseStatuses = ['Asking for Help', 'Needs Attention'];
-      let healthStatus;
-      if (day90Rec && DAY90_STATUS[day90Rec]) {
-        healthStatus = DAY90_STATUS[day90Rec];
-      } else if (isOverdue && !worseStatuses.includes(selfReportedStatus)) {
-        healthStatus = 'Needs Attention';
-      } else {
-        healthStatus = selfReportedStatus;
-      }
-      const day1DateStr = day1Row ? cellVal(day1Row, 'Submitted At') : null;
-      let daysActive = '—';
-      if (day1DateStr) {
-        const day1Date = new Date(day1DateStr);
-        const today = new Date();
-        const diff = Math.floor((today - day1Date) / (1000 * 60 * 60 * 24));
-        daysActive = diff === 0 ? 'Day 1' : diff + 'd';
-      }
-
-      // Count distinct check-in days submitted
-      const submittedDays = new Set(pilot.rows.map(r => cellVal(r, 'Check-In Day')).filter(Boolean));
-      const submitted = submittedDays.size;
-      const pct = Math.round((submitted / ALL_DAYS.length) * 100);
-
-      const color = STATUS_COLORS[healthStatus] || '#9CA3AF';
-      const isGreen = healthStatus === 'Moving Forward' || healthStatus === 'Standardized';
-      if (isGreen) green++; else attn++;
-
-      return `<div class="dt-row" style="display:grid;grid-template-columns:2fr 1fr 0.8fr 0.8fr 1fr 1.2fr;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid #F0F2F5;">
-        <span style="font-weight:600;color:var(--bts-dark);font-size:13px;">${pilot.name}</span>
-        <span style="font-size:12px;color:#555;">${leadName}${partName ? ' &amp; ' + partName : ''}</span>
-        <span style="font-size:12px;color:#888;">${currentDay}</span>
-        <span style="font-size:12px;color:#888;">${daysActive}</span>
-        <span>
-          <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#555;">
-            <span style="width:10px;height:10px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;" title="${healthStatus}"></span>
-            ${healthStatus}
-          </span>
-        </span>
-        <span>
-          <div style="background:#F0F2F5;border-radius:4px;height:6px;overflow:hidden;">
-            <div style="background:${color};height:100%;width:${pct}%;transition:width 0.3s;"></div>
-          </div>
-          <span style="font-size:10px;color:#AAA;margin-top:3px;display:block;">${submitted} of ${ALL_DAYS.length} check-ins</span>
-        </span>
-      </div>`;
-    }).join('');
-
-    rowsEl.innerHTML = rows || '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">No pilots yet.</div>';
-    if (activeEl) activeEl.textContent = Object.keys(pilotMap).length;
-    if (greenEl) greenEl.textContent = green;
-    if (attnEl) attnEl.textContent = attn;
-
-  } catch(err) {
-    console.error('Dashboard load error:', err);
-    rowsEl.innerHTML = '<div style="padding:24px;text-align:center;color:#E53E3E;font-size:13px;">Could not load dashboard. Please check your connection.</div>';
-  }
 }
 
 function renderHomePilots() {
@@ -2474,16 +2093,14 @@ function toggleResearch(id) {
 }
 
 function showTab(tab) {
-  ['home','idea','checkin','cra','mapper','dashboard'].forEach(t => {
+  ['home','checkin','cra','mapper'].forEach(t => {
     document.getElementById('tab-' + t).style.display = (t === tab) ? '' : 'none';
     document.getElementById('nav-' + t).classList.toggle('active', t === tab);
   });
-  if (tab === 'checkin') { document.getElementById('checkin-selector').style.display = ''; document.getElementById('checkin-form').style.display = 'none'; }
-  if (tab === 'cra') { document.getElementById('cra-selector').style.display = ''; document.getElementById('cra-form').style.display = 'none'; renderCRAGrid(); }
-  if (tab === 'dashboard') renderDashboard();
+  if (tab === 'checkin') { document.getElementById('wfc-selector').style.display = ''; document.getElementById('wfc-form').style.display = 'none'; renderWFDashboard(); }
+  if (tab === 'cra') { document.getElementById('cra-selector').style.display = ''; document.getElementById('cra-form').style.display = 'none'; renderCRAGrid(); renderCRADashboard(); }
   if (tab === 'mapper') { initProcessStudio(); renderStructuredSteps(); renderUnmappedReferencesPanel(); setTimeout(() => { document.getElementById('export-bar').style.display = ''; }, 150); }
   else { const eb = document.getElementById('export-bar'); if (eb) eb.style.display = 'none'; }
-  if (tab === 'idea') setupIdeaClassifier();
 }
 
 // The "How Research Supports This Process" content now lives as a modal, launched
@@ -2496,652 +2113,482 @@ function closeResearchModal() {
 }
 
 
-function setupIdeaClassifier() {
-  document.getElementById('q-priority').addEventListener('change', classifyIdea);
-  document.getElementById('q-improves').addEventListener('change', classifyIdea);
-}
+// ── Workflow Flywheels Check-In System ────────────────────────────────────
 
-function classifyIdea() {
-  const p = document.getElementById('q-priority').value;
-  const i = document.getElementById('q-improves').value;
-  const box = document.getElementById('classification-result');
-  if (!p || !i) { box.style.display = 'none'; return; }
-  let bucket = '', stage = '', color = '', note = '';
-  if (p === 'yes' && i === 'yes') {
-    bucket = 'Priority Now'; stage = 'Experiment → Pilot'; color = '#E1F5EE'; note = 'This idea is a strong candidate. Submit the form and bring it to the next AI Innovation Lab to find two co-owners.';
-  } else if (p === 'no' && i === 'no') {
-    bucket = 'Not Now'; stage = 'Park it'; color = '#F0F2F5'; note = 'Park this idea for now. Log it anyway — conditions may change.';
-  } else {
-    bucket = 'Experiment'; stage = 'Light Experiment'; color = '#FAEEDA'; note = 'Worth exploring individually or discussing in a session. No team capacity commitment yet.';
+const PHASE_ORDER = ['Map Current State', 'Visualize', 'Simplify', 'Automate'];
+
+// DRAFT — placeholder guidance per phase, inspired by the old day-by-day check-in
+// questions. Elya: this is the piece we agreed to refine together, not final copy.
+const PHASE_GUIDANCE = {
+  'Map Current State': {
+    lead: 'The bravest thing a team can do is look honestly at how work actually happens &mdash; not the tidy version, the real one.',
+    bullets: [
+      'Have you mapped it out, step by step, the way it truly unfolds today?',
+      'Has everyone had a real chance to weigh in, even the parts that complicate the picture?',
+      'Any notable issues or blockers?'
+    ]
+  },
+  'Visualize': {
+    lead: 'Is the mapped workflow visible, clear, and accurate to everyone on the team?',
+    bullets: [
+      'Now that you can see it laid out, are the friction points out in the open too?',
+      'Any notable issues or blockers?',
+      'Have you brought in any other teams? Not just your own team &mdash; if this workflow touches someone else\'s process, meet with that team to understand their part of it too.'
+    ]
+  },
+  'Simplify': {
+    lead: 'Have you simplified the workflow? What have you removed, added, combined, replaced, or clarified?',
+    bullets: [
+      'Is there anything that only survives because "that\'s how it\'s always been done"?',
+      'Any notable issues or blockers?',
+      'Have you brought in any other teams? Not just your own team &mdash; if this touches someone else\'s process, meet with them to look for a simpler path together, and make sure your simplification doesn\'t just move the friction onto them.'
+    ]
+  },
+  'Automate': {
+    lead: 'Where does a tool actually earn its place, now that the process itself is honest and simple?',
+    bullets: [
+      'What would you automate first, and why that one?',
+      'Any notable issues or blockers?',
+      'Have you brought in any other teams? Not just your own team &mdash; meet with them to discuss, brainstorm, build, and test it together, and confirm the new way doesn\'t create friction on their end.'
+    ]
   }
-  box.style.display = '';
-  box.innerHTML = `<div style="background:${color};border-radius:8px;padding:12px 14px;font-size:12px;color:var(--bts-dark);line-height:1.6"><strong>Work Bucket:</strong> ${bucket} &nbsp;&bull;&nbsp; <strong>Starting Stage:</strong> ${stage}<br><span style="color:#666;margin-top:4px;display:block">${note}</span></div>`;
-}
-
-// ── Go-Do Actions System ──────────────────────────────────────────────────────
-
-// Pre-filled Go-Do items per day (from AI Pilot Playbook)
-// These appear AFTER submitting that day, to be completed BEFORE the next check-in
-const GODO_TEMPLATES = {
-  1: [
-    'Send Day 1 written update to Team Leadership via the Innovation Tool',
-    'Confirm Team Leadership has received and acknowledged the kick-off update',
-    'Share the milestone calendar with both co-owners and Team Leadership',
-    'Both Lead and Partner independently document the baseline measurement',
-    'Set up the tool and orient all testers',
-    'If a new AI tool license was requested, follow up with the AI Champion'
-  ],
-  15: [
-    'Send Day 15 written update to Team Leadership — both co-owners contribute their perspective',
-    'Monitor for Team Leadership written feedback (due within one week)',
-    'Document any early surprises, blockers, or adjustments needed',
-    'Continue tracking usage data and time comparisons against baseline'
-  ],
-  30: [
-    'Pilot Lead drafts Day 30 update — Pilot Partner reviews before it is sent',
-    'Send Day 30 written update to Team Leadership',
-    'Monitor for Team Leadership feedback (due within one week)',
-    'Decide together: continue, adjust, or pause — document your reasoning'
-  ],
-  45: [
-    'Pilot Partner: identify and brief team members not previously involved in the pilot',
-    'Facilitate the "third eye" review session with those fresh perspectives',
-    'Document all feedback surfaced — including concerns and blind spots',
-    'Incorporate any immediate refinements before Day 60',
-    'Prepare talking points for the Day 60 verbal check-in with Team Leadership'
-  ],
-  60: [
-    'Document key takeaways and Team Leadership verbal feedback in writing via the Innovation Tool',
-    'Begin the cross-functional review — share the tool with any affected departments',
-    'Each affected department must confirm no workflow conflicts before Day 90',
-    'Document cross-functional approvals or concerns in the Innovation Tool',
-    'Incorporate any refinements from the Day 60 Team Leadership feedback'
-  ],
-  75: [
-    'Send Day 75 written readiness update to Team Leadership',
-    'Confirm all cross-functional reviewers have had final review and practice use',
-    'Resolve any outstanding concerns raised by cross-functional reviewers',
-    'Prepare the Day 90 verbal presentation — Pilot Lead presents, Partner attends',
-    'Pilot Partner: prepare your independent testing findings for Day 90'
-  ],
-  90: []  // Day 90 is the final check-in — no future Go-Dos
 };
 
-// Next check-in day map
-const NEXT_CHECKIN = { 1: 15, 15: 30, 30: 45, 45: 60, 60: 75, 75: 90, 90: null };
-const PREV_CHECKIN = { 15: 1, 30: 15, 45: 30, 60: 45, 75: 60, 90: 75 };
+function renderPhaseGuidanceHTML(phase) {
+  const g = PHASE_GUIDANCE[phase] || { lead: '', bullets: [] };
+  const leadHTML = g.lead ? `<p style="font-size:12px;color:var(--bts-dark);margin:10px 0 6px;font-weight:600;">${g.lead}</p>` : '';
+  const bulletsHTML = g.bullets.length ? `<ul style="font-size:12px;color:var(--bts-dark);line-height:1.7;padding-left:18px;margin:${g.lead ? '0' : '10px'} 0 0;">${g.bullets.map(q => `<li>${q}</li>`).join('')}</ul>` : '';
+  return leadHTML + bulletsHTML;
+}
 
-// In-memory-only store for the CURRENT day's own Go-Do checklist — this day hasn't
-// been submitted yet, so there is no Smartsheet row to attach state to. It lives only
-// for as long as the form is open and is captured into Smartsheet at submit time.
-// This is never written to browser storage; it disappears the moment the tab closes.
-let _liveGodoItems = {};
+async function renderWFDashboard() {
+  const rowsEl = document.getElementById('wfc-dash-rows');
+  const activeEl = document.getElementById('wfc-dash-active');
+  const greenEl = document.getElementById('wfc-dash-green');
+  const attnEl = document.getElementById('wfc-dash-attn');
+  if (!rowsEl) return;
+  rowsEl.innerHTML = '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">Loading...</div>';
 
-function getLiveGodoItems(day) {
-  if (!_liveGodoItems[day]) {
-    _liveGodoItems[day] = (GODO_TEMPLATES[day] || []).map(text => ({ text, checked: false, custom: false }));
+  try {
+    const allRows = await smGetSheet(SM.WFC_SHEET);
+    const taskForceMap = {};
+    allRows.forEach(row => {
+      const name = (row['Task Force Name'] || '').trim();
+      if (!name) return;
+      const key = name.toLowerCase();
+      if (!taskForceMap[key]) taskForceMap[key] = { name, rows: [] };
+      taskForceMap[key].rows.push(row);
+    });
+
+    const STATUS_COLORS = {
+      'Moving Forward': '#1D9E75',
+      'Needs Attention': '#EF9F27',
+      'Standardized': '#1C4C87',
+      'Reevaluating': '#CA1C68',
+      'Tabled': '#9CA3AF',
+    };
+
+    let green = 0, attn = 0;
+    const todayMidnight = new Date();
+    todayMidnight.setHours(0, 0, 0, 0);
+
+    const rowsHTML = Object.values(taskForceMap).map(tf => {
+      const sorted = [...tf.rows].sort((a, b) => {
+        const na = parseInt(a['Check-In Number']) || 0;
+        const nb = parseInt(b['Check-In Number']) || 0;
+        return nb - na; // descending — most recent first
+      });
+      const latest = sorted[0];
+      const teamLeader = latest['Team Leader Name'] || '';
+      const teamMembers = latest['Team Members'] || '';
+      const phase = latest['Phase'] || 'Map Current State';
+      const selfReportedStatus = latest['Momentum'] || 'Moving Forward';
+      const checkInCount = tf.rows.length;
+      const nextMeetingStr = latest['Next Meeting Date'] || '';
+
+      // Overdue detection — simpler than the old system since Next Meeting Date is a real date field
+      let isOverdue = false;
+      if (nextMeetingStr) {
+        const nextMeetingDate = new Date(nextMeetingStr + 'T00:00:00');
+        isOverdue = todayMidnight > nextMeetingDate;
+      }
+      // Only escalate an active "Moving Forward" status when overdue — never override
+      // "Needs Attention" (already flagged) or a final outcome (Standardized/Reevaluating/Tabled).
+      const momentum = (isOverdue && selfReportedStatus === 'Moving Forward') ? 'Needs Attention' : selfReportedStatus;
+
+      const color = STATUS_COLORS[momentum] || '#9CA3AF';
+      if (momentum === 'Moving Forward') green++; else attn++;
+
+      const nextMeetingDisplay = nextMeetingStr
+        ? new Date(nextMeetingStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+        : '—';
+
+      return `<div class="dt-row" style="display:grid;grid-template-columns:1.4fr 1fr 1.3fr 0.8fr 0.7fr 0.9fr 1fr;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid #F0F2F5;">
+        <span style="font-weight:600;color:var(--bts-dark);font-size:13px;">${tf.name}</span>
+        <span style="font-size:12px;color:#555;">${teamLeader}</span>
+        <span style="font-size:12px;color:#555;">${teamMembers}</span>
+        <span style="font-size:12px;color:#888;">${phase}</span>
+        <span style="font-size:12px;color:var(--bts-teal);font-weight:700;text-decoration:underline;cursor:pointer;" onclick="showWFCheckinHistory('${tf.name.replace(/'/g, "\\'")}')">${checkInCount}</span>
+        <span style="font-size:12px;color:${isOverdue ? '#E53E3E' : '#888'};font-weight:${isOverdue ? '700' : '400'};">${nextMeetingDisplay}${isOverdue ? ' (overdue)' : ''}</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#555;">
+          <span style="width:10px;height:10px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;" title="${momentum}"></span>
+          ${momentum}
+        </span>
+      </div>`;
+    }).join('');
+
+    rowsEl.innerHTML = rowsHTML || '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">No check-ins yet — task forces appear here after their first check-in is submitted.</div>';
+    if (activeEl) activeEl.textContent = Object.keys(taskForceMap).length;
+    if (greenEl) greenEl.textContent = green;
+    if (attnEl) attnEl.textContent = attn;
+  } catch (err) {
+    console.error('Workflow Dashboard load error:', err);
+    rowsEl.innerHTML = '<div style="padding:24px;text-align:center;color:#E53E3E;font-size:13px;">Could not load dashboard. Please check your connection.</div>';
   }
-  return _liveGodoItems[day];
 }
 
-function resetLiveGodoItems(day) {
-  delete _liveGodoItems[day];
-}
-
-// Looks up the already-submitted Go-Do checklist row for a pilot + day in Smartsheet.
-// Returns { rowId, items } if that day has been submitted, or null otherwise.
-async function ciLookupGodoRow(pilotName, day) {
-  const name = (pilotName || '').trim().toLowerCase();
+// Looks up the most recent check-in for a task force, so returning teams don't
+// have to retype their Team Leader / team members / scribe every single time.
+async function wfLookupTaskForce(taskForceName) {
+  const name = (taskForceName || '').trim().toLowerCase();
   if (!name) return null;
-  const rows = await smGetSheet(SM.CHECKIN_SHEET);
-  const row = rows.find(r =>
-    (r['Submission'] || '').trim().toLowerCase() === name && r['Check-In Day'] === ('Day ' + day)
-  );
-  if (!row) return null;
-  let items = [];
-  try { items = JSON.parse(row['Go-Do State'] || '[]'); } catch(e) { items = []; }
-  return { rowId: row._rowId, items };
-}
-
-// Merges saved checked state with the current template wording (so wording fixes
-// always take effect immediately, never frozen at whatever text existed at save time).
-function refreshGodoWording(day, savedItems) {
-  const template = (GODO_TEMPLATES[day] || []).map(text => ({ text, checked: false, custom: false }));
-  if (!savedItems || !savedItems.length) return template;
-  return savedItems.map((item, idx) => {
-    if (item.custom) return item;
-    const freshText = (template[idx] && template[idx].text) || item.text;
-    return { text: freshText, checked: item.checked, custom: false };
-  });
-}
-
-// Persists the Go-Do checklist state for an already-submitted day back to Smartsheet.
-async function ciSaveGodoState(rowId, items) {
-  if (!rowId) return;
-  try { await smUpdateRow(SM.CHECKIN_SHEET, rowId, { [SM.CI.godoState]: JSON.stringify(items) }); } catch(e) {}
-}
-
-// Render previous day Go-Do checklist (appears at top of current check-in) —
-// reads live from the previous day's Smartsheet row.
-async function renderPrevGodoChecklist(currentDay, pilotName) {
-  const prevDay = PREV_CHECKIN[currentDay];
-  if (!prevDay) return '';
-  const godoRow = await ciLookupGodoRow(pilotName, prevDay);
-  if (!godoRow) return '';
-  const items = refreshGodoWording(prevDay, godoRow.items);
-  if (!items.length) return '';
-  const rowId = godoRow.rowId;
-
-  const nextLabel = 'Day ' + currentDay;
-  const unchecked = items.filter(i => !i.checked).length;
-  const escapedPilotName = (pilotName || '').replace(/'/g, "\\'");
-
-  const itemsHTML = items.map((item, idx) => `
-    <div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #F5F6F8;">
-      <input type="checkbox" id="prev-godo-${idx}" ${item.checked ? 'checked' : ''}
-        onchange="togglePrevGodo(${rowId},${prevDay},'${escapedPilotName}',${idx},this.checked)"
-        style="margin-top:2px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
-      <label for="prev-godo-${idx}" style="font-size:12px;color:${item.checked ? '#AAA' : 'var(--bts-dark)'};cursor:pointer;line-height:1.5;${item.checked ? 'text-decoration:line-through;' : ''}">
-        ${item.text}
-        ${!item.checked ? '<span style="margin-left:6px;font-size:9px;font-weight:700;background:#FAE5D3;color:#C0570F;border-radius:4px;padding:1px 5px;">FLAGGED</span>' : ''}
-      </label>
-    </div>`).join('');
-
-  return `
-    <div style="background:#FFFBF2;border:1px solid #FAC775;border-radius:10px;padding:14px 16px;margin-bottom:18px;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <span style="font-size:13px;">📋</span>
-        <div style="font-size:12px;font-weight:700;color:var(--bts-dark);">Go-Do Actions from Day ${prevDay}</div>
-        ${unchecked > 0 ? `<span style="font-size:10px;font-weight:700;background:#FAE5D3;color:#C0570F;border-radius:5px;padding:2px 7px;">${unchecked} flagged</span>` : '<span style="font-size:10px;font-weight:700;background:#E1F5EE;color:#0F6E56;border-radius:5px;padding:2px 7px;">All complete ✓</span>'}
-      </div>
-      <p style="font-size:11px;color:#888;margin-bottom:10px;">Check off any remaining items before submitting your ${nextLabel} update.</p>
-      ${itemsHTML}
-    </div>`;
-}
-
-async function togglePrevGodo(rowId, day, pilotName, idx, checked) {
-  const godoRow = await ciLookupGodoRow(pilotName, day);
-  if (!godoRow) return;
-  const items = refreshGodoWording(day, godoRow.items);
-  if (items[idx]) items[idx].checked = checked;
-  await ciSaveGodoState(rowId, items);
-  // Update label styling without re-rendering
-  const label = document.querySelector(`label[for="prev-godo-${idx}"]`);
-  if (label) {
-    label.style.color = checked ? '#AAA' : 'var(--bts-dark)';
-    label.style.textDecoration = checked ? 'line-through' : '';
-    const flag = label.querySelector('span');
-    if (flag) flag.style.display = checked ? 'none' : 'inline';
-  }
-}
-
-// Render Go-Do section for current day (appears after submit) — purely in-memory
-// until this day's own form is submitted, at which point it is captured into Smartsheet.
-function renderGodoSection(day) {
-  const nextDay = NEXT_CHECKIN[day];
-  if (!nextDay) return ''; // Day 90 has no next check-in
-  const items = getLiveGodoItems(day);
-
-  const itemsHTML = items.map((item, idx) => `
-    <div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #F0F2F5;" id="godo-row-${idx}">
-      <input type="checkbox" id="godo-${idx}" ${item.checked ? 'checked' : ''}
-        onchange="toggleGodo(${day},${idx},this.checked)"
-        style="margin-top:3px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
-      <label for="godo-${idx}" style="font-size:12px;color:var(--bts-dark);cursor:pointer;line-height:1.5;flex:1;">${item.text}</label>
-    </div>`).join('');
-
-  return `
-    <div id="godo-section-${day}" style="margin-top:24px;border-top:2px solid var(--bts-teal);padding-top:16px;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-        <span style="font-size:14px;">✅</span>
-        <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Go-Do Actions before Day ${nextDay} Check-In</div>
-      </div>
-      <p style="font-size:11px;color:#888;margin-bottom:12px;line-height:1.5;">Complete these actions before your next check-in. Uncompleted items will be <strong>flagged</strong> at the start of your Day ${nextDay} check-in.</p>
-      <div id="godo-items-${day}">${itemsHTML}</div>
-      <div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
-        <input type="text" id="godo-custom-input-${day}" placeholder="Add a custom action..."
-          style="flex:1;padding:7px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:12px;font-family:var(--font);outline:none;"
-          onfocus="this.style.borderColor='var(--bts-teal)'" onblur="this.style.borderColor='#DDE1E6'"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();event.stopPropagation();addCustomGodo(${day});}" />
-        <button onclick="event.preventDefault();event.stopPropagation();addCustomGodo(${day});"
-          style="background:var(--bts-teal);color:white;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap;">+ Add</button>
-      </div>
-    </div>`;
-}
-
-function toggleGodo(day, idx, checked) {
-  const items = getLiveGodoItems(day);
-  if (items[idx]) items[idx].checked = checked;
-}
-
-function addCustomGodo(day) {
-  const input = document.getElementById('godo-custom-input-' + day);
-  if (!input) return;
-  const text = input.value.trim();
-  if (!text) return;
-  const items = getLiveGodoItems(day);
-  items.push({ text, checked: false, custom: true });
-  input.value = '';
-  // Append new item to list without full re-render
-  const container = document.getElementById('godo-items-' + day);
-  if (container) {
-    const idx = items.length - 1;
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #F0F2F5;';
-    row.id = 'godo-row-' + idx;
-    row.innerHTML = `<input type="checkbox" id="godo-${idx}"
-      onchange="toggleGodo(${day},${idx},this.checked)"
-      style="margin-top:3px;accent-color:var(--bts-teal);width:14px;height:14px;flex-shrink:0;cursor:pointer;" />
-      <label for="godo-${idx}" style="font-size:12px;color:var(--bts-dark);cursor:pointer;line-height:1.5;flex:1;">${text}</label>`;
-    container.appendChild(row);
-  }
-}
-
-function openCheckin(day) {
-  document.getElementById('checkin-selector').style.display = 'none';
-  const form = document.getElementById('checkin-form');
-  form.style.display = '';
-  const isVerbal = (day === 60 || day === 90);
-  const labels = {
-    1: 'Kick-off written update — pilot officially begins',
-    15: 'Day 15 written update — early impressions from both co-owners',
-    30: 'Day 30 written update — hypothesis check',
-    45: 'Day 45 written summary — Pilot Partner leads the third-eye review',
-    60: 'Day 60 verbal check-in — prepare for your meeting with Team Leadership',
-    75: 'Day 75 written update — final readiness for Day 90',
-    90: 'Day 90 verbal presentation — prepare to present your findings to Team Leadership'
+  const rows = await smGetSheet(SM.WFC_SHEET);
+  const matches = rows.filter(r => (r['Task Force Name'] || '').trim().toLowerCase() === name);
+  if (!matches.length) return null;
+  matches.sort((a, b) => (parseInt(b['Check-In Number']) || 0) - (parseInt(a['Check-In Number']) || 0));
+  const latest = matches[0];
+  return {
+    teamLeaderName: latest['Team Leader Name'] || '',
+    teamLeaderEmail: latest['Team Leader Email'] || '',
+    teamMembers: latest['Team Members'] || '',
+    scribe: latest['Scribe'] || '',
+    phase: latest['Phase'] || 'Map Current State',
+    checkInCount: matches.length
   };
-  const prompts = {
-    1: [],
-    15: [
-      'Is the tool behaving as expected? Any early surprises or blockers?',
-      'What have you observed in the first two weeks of testing?',
-      'Are there any adjustments needed to scope, testers, or timeline at this stage?'
-    ],
-    30: [
-      'What is working so far?',
-      'What is not working or harder than expected?',
-      'Is your original hypothesis holding? If not, how has it shifted?',
-      'Recommendation: Should we continue, adjust, or pause? Why?'
-    ],
-    45: [
-      'Which team members not previously involved did the Pilot Partner bring in for a fresh-eyes review?',
-      'What did those outside perspectives surface — blind spots, concerns, or new observations? Were you able to implement any updates?',
-      'What concerns or objections did the fresh reviewers raise? How are you addressing them?',
-    ],
-    60: [
-      'What is the headline you want Team Leadership to walk away with from this meeting?',
-      'What progress will you share since Day 45, and what refinements were made?',
-       'Cross-functional review update: Which departments will you engage? What do you anticipate they will say? (Document N/A if no departments are affected.)',
-      'What questions do you anticipate from Team Leadership?'
-    ],
-    75: [
-      'Have the same reviewers from earlier — including cross-functional approvers — received the tool for final review and practice use?',
-      'What is the overall readiness level for the Day 90 presentation?',
-      'Are there any last changes or open concerns to resolve before Day 90?'
-    ],
-    90: [
-      'What is the core story you are presenting — what did this pilot prove?',
-      'What does the data show vs. your original baseline? Be specific.',
-      'What is your recommendation — Standardize, Reevaluate, or Table — and what is your strongest argument for it?',
-      'What questions do you expect from Team Leadership, and how will you respond?'
-    ]
+}
+
+// Shows every check-in for a task force in a modal, most recent on top and the
+// first check-in at the bottom. Closes only via the X button — no click-outside.
+async function showWFCheckinHistory(taskForceName) {
+  const overlay = document.getElementById('wfc-history-modal-overlay');
+  const content = document.getElementById('wfc-history-modal-content');
+  content.innerHTML = '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">Loading...</div>';
+  overlay.style.display = 'block';
+
+  const name = (taskForceName || '').trim().toLowerCase();
+  const allRows = await smGetSheet(SM.WFC_SHEET);
+  const rows = allRows.filter(r => (r['Task Force Name'] || '').trim().toLowerCase() === name);
+  const sorted = [...rows].sort((a, b) => (parseInt(b['Check-In Number']) || 0) - (parseInt(a['Check-In Number']) || 0));
+
+  const STATUS_COLORS = {
+    'Moving Forward': '#1D9E75', 'Needs Attention': '#EF9F27',
+    'Standardized': '#1C4C87', 'Reevaluating': '#CA1C68', 'Tabled': '#9CA3AF',
   };
-  let fieldsHTML = '';
-  if (day === 1) {
-    fieldsHTML = `
-      <div style="background:var(--bts-blue-light);border-left:3px solid var(--bts-blue);border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:var(--bts-blue);margin-bottom:18px;line-height:1.6">
-        Completed by the <strong>Pilot Lead</strong>. This confirms the pilot is officially underway and establishes the shared record from Day 1.
-      </div>
 
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;">Pilot Lead</div>
-      <div class="form-row">
-        <div class="field"><label>Your name</label><input type="text" id="d1-lead-name" placeholder="Your full name" /></div>
-        <div class="field"><label>Your email</label><input type="email" id="d1-lead-email" placeholder="your@bts.com" /></div>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Pilot Partner</div>
-      <div class="form-row">
-        <div class="field"><label>Partner name</label><input type="text" id="d1-partner-name" placeholder="Partner's full name" /></div>
-        <div class="field"><label>Partner email</label><input type="email" id="d1-partner-email" placeholder="partner@bts.com" /></div>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Team Leadership</div>
-      <div class="field">
-        <label>Team Leadership email <span style="font-weight:400;color:#888;">(Will receive written updates and provide feedback — they are informed, not in the ownership seat.)</span></label>
-        <input type="email" id="d1-leadership-email" placeholder="leadership@bts.com" />
-        <p style="font-size:11px;color:#999;margin-top:5px;">This person will be the primary recipient of every check-in update email. The Pilot Lead sends, Partner is CC'd.</p>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Pilot Hypothesis</div>
-      <div class="field">
-        <label>What is your pilot hypothesis?</label>
-        <textarea id="d1-hypothesis" placeholder='We believe this tool will... (e.g. reduce time spent on SOW drafting by automating the first-draft step)' rows="3"></textarea>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Baseline Measurement</div>
-      <div class="field">
-        <label>What is your baseline? How long does this task take today without the tool?</label>
-        <textarea id="d1-baseline" placeholder="Both Lead and Partner should document this independently. e.g. Approximately 2 hours per SOW draft." rows="3"></textarea>
-        <p style="font-size:11px;color:#999;margin-top:5px;">Both co-owners should document their baseline independently before the pilot begins.</p>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Problem Statement</div>
-      <div class="field">
-        <label>What is the current friction or constraint that this idea solves?</label>
-        <textarea id="d1-friction-constraint" placeholder="Describe the situation as it exists today — the specific pain, bottleneck, or inefficiency this pilot is designed to address." rows="3"></textarea>
-        <p style="font-size:11px;color:#999;margin-top:5px;">This anchors your Day 90 story. The clearer you are about the problem today, the more compelling your recommendation will be at the end.</p>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Test Group</div>
-      <div class="field">
-        <label>Who are your testers?</label>
-        <textarea id="d1-testers" placeholder="List names and roles. Size determined by co-owners and confirmed with Team Leadership." rows="3"></textarea>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Milestone Calendar</div>
-      <p style="font-size:12px;color:#888;margin-bottom:12px;">Enter your planned check-in dates. Adjust for weekends — move to the nearest business day and note the adjustment here.</p>
-      <div class="form-row">
-        <div class="field"><label>Day 15 check-in</label><input type="date" id="d1-date15" /></div>
-        <div class="field"><label>Day 30 check-in</label><input type="date" id="d1-date30" /></div>
-      </div>
-      <div class="form-row">
-        <div class="field"><label>Day 45 check-in</label><input type="date" id="d1-date45" /></div>
-        <div class="field"><label>Day 60 check-in</label><input type="date" id="d1-date60" /></div>
-      </div>
-      <div class="form-row">
-        <div class="field"><label>Day 75 check-in</label><input type="date" id="d1-date75" /></div>
-        <div class="field"><label>Day 90 check-in</label><input type="date" id="d1-date90" /></div>
-      </div>
-
-      <div style="margin-top:24px;padding-top:20px;border-top:1px solid #E8EBF0;">
-        <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:8px;">Need a New AI Tool License?</div>
-        <p style="font-size:12px;color:#888;margin-bottom:12px;line-height:1.6;">If this pilot requires a tool your team does not currently have access to, request a license here. Uses information already entered above.</p>
-        <button type="button" onmousedown="event.preventDefault();event.stopPropagation();openLicenseRequest();" style="display:inline-flex;align-items:center;gap:7px;background:var(--bts-purple-light);border:1.5px solid var(--bts-purple);border-radius:8px;padding:10px 18px;font-size:12px;font-weight:700;color:var(--bts-purple);cursor:pointer;font-family:var(--font);">&#128274; Request New AI Tool License</button>
-        <p style="font-size:11px;color:#BBB;margin-top:8px;">Approval path: AI Champion &rarr; Team Leadership &rarr; IT</p>
-      </div>
-    `;
-  } else {
-    fieldsHTML = prompts[day].map((q,i) => `
-      <div class="field">
-        <label>${q}</label>
-        <textarea placeholder="Your response..." rows="3"></textarea>
-      </div>
-    `).join('');
-  }
-
-  let statusHTML = '';
-  if (true) { // Health status shown on all check-in days including verbal
-    statusHTML = `
-      <div class="field">
-        <label>Health status update</label>
-        <div class="status-row" id="ci-status-row">
-          <div class="status-pill sp-green selected" onclick="selectStatus(this,'green')">Moving Forward</div>
-          <div class="status-pill sp-amber" onclick="selectStatus(this,'amber')">Needs Attention</div>
-          <div class="status-pill sp-red" onclick="selectStatus(this,'red')">Asking for Help</div>
+  const itemsHTML = sorted.map(r => {
+    const num = r['Check-In Number'] || '?';
+    const phase = r['Phase'] || '';
+    const momentum = r['Momentum'] || 'Moving Forward';
+    const color = STATUS_COLORS[momentum] || '#9CA3AF';
+    const status = r['Status Update'] || '';
+    const issues = r['Issues or Blockers'] || '';
+    const otherTeams = r['Other Teams Brought In'] || '';
+    const nextMeeting = r['Next Meeting Date'] || '';
+    const writtenBy = r['Scribe'] || r['Submitted By'] || '';
+    const submittedAt = r['Submitted At'] ? new Date(r['Submitted At']).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+    return `
+      <div style="border:1px solid #E8EBF0;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Check-In ${num} &mdash; ${phase}</div>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#555;">
+            <span style="width:8px;height:8px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;"></span>${momentum}
+          </span>
         </div>
+        ${status ? `<div style="font-size:12px;color:#555;margin-bottom:6px;"><strong>Status:</strong> ${status}</div>` : ''}
+        ${issues ? `<div style="font-size:12px;color:#555;margin-bottom:6px;"><strong>Issues:</strong> ${issues}</div>` : ''}
+        ${otherTeams ? `<div style="font-size:12px;color:#555;margin-bottom:6px;"><strong>Other teams:</strong> ${otherTeams}</div>` : ''}
+        <div style="font-size:11px;color:#AAA;margin-top:8px;">${writtenBy ? 'Written by ' + writtenBy + ' &middot; ' : ''}${nextMeeting ? 'Next meeting: ' + nextMeeting + ' &middot; ' : ''}Submitted ${submittedAt}</div>
       </div>`;
-  }
+  }).join('');
 
-  let d90HTML = '';
-  if (day === 90) {
-    d90HTML = `
-      <div class="field">
-        <label>Day 90 recommendation</label>
-        <select id="ci-outcome">
-          <option value="">Select outcome...</option>
-          <option value="standardize">Standardize — roll out as a team expectation with communication and onboarding plan</option>
-          <option value="reevaluate">Reevaluate — continue piloting with a refined hypothesis and a new 30-day check-in</option>
-          <option value="table">Table — pause the pilot, log what was learned, return to the backlog</option>
-        </select>
-      </div>`;
-  }
+  content.innerHTML = `
+    <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin-bottom:4px;">${taskForceName}</div>
+    <p style="font-size:12px;color:#888;margin-bottom:16px;">All check-ins, most recent first</p>
+    ${itemsHTML || '<div style="padding:20px;text-align:center;color:#AAA;font-size:13px;">No check-ins found.</div>'}
+  `;
+}
 
-  let xfHTML = '';
-  if (day === 60) {
-    xfHTML = `
-      <div class="field" style="margin-top:4px">
-        <label>Which teams does this pilot touch?</label>
-        <p style="font-size:11px;color:#888;margin-bottom:8px;">List any teams affected. Each team needs to confirm there are no workflow conflicts before Day 90.</p>
-        <textarea id="xf-teams-text" rows="3" placeholder="e.g. Finance, PRO, Digital — or write N/A if no other teams are affected" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid #DDE1E6;border-radius:7px;font-size:13px;font-family:var(--font);resize:vertical;outline:none;" onfocus="this.style.borderColor='var(--bts-pink)'" onblur="this.style.borderColor='#DDE1E6'"></textarea>
+function closeWFCheckinHistory() {
+  document.getElementById('wfc-history-modal-overlay').style.display = 'none';
+}
+
+// Shows every stage check-in for a flywheel, most recent stage first. Reuses the
+// same history modal as the Workflow Dashboard (the overlay is generic, not WFC-specific).
+async function showCRACheckinHistory(flywheelName) {
+  const overlay = document.getElementById('wfc-history-modal-overlay');
+  const content = document.getElementById('wfc-history-modal-content');
+  content.innerHTML = '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">Loading...</div>';
+  overlay.style.display = 'block';
+
+  const name = (flywheelName || '').trim().toLowerCase();
+  const allRows = await smGetSheet(SM.CRA_SHEET);
+  const rows = allRows.filter(r => (r['Flywheel Name'] || '').trim().toLowerCase() === name);
+  const sorted = [...rows].sort((a, b) => {
+    const stageNumA = CRA_STAGES.find(s => s.name === a['Stage'])?.key || 0;
+    const stageNumB = CRA_STAGES.find(s => s.name === b['Stage'])?.key || 0;
+    return stageNumB - stageNumA;
+  });
+
+  const STATUS_COLORS = {
+    'Moving Forward': '#1D9E75', 'Needs Attention': '#EF9F27',
+    'Standardized': '#1C4C87', 'Reevaluating': '#CA1C68', 'Tabled': '#9CA3AF',
+  };
+
+  const itemsHTML = sorted.map(r => {
+    const stageName = r['Stage'] || '';
+    const stageObj = CRA_STAGES.find(s => s.name === stageName);
+    const stageNum = stageObj?.key || '?';
+    const momentum = r['Momentum Status'] || 'Moving Forward';
+    const color = STATUS_COLORS[momentum] || '#9CA3AF';
+    const prompts = stageObj?.prompts || [];
+    const responses = [r['Response 1'], r['Response 2'], r['Response 3'], r['Response 4']];
+    const responseLines = responses.map((resp, i) => resp ? `<div style="font-size:12px;color:#555;margin-bottom:6px;"><strong>${prompts[i] || 'Response ' + (i + 1)}:</strong> ${resp}</div>` : '').join('');
+    const teamsAdopting = r['Teams Adopting'] || '';
+    const writtenBy = r['Submitted By'] || '';
+    const submittedAt = r['Submitted At'] ? new Date(r['Submitted At']).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+    return `
+      <div style="border:1px solid #E8EBF0;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div style="font-size:13px;font-weight:700;color:var(--bts-dark);">Stage ${stageNum} &mdash; ${stageName}</div>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#555;">
+            <span style="width:8px;height:8px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;"></span>${momentum}
+          </span>
+        </div>
+        ${responseLines}
+        ${teamsAdopting ? `<div style="font-size:12px;color:#555;margin-bottom:6px;"><strong>Teams:</strong> ${teamsAdopting}</div>` : ''}
+        <div style="font-size:11px;color:#AAA;margin-top:8px;">${writtenBy ? 'Written by ' + writtenBy + ' &middot; ' : ''}Submitted ${submittedAt}</div>
       </div>`;
+  }).join('');
+
+  content.innerHTML = `
+    <div style="font-size:16px;font-weight:800;color:var(--bts-dark);margin-bottom:4px;">${flywheelName}</div>
+    <p style="font-size:12px;color:#888;margin-bottom:16px;">All stage check-ins, most recent first</p>
+    ${itemsHTML || '<div style="padding:20px;text-align:center;color:#AAA;font-size:13px;">No check-ins found.</div>'}
+  `;
+}
+
+async function renderCRADashboard() {
+  const rowsEl = document.getElementById('cra-dash-rows');
+  const activeEl = document.getElementById('cra-dash-active');
+  const greenEl = document.getElementById('cra-dash-green');
+  const attnEl = document.getElementById('cra-dash-attn');
+  if (!rowsEl) return;
+  rowsEl.innerHTML = '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">Loading...</div>';
+
+  try {
+    const allRows = await smGetSheet(SM.CRA_SHEET);
+    const flywheelMap = {};
+    allRows.forEach(row => {
+      const name = (row['Flywheel Name'] || '').trim();
+      if (!name) return;
+      const key = name.toLowerCase();
+      if (!flywheelMap[key]) flywheelMap[key] = { name, rows: [] };
+      flywheelMap[key].rows.push(row);
+    });
+
+    const STATUS_COLORS = {
+      'Moving Forward': '#1D9E75',
+      'Needs Attention': '#EF9F27',
+      'Standardized': '#1C4C87',
+      'Reevaluating': '#CA1C68',
+      'Tabled': '#9CA3AF',
+    };
+
+    let green = 0, attn = 0;
+
+    const rowsHTML = Object.values(flywheelMap).map(fw => {
+      const sorted = [...fw.rows].sort((a, b) => {
+        const stageNumA = CRA_STAGES.find(s => s.name === a['Stage'])?.key || 0;
+        const stageNumB = CRA_STAGES.find(s => s.name === b['Stage'])?.key || 0;
+        if (stageNumB !== stageNumA) return stageNumB - stageNumA; // furthest-along stage first
+        return (b['Submitted At'] || '').localeCompare(a['Submitted At'] || ''); // tie-break: most recent
+      });
+      const latest = sorted[0];
+      const owner = latest['Flywheel Owner'] || '';
+      const stageName = latest['Stage'] || 'Spark the Reaction';
+      const stageNum = CRA_STAGES.find(s => s.name === stageName)?.key || 1;
+      const momentum = latest['Momentum Status'] || 'Moving Forward';
+      const checkInCount = fw.rows.length;
+
+      const color = STATUS_COLORS[momentum] || '#9CA3AF';
+      if (momentum === 'Moving Forward') green++; else attn++;
+
+      return `<div class="dt-row" style="display:grid;grid-template-columns:1.6fr 1.2fr 1.4fr 0.8fr 1.3fr;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid #F0F2F5;">
+        <span style="font-weight:600;color:var(--bts-dark);font-size:13px;">${fw.name}</span>
+        <span style="font-size:12px;color:#555;">${owner}</span>
+        <span style="font-size:12px;color:#888;">Stage ${stageNum} &mdash; ${stageName}</span>
+        <span style="font-size:12px;color:var(--bts-teal);font-weight:700;text-decoration:underline;cursor:pointer;" onclick="showCRACheckinHistory('${fw.name.replace(/'/g, "\\'")}')">${checkInCount}</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#555;">
+          <span style="width:10px;height:10px;border-radius:50%;background:${color};display:inline-block;flex-shrink:0;" title="${momentum}"></span>
+          ${momentum}
+        </span>
+      </div>`;
+    }).join('');
+
+    rowsEl.innerHTML = rowsHTML || '<div style="padding:24px;text-align:center;color:#AAA;font-size:13px;">No check-ins yet — flywheels appear here after their first stage check-in is submitted.</div>';
+    if (activeEl) activeEl.textContent = Object.keys(flywheelMap).length;
+    if (greenEl) greenEl.textContent = green;
+    if (attnEl) attnEl.textContent = attn;
+  } catch (err) {
+    console.error('Workflow Dashboard load error:', err);
+    rowsEl.innerHTML = '<div style="padding:24px;text-align:center;color:#E53E3E;font-size:13px;">Could not load dashboard. Please check your connection.</div>';
   }
+}
+
+function backToWFCSelector() {
+  document.getElementById('wfc-selector').style.display = '';
+  document.getElementById('wfc-form').style.display = 'none';
+  document.getElementById('wfc-form').innerHTML = '';
+  renderWFDashboard();
+}
+
+async function openWFCheckinForm() {
+  const taskForceName = document.getElementById('wfc-taskforce-name')?.value.trim() || '';
+  if (!taskForceName) { alert('Please enter a task force name first.'); return; }
+
+  const prior = await wfLookupTaskForce(taskForceName);
+  const nextCheckInNumber = prior ? prior.checkInCount + 1 : 1;
+  const currentPhase = prior ? prior.phase : 'Map Current State';
+
+  const selector = document.getElementById('wfc-selector');
+  const form = document.getElementById('wfc-form');
+  selector.style.display = 'none';
+  form.style.display = '';
+
+  const phasePillsHTML = PHASE_ORDER.map(p => `
+    <div class="status-pill ${p === currentPhase ? 'selected' : ''}" data-phase="${p}" onclick="selectWFPhase(this,'${p}')" style="cursor:pointer;">${p}</div>
+  `).join('');
 
   form.innerHTML = `
-    <button class="back-btn" onclick="backToCheckinSelector()">&#8592; Back to check-in selector</button>
+    <button class="back-btn" onclick="backToWFCSelector()">&#8592; Back to Task Forces</button>
     <div class="form-card">
-      <h3>Day ${day} &mdash; ${labels[day]}</h3>
-      <p class="form-sub">${isVerbal ? 'Use this form to prepare your talking points before the meeting. After the meeting, return here to document key takeaways and Team Leadership feedback.' : day === 45 ? 'The Pilot Partner owns bringing in fresh perspectives — team members who have not been involved yet. Use this form to capture what they surfaced.' : day === 30 ? 'Pilot Lead drafts this update. Pilot Partner reviews and adds their perspective before it is sent to Team Leadership.' : 'Complete this written update via the Innovation Tool.'}</p>
-      ${isVerbal ? '<div class="warn-box">This is a <strong>verbal check-in</strong> — meet with Team Leadership in person or on a call. Use this form to prepare talking points and record key takeaways immediately after.</div>' : ''}
+      <h3>Check-In ${nextCheckInNumber} &mdash; ${taskForceName}</h3>
+      <p class="form-sub">A quick update on where things stand &middot; standard cadence: every 15 days, but go at whatever pace works for your team.</p>
+
       <div class="form-row">
-        <div class="field"><label>Pilot name</label><input type="text" id="ci-pilot-name" placeholder="e.g. Digital Operator Tool Pilot" /></div>
-        <div class="field"><label>Your role on this pilot</label><select><option>Pilot Lead</option><option>Pilot Partner</option></select></div>
+        <div class="field"><label>Team Leader Name</label><input type="text" id="wfc-leader-name" value="${prior?.teamLeaderName || ''}" placeholder="Full name" /></div>
+        <div class="field"><label>Team Leader email</label><input type="email" id="wfc-leader-email" value="${prior?.teamLeaderEmail || ''}" placeholder="leader@bts.com" /></div>
       </div>
-      <div id="prev-godo-container"></div>
-      ${xfHTML}
-      ${fieldsHTML}
-      ${statusHTML}
-      ${d90HTML}
-      <div class="success-toast" id="ci-toast">Check-in submitted. Team Leadership will respond within one week.</div>
+      <div class="field">
+        <label>Team Members</label>
+        <p style="font-size:11px;color:#999;margin-top:-2px;margin-bottom:6px;">You do not need to repeat the team leader.</p>
+        <input type="text" id="wfc-team-members" value="${prior?.teamMembers || ''}" placeholder="e.g. Jordan, Casey, Priya" />
+      </div>
+      <div class="field"><label>Scribe <span style="font-weight:400;color:#999;">(recommended, not required)</span></label><input type="text" id="wfc-scribe" value="${prior?.scribe || ''}" placeholder="Who's submitting this update?" /></div>
+
+      <div class="field">
+        <label>Which phase are you in?</label>
+        <div class="status-row" id="wfc-phase-row" style="display:flex;gap:8px;flex-wrap:wrap;">${phasePillsHTML}</div>
+        <div id="wfc-phase-guidance">${renderPhaseGuidanceHTML(currentPhase)}</div>
+      </div>
+
+      <div class="field"><label>Status update</label><textarea id="wfc-status" rows="4" placeholder="Where are things at? What's been done since the last check-in?"></textarea></div>
+
+      <div class="field">
+        <label>Momentum</label>
+        <div class="status-row" id="wfc-status-row" style="display:flex;flex-wrap:wrap;gap:8px;">
+          <div class="status-pill sp-green selected" onclick="selectStatus(this,'green')">Moving Forward</div>
+          <div class="status-pill sp-amber" onclick="selectStatus(this,'amber')">Needs Attention</div>
+          <div class="status-pill sp-blue" onclick="selectStatus(this,'blue')">Standardized</div>
+          <div class="status-pill sp-magenta" onclick="selectStatus(this,'magenta')">Reevaluating</div>
+          <div class="status-pill sp-gray" onclick="selectStatus(this,'gray')">Tabled</div>
+        </div>
+        <p style="font-size:11px;color:#888;margin-top:6px;">Most check-ins are Moving Forward or Needs Attention. The other three are for when the work has reached a conclusion.</p>
+      </div>
+
+      <div class="field"><label>When's your next meeting?</label><input type="date" id="wfc-next-meeting" /></div>
+
+      <div class="success-toast" id="wfc-toast">Saved. Check-in logged.</div>
       <div class="btn-row">
-        <button class="btn-sec" onclick="backToCheckinSelector()">Cancel</button>
-        <button class="btn-submit" onclick="submitCheckin(${day})">Submit Day ${day} Update</button>
+        <button class="btn-sec" onclick="backToWFCSelector()">Cancel</button>
+        <button class="btn-submit" onclick="submitWFCheckin(${nextCheckInNumber})">Submit Check-In ${nextCheckInNumber}</button>
       </div>
-      <div id="godo-container-${day}"></div>
-    </div>`;
-
-  // Render prev Go-Do checklist and current Go-Do section immediately on load
-  resetLiveGodoItems(day);
-  setTimeout(() => {
-    const pilotNameEl = document.getElementById('ci-pilot-name');
-    const prevContainer = document.getElementById('prev-godo-container');
-    const godoContainer = document.getElementById('godo-container-' + day);
-
-    async function refreshAll() {
-      const pn = pilotNameEl?.value.trim() || '';
-      if (prevContainer) prevContainer.innerHTML = await renderPrevGodoChecklist(day, pn);
-      if (godoContainer) {
-        godoContainer.innerHTML = renderGodoSection(day);
-      }
-    }
-
-    refreshAll();
-    if (pilotNameEl) pilotNameEl.addEventListener('blur', refreshAll);
-  }, 50);
+    </div>
+  `;
 }
 
+function selectWFPhase(el, phase) {
+  document.querySelectorAll('#wfc-phase-row .status-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  const guidance = document.getElementById('wfc-phase-guidance');
+  if (guidance) guidance.innerHTML = renderPhaseGuidanceHTML(phase);
+}
+
+// Toggles which momentum pill is selected. Generalized to work inside any status-row
+// container (used by both the Workflow and CRA check-in forms), not tied to one tab.
 function selectStatus(el, status) {
-  document.querySelectorAll('#ci-status-row .status-pill').forEach(p => p.classList.remove('selected'));
+  const row = el.parentElement;
+  if (!row) return;
+  row.querySelectorAll('.status-pill').forEach(p => p.classList.remove('selected'));
   el.classList.add('selected');
 }
 
-function backToCheckinSelector() {
-  document.getElementById('checkin-selector').style.display = '';
-  document.getElementById('checkin-form').style.display = 'none';
-}
+async function submitWFCheckin(checkInNumber) {
+  const toast = document.getElementById('wfc-toast');
+  const formCard = document.querySelector('#wfc-form .form-card');
+  if (!formCard) return;
 
-// Looks up the Pilot Lead's name from that pilot's own Day 1 row in Smartsheet —
-// used to sign the auto-drafted email on Days 15-90 without depending on browser storage.
-async function ciLookupPilotLead(pilotName) {
-  const name = (pilotName || '').trim().toLowerCase();
-  if (!name) return '';
-  const rows = await smGetSheet(SM.CHECKIN_SHEET);
-  const day1Row = rows.find(r =>
-    (r['Submission'] || '').trim().toLowerCase() === name && r['Check-In Day'] === 'Day 1'
-  );
-  return day1Row ? (day1Row['Pilot Lead'] || '') : '';
-}
-
-async function submitCheckin(day) {
-  const toast = document.getElementById('ci-toast');
-  const formCard = document.querySelector('#checkin-form .form-card');
-
-  // Day 1 collects structured fields
-  if (day === 1) {
-    const leadName    = document.getElementById('d1-lead-name')?.value.trim() || '';
-    const leadEmail   = document.getElementById('d1-lead-email')?.value.trim() || '';
-    const partName    = document.getElementById('d1-partner-name')?.value.trim() || '';
-    const partEmail   = document.getElementById('d1-partner-email')?.value.trim() || '';
-    const leaderEmail = document.getElementById('d1-leadership-email')?.value.trim() || '';
-    const level5      = document.getElementById('d1-level5')?.value.trim() || 'Not yet identified';
-    const hypothesis  = document.getElementById('d1-hypothesis')?.value.trim() || '';
-    const baseline    = document.getElementById('d1-baseline')?.value.trim() || '';
-    const frictionConstraint = document.getElementById('d1-friction-constraint')?.value.trim() || '';
-    const testers     = document.getElementById('d1-testers')?.value.trim() || '';
-    const dateIds     = ['d1-date15','d1-date30','d1-date45','d1-date60','d1-date75','d1-date90'];
-    const dayNums     = [15, 30, 45, 60, 75, 90];
-    const dateLabels  = ['Day 15','Day 30','Day 45','Day 60','Day 75','Day 90'];
-    const dateValues  = dateIds.map(id => document.getElementById(id)?.value || '');
-    const dates       = dateLabels.map((lbl,i) => lbl + ': ' + (dateValues[i] || 'TBD')).join(' | ');
-    const pilotName   = document.getElementById('ci-pilot-name')?.value.trim() || formCard?.querySelector('input[type=text]')?.value.trim() || '';
-
-    toast.style.display = 'block';
-    toast.textContent = 'Submitting Day 1 kick-off...';
-    toast.style.background = '#E6F1FB'; toast.style.borderColor = '#B5D4F4'; toast.style.color = '#1C4C86';
-    const result = await smAddRow(SM.CHECKIN_SHEET, {
-      [SM.CI.pilotName]: pilotName || 'Day 1 Kick-off',
-      [SM.CI.pilotLead]: leadName,
-      [SM.CI.pilotPartner]: partName,
-      [SM.CI.submitterEmail]: leadEmail,
-      [SM.CI.checkInDay]: 'Day 1',
-      [SM.CI.checkInType]: 'Written',
-      [SM.CI.role]: 'Pilot Lead',
-      [SM.CI.response1]: 'Lead: ' + leadName + ' (' + leadEmail + ') | Partner: ' + partName + ' (' + partEmail + ') | Leadership: ' + leaderEmail,
-      [SM.CI.response2]: 'Team Leadership: ' + leaderEmail,
-      [SM.CI.response3]: 'Hypothesis: ' + hypothesis + ' | Baseline: ' + baseline,
-      [SM.CI.response4]: 'Testers: ' + testers + ' | Milestone dates: ' + dates,
-      [SM.CI.xfNotes]: frictionConstraint ? 'Friction/Constraint: ' + frictionConstraint : '',
-      [SM.CI.healthStatus]: (() => {
-        const pill = document.querySelector('#ci-status-row .status-pill.selected');
-        if (!pill) return 'Moving Forward';
-        const txt = pill.textContent.trim();
-        return txt || 'Moving Forward';
-      })(),
-      [SM.CI.submittedAt]: new Date().toISOString(),
-      [SM.CI.godoState]: JSON.stringify(getLiveGodoItems(1))
-    });
-    resetLiveGodoItems(1);
-    toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
-    toast.textContent = result.ok
-      ? 'Day 1 kick-off saved. Opening email update...'
-      : 'Saved locally. Backend not connected yet. Opening email...';
-
-    // Open mailto for team leadership
-    const emailSubject = encodeURIComponent(pilotName + ' Status - Check In Day 1');
-    const emailBody = encodeURIComponent(
-      'Hi,\n\nI am writing to share our Day 1 Kick-off update for the following pilot:\n\n' +
-      'Pilot: ' + pilotName + '\n' +
-      'Pilot Lead: ' + leadName + '\n' +
-      'Pilot Partner: ' + partName + '\n' +
-      'Hypothesis: ' + hypothesis + '\n' +
-      'Baseline: ' + baseline + '\n' +
-      'Testers: ' + testers + '\n' +
-      'Milestone Calendar:\n' + dateLabels.map((l,i) => '  ' + l + ': ' + (dateValues[i] || 'TBD')).join('\n') + '\n\n' +
-      '[Add any additional notes here]\n\n' +
-      'Best,\n' + leadName
-    );
-    setTimeout(() => {
-      window.location.href = 'mailto:?subject=' + emailSubject + '&body=' + emailBody;
-    }, 800);
-    setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 3500);
-    return;
-  }
-  const textareas = formCard ? Array.from(formCard.querySelectorAll('textarea')) : [];
-  const pilotNameEl = formCard ? formCard.querySelector('input[type=text]') : null;
-  const roleEl = formCard ? formCard.querySelector('select') : null;
-  const responses = textareas.map(t => t.value.trim());
-  const pilotName = pilotNameEl ? pilotNameEl.value.trim() : '';
-  const role = roleEl ? roleEl.value : 'Pilot Lead';
-  const statusPill = formCard ? formCard.querySelector('.status-pill.selected') : null;
-  const statusMap = {'Moving Forward': 'Moving Forward', 'Needs Attention': 'Needs Attention', 'Asking for Help': 'Asking for Help'};
-  const healthStatus = statusPill ? (statusPill.textContent.trim()) : 'Moving Forward';
-  const xfNotes = formCard ? (formCard.querySelector('#xf-teams-text')?.value.trim() || '') : '';
-  const outcomeEl = formCard ? formCard.querySelector('#ci-outcome') : null;
-  const day90Rec = outcomeEl ? outcomeEl.value : 'N/A';
+  const taskForceName = document.getElementById('wfc-taskforce-name')?.value.trim() || '';
+  const teamLeaderName = document.getElementById('wfc-leader-name')?.value.trim() || '';
+  const teamLeaderEmail = document.getElementById('wfc-leader-email')?.value.trim() || '';
+  const teamMembers = document.getElementById('wfc-team-members')?.value.trim() || '';
+  const scribe = document.getElementById('wfc-scribe')?.value.trim() || '';
+  const phaseEl = formCard.querySelector('#wfc-phase-row .status-pill.selected');
+  const phase = phaseEl ? phaseEl.getAttribute('data-phase') : 'Map Current State';
+  const statusUpdate = document.getElementById('wfc-status')?.value.trim() || '';
+  // Issues/blockers and other-teams are no longer separate fields — they're prompts
+  // inside the phase guidance list, folded into the single Status update box above.
+  const issues = '';
+  const otherTeams = '';
+  const nextMeetingDate = document.getElementById('wfc-next-meeting')?.value || '';
+  const statusPill = formCard.querySelector('#wfc-status-row .status-pill.selected');
+  const momentum = statusPill ? statusPill.textContent.trim() : 'Moving Forward';
 
   toast.style.display = 'block';
   toast.textContent = 'Submitting...';
-  toast.style.background = '#E6F1FB';
-  toast.style.borderColor = '#B5D4F4';
-  toast.style.color = '#1C4C86';
+  toast.style.background = '#E1F5EE'; toast.style.borderColor = '#9FE1CB'; toast.style.color = '#0F6E56';
 
-  const result = await saveCheckinToSmartsheet(day, pilotName, role, responses, healthStatus, xfNotes, day90Rec);
+  const result = await saveWFCheckinToSmartsheet({
+    taskForceName, teamLeaderName, teamLeaderEmail, teamMembers, scribe,
+    checkInNumber, phase, statusUpdate, issues, otherTeams, nextMeetingDate, momentum,
+    submittedBy: scribe || teamLeaderName, submittedByEmail: teamLeaderEmail
+  });
 
-  if (result.ok) {
-    toast.style.background = '';
-    toast.style.borderColor = '';
-    toast.style.color = '';
-    toast.textContent = 'Check-in saved. Opening email update...';
-  } else {
-    toast.style.background = '#FCEBEB';
-    toast.style.borderColor = '#F7C1C1';
-    toast.style.color = '#A32D2D';
-    toast.textContent = 'Backend not connected yet — opening email to share update.';
+  toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
+  toast.textContent = result.ok
+    ? 'Saved. Check-in logged.'
+    : 'Saved locally. Backend not connected yet.';
+
+  if (teamLeaderEmail) {
+    const emailSubject = encodeURIComponent(taskForceName + ' — Check-In ' + checkInNumber);
+    const emailBody = encodeURIComponent(
+      'Hi,\n\nCheck-in ' + checkInNumber + ' update for ' + taskForceName + ':\n\n' +
+      'Phase: ' + phase + '\n\n' +
+      'Status: ' + statusUpdate + '\n\n' +
+      'Issues/blockers: ' + (issues || 'None') + '\n\n' +
+      'Other teams brought in: ' + (otherTeams || 'None') + '\n\n' +
+      'Momentum: ' + momentum + '\n' +
+      'Next meeting: ' + (nextMeetingDate || 'TBD') + '\n\n' +
+      '[Add any additional notes here]\n\nBest,\n' + (scribe || teamLeaderName)
+    );
+    setTimeout(() => {
+      window.location.href = 'mailto:' + encodeURIComponent(teamLeaderEmail) + '?subject=' + emailSubject + '&body=' + emailBody;
+    }, 800);
   }
 
-  // Open mailto for team leadership
-  const leadName = await ciLookupPilotLead(pilotName);
-  const emailSubject = encodeURIComponent(pilotName + ' Status - Check In Day ' + day);
-  // Full question text for each check-in day — matches the form prompts exactly
-  const CI_QUESTIONS = {
-    15: [
-      'Is the tool behaving as expected? Any early surprises or blockers?',
-      'What have you observed in the first two weeks of testing?',
-      'Are there any adjustments needed to scope, testers, or timeline at this stage?'
-    ],
-    30: [
-      'What is working so far?',
-      'What is not working or harder than expected?',
-      'Is your original hypothesis holding? If not, how has it shifted?',
-      'Recommendation: Should we continue, adjust, or pause? Why?'
-    ],
-    45: [
-      'Which team members not previously involved did the Pilot Partner bring in for a fresh-eyes review?',
-      'What did those outside perspectives surface — blind spots, concerns, or new observations? Were you able to implement any updates?',
-      'What concerns or objections did the fresh reviewers raise? How are you addressing them?'
-    ],
-    60: [
-      'What is the headline you want Team Leadership to walk away with from this meeting?',
-      'What progress will you share since Day 45, and what refinements were made?',
-      'Cross-functional review update: Which departments will you engage? What do you anticipate they will say?',
-      'What questions do you anticipate from Team Leadership?'
-    ],
-    75: [
-      'Have the same reviewers from earlier — including cross-functional approvers — received the tool for final review and practice use?',
-      'What is the overall readiness level for the Day 90 presentation?',
-      'Are there any last changes or open concerns to resolve before Day 90?'
-    ],
-    90: [
-      'What is the core story you are presenting — what did this pilot prove?',
-      'What does the data show vs. your original baseline? Be specific.',
-      'What is your recommendation — Standardize, Reevaluate, or Table — and what is your strongest argument for it?',
-      'What questions do you expect from Team Leadership, and how will you respond?'
-    ]
-  };
-  const dayQuestions = CI_QUESTIONS[day] || [];
-  const responsesText = responses.map((r, i) => {
-    const qText = dayQuestions[i] || ('Question ' + (i+1));
-    return 'Q' + (i+1) + ' — ' + qText + ':\n' + (r || '[No response entered]');
-  }).join('\n\n');
-  const xfNotesLine = (day === 60)
-    ? 'Which teams does this pilot touch?:\n' + (xfNotes || '[No response entered]') + '\n\n'
-    : '';
-  const emailBody = encodeURIComponent(
-    'Hi,\n\nPlease find our Day ' + day + ' check-in update for the following pilot:\n\n' +
-    'Pilot: ' + pilotName + '\n' +
-    'Submitted by: ' + role + '\n' +
-    'Health Status: ' + healthStatus + '\n\n' +
-    xfNotesLine +
-    responsesText +
-    (day === 90 ? '\n\nDay 90 Recommendation: ' + day90Rec : '') +
-    '\n\n[Add any additional notes here]\n\nBest,\n' + (leadName || '')
-  );
-  setTimeout(() => {
-    window.location.href = 'mailto:?subject=' + emailSubject + '&body=' + emailBody;
-  }, 800);
-
-  setTimeout(() => { toast.style.display = 'none'; backToCheckinSelector(); }, 3500);
+  setTimeout(() => { toast.style.display = 'none'; backToWFCSelector(); }, teamLeaderEmail ? 2600 : 2200);
 }
+
 
 // ══════════════════════════════════════════════════════════════════════════
 // CHAIN REACTION ACCELERATOR
@@ -3175,30 +2622,29 @@ const CRA_STAGES = [
     icon: '&#128269;', // magnifying glass
     name: 'Pressure-Test the Spark',
     tag: 'Voluntary &middot; Multi-team',
-    label: 'See if it holds up outside your own hands',
-    intro: 'A flywheel that only works for the person who built it is a habit. One that survives someone else running it is something worth looking at closely. Cracking under pressure here is a normal, useful outcome &mdash; not a failure.',
+    label: 'See if it holds up outside your own hands — and outside your own team',
+    intro: 'A flywheel that only works for the person who built it is a habit. One that survives contact with the teams it actually touches, with no help from you, is something worth looking at closely. Cracking under pressure here is a normal, useful outcome &mdash; not a failure.',
     prompts: [
-      'Which other people or teams have tried it since Stage 1? What happened?',
       'Did anything crack, break, or need explaining that you did not expect?',
       'If a stranger to this workflow tried it today with no help from you, could they succeed? What is missing if not?'
     ]
   },
   {
     key: 3,
-    icon: '&#128142;', // gem
-    name: 'Cut the Diamond',
+    icon: '&#127919;', // target
+    name: 'Set the Standard',
     tag: 'Decision point',
-    label: 'Put it under the loupe before you call it a diamond',
-    intro: 'This is the honest gut-check, not a formality. A diamond is not just something that worked twice &mdash; it is something that would be ridiculous not to do this way everywhere. Take the full five minutes here.',
+    label: 'Put it under real scrutiny before you call it the standard',
+    intro: 'This is the honest gut-check, not a formality. Working twice does not make something the new standard &mdash; it has to be something that would be ridiculous not to do this way everywhere. Take the full five minutes here.',
     prompts: [
       'What steps still exist only because "that is how it has always been done"? What did you question and remove?',
       'What is now faster, simpler, or automated compared to when this started?',
       'Say it plainly: is this cost-effective, technically sound, and something you would defend in front of Team Leadership as a new standard?'
     ],
     checklist: [
-      'This screams "this is a diamond" &mdash; a genuinely better way to work',
+      'This is a genuinely better way to work, not just a marginal tweak',
       'It has real value: margin, growth, customer joy, or team joy',
-      'It has been pressure-tested with more than one team',
+      'Every team this touches has given feedback, not just the first tester',
       'It is technically sound and secure',
       'It has vocal champions who have actually used the new way',
       'It is cost-effective, including token costs',
@@ -3211,24 +2657,25 @@ const CRA_STAGES = [
     name: 'Institutionalize',
     tag: 'Team rollout &middot; Not voluntary',
     label: 'This is the part that becomes the new way of working',
-    intro: 'Everything up to now was voluntary. This is not &mdash; and that is by design. Great diamonds deserve great adoption. Be both inspiration and clear leader here: the why is loud, the standard is clear, and the old way gets a real sunset date.',
+    intro: 'Everything up to now was voluntary. This is not &mdash; and that is by design. A real standard deserves real adoption. Be both inspiration and clear leader here: the why is loud, the standard is clear, and the old way gets a real sunset date. Communicate the how, not just the what — other teams need to see how this was built, not just that it works.',
     prompts: [
       'Which teams are affected &mdash; direct and cross-functional &mdash; and what changes for them?',
       'Who will present this as a peer showing how they use it, and what coaching (technical and role-level) does the team need?',
+      'How are you communicating the how, not just the what — so other teams could actually rebuild this themselves?',
       'What is the cutover date, and what happens to the old way after it?'
     ]
   },
   {
     key: 5,
     icon: '&#129517;', // compass
-    name: 'Manage the Diamond',
+    name: 'Manage the Standard',
     tag: 'Ongoing &middot; Named owner',
-    label: 'Diamonds need a keeper, not a launch party',
-    intro: 'The riskiest moment for a diamond is the week after everyone stops watching it. Someone has to own it going forward &mdash; listening for what is breaking, what needs renewing, and when the old way can finally be retired for good. This is not a one-time form: the Diamond Owner should come back and answer these on a consistent, ongoing basis. Management is ongoing.',
+    label: 'Standards need a keeper, not a launch party',
+    intro: 'The riskiest moment for a new standard is the week after everyone stops watching it. Someone has to own it going forward &mdash; listening for what is breaking, what needs renewing, and when the old way can finally be retired for good. This is not a one-time form: the Flywheel Owner should come back and answer these on a consistent, ongoing basis. Management is ongoing.',
     prompts: [
-      'Who owns this diamond now that it is live, day to day?',
+      'Who owns this now that it is live, day to day?',
       'What are you hearing from the team using it &mdash; both the good and the hard parts?',
-      'Is this diamond still earning its keep, or has a newer AI capability made it obsolete?',
+      'Is this still earning its keep, or has a newer AI capability made it obsolete?',
       'If it is still earning its keep, how are you measuring it against its original cost and benefit &mdash; treating it like a contractor, not a fixture?'
     ]
   }
@@ -3244,19 +2691,19 @@ const CRA_GODO_TEMPLATES = {
     'You are ready to act as a peer coach for the next person who wants to try it'
   ],
   2: [
-    'Get feedback from more than one team or person — not just the first tester. Every team that this flywheel touches should share feedback before the next stage',
+    'Every team this flywheel touches gives feedback before the next stage — not just the first tester',
     'Implement that feedback and find a resolution before calling it ready',
     'Each time it looks finished again, run it past a new pair of eyes before moving to Stage 3'
   ],
   3: [
     'Get Team Leadership\'s explicit yes to move from voluntary to mandated',
-    'Confirm your Flywheel Partner — not you — is ready to present it as the new standard',
+    'Confirm a team member — not you — is ready to present it as the new standard',
     'Propose a cutover date for retiring the old way'
   ],
   4: [
     'Confirm the cutover date has passed and the old way is retired',
     'Make sure every affected team has had technical and role coaching',
-    'Set and communicate the new metrics this diamond will be measured against'
+    'Set and communicate the new metrics this will be measured against'
   ],
   5: [
     'If it\'s time to retire or upgrade it, do that now rather than letting it linger'
@@ -3292,7 +2739,7 @@ function openCRA(stageKey) {
 
   const checklistHTML = stage.checklist ? `
     <div class="field">
-      <label>Diamond checklist &mdash; check what is true today</label>
+      <label>Standard-readiness checklist &mdash; check what is true today</label>
       <div class="cra-checklist" id="cra-checklist">
         ${stage.checklist.map((c, i) => `
           <label class="cra-check-item"><input type="checkbox" id="cra-check-${i}" value="${c.replace(/"/g,'&quot;')}" /> ${c}</label>
@@ -3303,15 +2750,23 @@ function openCRA(stageKey) {
 
   const teamsHTML = stage.key === 2 ? `
     <div class="field">
-      <label>Cross-functional feedback</label>
-      <p style="font-size:11px;color:#888;margin-top:-2px;margin-bottom:8px;">Has any team this flywheel touches given feedback? Has it been implemented? Name who you talked to on each team.</p>
-      <textarea id="cra-teams" rows="2" placeholder="e.g. Finance — talked to Jordan, feedback implemented | Sales — talked to Casey, pending — or N/A if no other teams are affected"></textarea>
+      <label>Which teams does this touch — and have they given feedback?</label>
+      <p style="font-size:11px;color:#888;margin-top:-2px;margin-bottom:8px;">If this workflow affects or overlaps with another team's process, that team needs to actually try it and give feedback before you move on — this isn't about finding any outside tester, it's every team this genuinely touches.</p>
+      <textarea id="cra-teams" rows="3" placeholder="e.g. Finance — this touches their invoice approval step, Jordan tested it and flagged a timing issue | Sales — doesn't touch their process, N/A" required></textarea>
     </div>
   ` : stage.key === 4 ? `
     <div class="field">
-      <label>Have you presented, or have a date set to present, this diamond to all teams it touches?</label>
-      <p style="font-size:11px;color:#888;margin-top:-2px;margin-bottom:8px;">List dates below next to each team.</p>
+      <label>Have you presented, or have a date set to present, this new standard to all teams it touches?</label>
+      <p style="font-size:11px;color:#888;margin-top:-2px;margin-bottom:8px;">List dates below next to each team. Focus on communicating how this works, not just that it works.</p>
       <textarea id="cra-teams" rows="2" placeholder="e.g. Finance — presented 8/12 | Sales — scheduled for 8/20 | Ops — N/A, not affected"></textarea>
+    </div>
+  ` : '';
+
+  const diamondEvidenceHTML = stage.key === 5 ? `
+    <div style="background:#EFF6FF;border-left:4px solid #2563EB;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:0.6px;text-transform:uppercase;color:#2563EB;margin-bottom:6px;">Rare recognition: Diamonds</div>
+      <div style="font-size:12.5px;color:var(--bts-dark);line-height:1.7;margin-bottom:10px;">Most standards do good, steady work &mdash; that is the win. Only rarely does one clearly move the P&amp;L needle. If you have real evidence this one has &mdash; not team efficiency, but measurable business or client impact &mdash; describe it below. PMO leadership reviews these separately; filling this in does not grant Diamond status on its own.</div>
+      <textarea id="cra-diamond-evidence" rows="2" placeholder="Leave blank unless you have real, measurable evidence of business or client impact"></textarea>
     </div>
   ` : '';
 
@@ -3320,19 +2775,20 @@ function openCRA(stageKey) {
     <p style="font-size:12px;color:#888;margin-bottom:12px;">Set a target completion date for each remaining phase. BTS recommends the whole process take no more than 90 days &mdash; how you split that time across phases is up to your team.</p>
     <div class="form-row">
       <div class="field"><label>Stage 2 &mdash; Pressure-Test the Spark</label><input type="date" id="cra-phase-date-2" /></div>
-      <div class="field"><label>Stage 3 &mdash; Cut the Diamond</label><input type="date" id="cra-phase-date-3" /></div>
+      <div class="field"><label>Stage 3 &mdash; Set the Standard</label><input type="date" id="cra-phase-date-3" /></div>
     </div>
     <div class="form-row">
       <div class="field"><label>Stage 4 &mdash; Institutionalize</label><input type="date" id="cra-phase-date-4" /></div>
-      <div class="field"><label>Stage 5 &mdash; Manage the Diamond</label><input type="date" id="cra-phase-date-5" /></div>
+      <div class="field"><label>Stage 5 &mdash; Manage the Standard</label><input type="date" id="cra-phase-date-5" /></div>
     </div>
   ` : '';
 
   const peopleHTML = stage.key === 1 ? `
-    <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Flywheel Partner</div>
-    <div class="form-row">
-      <div class="field"><label>Partner name</label><input type="text" id="cra-partner-name" placeholder="Partner's full name" /></div>
-      <div class="field"><label>Partner email</label><input type="email" id="cra-partner-email" placeholder="partner@bts.com" /></div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Team Members</div>
+    <div class="field">
+      <label>Team Members</label>
+      <p style="font-size:11px;color:#999;margin-top:-2px;margin-bottom:6px;">You do not need to repeat the Flywheel Owner.</p>
+      <input type="text" id="cra-team-members" placeholder="e.g. Jordan, Casey, Priya" />
     </div>
     <div style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#999;margin-bottom:10px;margin-top:18px;">Team Leader</div>
     <div class="form-row">
@@ -3345,7 +2801,7 @@ function openCRA(stageKey) {
   const godoItems = CRA_GODO_TEMPLATES[stage.key] || [];
   const godoTitle = nextStage
     ? `Before Stage ${nextStage.key} &mdash; ${nextStage.name}`
-    : 'Ongoing, now that this diamond is live';
+    : 'Ongoing, now that this is live';
   const godoHTML = godoItems.length ? `
     <div class="field">
       <label>${godoTitle}</label>
@@ -3363,10 +2819,10 @@ function openCRA(stageKey) {
       <h3>Stage ${stage.key} &mdash; ${stage.name}</h3>
       <p class="form-sub">${stage.label} &middot; Takes 5 minutes or less.</p>
       <div class="note-box" style="background:var(--bts-teal-light);border-left-color:var(--bts-teal);color:#0F5A5F;">${stage.intro}</div>
-      <div class="field"><label>Flywheel / diamond name</label><input type="text" id="cra-flywheel-name" placeholder="e.g. Digital Operator Tool" /></div>
+      <div class="field"><label>Flywheel name</label><input type="text" id="cra-flywheel-name" placeholder="e.g. Digital Operator Tool" /></div>
       <div class="form-row">
-        <div class="field"><label>Your name</label><input type="text" id="cra-owner-name" placeholder="Your full name" /></div>
-        <div class="field"><label>Your email</label><input type="email" id="cra-owner-email" placeholder="your@bts.com" /></div>
+        <div class="field"><label>Flywheel Owner name</label><input type="text" id="cra-owner-name" placeholder="Your full name" /></div>
+        <div class="field"><label>Flywheel Owner email</label><input type="email" id="cra-owner-email" placeholder="your@bts.com" /></div>
       </div>
       ${peopleHTML}
       ${promptsHTML}
@@ -3375,14 +2831,18 @@ function openCRA(stageKey) {
       ${teamsHTML}
       <div class="field">
         <label>Momentum</label>
-        <div class="status-row" id="cra-status-row">
+        <div class="status-row" id="cra-status-row" style="display:flex;flex-wrap:wrap;gap:8px;">
           <div class="status-pill sp-green selected" onclick="selectStatus(this,'green')">Moving Forward</div>
           <div class="status-pill sp-amber" onclick="selectStatus(this,'amber')">Needs Attention</div>
-          <div class="status-pill sp-red" onclick="selectStatus(this,'red')">Asking for Help</div>
+          <div class="status-pill sp-blue" onclick="selectStatus(this,'blue')">Standardized</div>
+          <div class="status-pill sp-magenta" onclick="selectStatus(this,'magenta')">Reevaluating</div>
+          <div class="status-pill sp-gray" onclick="selectStatus(this,'gray')">Tabled</div>
         </div>
+        <p style="font-size:11px;color:#888;margin-top:6px;">Most check-ins are Moving Forward or Needs Attention. The other three are for when the work has reached a conclusion.</p>
       </div>
       ${godoHTML}
-      <div class="success-toast" id="cra-toast">Saved. Momentum logged for this diamond.</div>
+      ${diamondEvidenceHTML}
+      <div class="success-toast" id="cra-toast">Saved. Momentum logged for this flywheel.</div>
       <div class="btn-row">
         <button class="btn-sec" onclick="backToCRASelector()">Cancel</button>
         <button class="btn-submit" onclick="submitCRA(${stage.key})">Submit Stage ${stage.key}</button>
@@ -3394,9 +2854,10 @@ function openCRA(stageKey) {
 function backToCRASelector() {
   document.getElementById('cra-selector').style.display = '';
   document.getElementById('cra-form').style.display = 'none';
+  renderCRADashboard();
 }
 
-// Looks up the Team Leader / Flywheel Partner for a flywheel from whatever CRA row
+// Looks up the Team Leader / Team Members for a flywheel from whatever CRA row
 // already has them saved (normally the Stage 1 submission). Used so Stages 2–5 can
 // auto-address their emails without depending on browser storage.
 async function craLookupContacts(flywheelName) {
@@ -3408,8 +2869,7 @@ async function craLookupContacts(flywheelName) {
   matches.sort((a, b) => new Date(b['Submitted At'] || 0) - new Date(a['Submitted At'] || 0));
   const latest = matches[0];
   return {
-    flywheelPartner: latest['Flywheel Partner'] || '',
-    partnerEmail: latest['Partner Email'] || '',
+    teamMembers: latest['Team Members'] || '',
     teamLeader: latest['Team Leader'] || '',
     teamLeaderEmail: latest['Team Leader Email'] || ''
   };
@@ -3420,23 +2880,31 @@ async function submitCRA(stageKey) {
   const formCard = document.querySelector('#cra-form .form-card');
   if (!formCard) return;
 
+  // Cross-team testing at Stage 2 is required, not skippable — block submission until named.
+  if (stageKey === 2) {
+    const teamsField = document.getElementById('cra-teams');
+    if (!teamsField || !teamsField.value.trim()) {
+      alert('Let us know which teams this touches and whether they\'ve given feedback before submitting Stage 2 — if it doesn\'t touch another team, say so.');
+      if (teamsField) teamsField.focus();
+      return;
+    }
+  }
+
   const flywheelName = document.getElementById('cra-flywheel-name')?.value.trim() || '';
   const role = 'Flywheel Owner'; // The Flywheel Owner is the only one who submits these check-ins.
   const ownerName = document.getElementById('cra-owner-name')?.value.trim() || '';
   const ownerEmail = document.getElementById('cra-owner-email')?.value.trim() || '';
 
-  let flywheelPartner = document.getElementById('cra-partner-name')?.value.trim() || '';
-  let partnerEmail = document.getElementById('cra-partner-email')?.value.trim() || '';
+  let teamMembers = document.getElementById('cra-team-members')?.value.trim() || '';
   let teamLeader = document.getElementById('cra-leader-name')?.value.trim() || '';
   let teamLeaderEmail = document.getElementById('cra-leader-email')?.value.trim() || '';
 
-  // Team Leader / Partner are only collected on Stage 1's form. For every other stage,
-  // pull the values live from the Stage 1 row already saved in Smartsheet.
+  // Team Leader / Team Members are only collected on Stage 1's form. For every
+  // other stage, pull the values live from the Stage 1 row already saved in Smartsheet.
   if (stageKey !== 1 && !teamLeaderEmail && flywheelName) {
     const contacts = await craLookupContacts(flywheelName);
     if (contacts) {
-      flywheelPartner = contacts.flywheelPartner;
-      partnerEmail = contacts.partnerEmail;
+      teamMembers = contacts.teamMembers;
       teamLeader = contacts.teamLeader;
       teamLeaderEmail = contacts.teamLeaderEmail;
     }
@@ -3456,8 +2924,12 @@ async function submitCRA(stageKey) {
   const teamsAdopting = document.getElementById('cra-teams')?.value.trim() || '';
   const checklistChecked = Array.from(formCard.querySelectorAll('#cra-checklist input:checked')).map(c => c.value);
   const diamondChecklist = checklistChecked.length ? checklistChecked.join(' | ') : '';
+  const diamondEvidence = document.getElementById('cra-diamond-evidence')?.value.trim() || '';
   const godoChecked = Array.from(formCard.querySelectorAll('#cra-godo-checklist input:checked')).map(c => c.value);
-  const godoNotes = godoChecked.length ? 'Completed before next stage: ' + godoChecked.join(' | ') : '';
+  let notesParts = [];
+  if (godoChecked.length) notesParts.push('Completed before next stage: ' + godoChecked.join(' | '));
+  if (diamondEvidence) notesParts.push('Diamond evidence: ' + diamondEvidence);
+  const godoNotes = notesParts.join(' || ');
 
   toast.style.display = 'block';
   toast.textContent = 'Submitting...';
@@ -3465,16 +2937,16 @@ async function submitCRA(stageKey) {
 
   const result = await saveCRAToSmartsheet({
     stage: stageKey, flywheelName, flywheelOwner: ownerName, ownerEmail,
-    flywheelPartner, partnerEmail, teamLeader, teamLeaderEmail,
+    teamMembers, teamLeader, teamLeaderEmail,
     role, responses, momentumStatus, teamsAdopting, diamondChecklist, godoNotes
   });
 
   toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
   toast.textContent = result.ok
-    ? 'Saved. Momentum logged for this diamond.'
+    ? 'Saved. Momentum logged for this flywheel.'
     : 'Saved locally. Backend not connected yet.';
 
-  // Every stage auto-addresses its update to the Team Leader named at Stage 1 (CC'ing the Partner).
+  // Every stage auto-addresses its update to the Team Leader named at Stage 1.
   if (teamLeaderEmail) {
     let emailSubject, emailBody;
     if (stageKey === 1) {
@@ -3483,7 +2955,7 @@ async function submitCRA(stageKey) {
         'Hi,\n\nOur flywheel has worked, and we are starting the Chain Reaction Accelerator to help it spread:\n\n' +
         'Flywheel: ' + flywheelName + '\n' +
         'Flywheel Owner: ' + ownerName + '\n' +
-        'Flywheel Partner: ' + flywheelPartner + '\n\n' +
+        'Team Members: ' + teamMembers + '\n\n' +
         'How our flywheel experimentation has worked so far: ' + (responses[0] || '') + '\n' +
         'What we are using AI for right now: ' + (responses[1] || '') + '\n' +
         'Our wins: ' + (responses[2] || '') + '\n\n' +
@@ -3496,14 +2968,14 @@ async function submitCRA(stageKey) {
       let bodyLines = ['Hi,', '', 'Update on ' + flywheelName + ' — Stage ' + stageKey + ', ' + stageObj.name + ':', ''];
       stageObj.prompts.forEach((q, i) => { bodyLines.push(q); bodyLines.push(responses[i] || ''); bodyLines.push(''); });
       if (teamsAdopting) bodyLines.push('Teams: ' + teamsAdopting, '');
-      if (diamondChecklist) bodyLines.push('Diamond checklist: ' + diamondChecklist, '');
+      if (diamondChecklist) bodyLines.push('Standard-readiness checklist: ' + diamondChecklist, '');
+      if (diamondEvidence) bodyLines.push('Diamond evidence: ' + diamondEvidence, '');
       bodyLines.push('Momentum: ' + momentumStatus, '', '[Add any additional notes here]', '', 'Best,', ownerName);
       emailBody = encodeURIComponent(bodyLines.join('\n'));
     }
     setTimeout(() => {
       window.location.href = 'mailto:' + encodeURIComponent(teamLeaderEmail) +
-        (partnerEmail ? '?cc=' + encodeURIComponent(partnerEmail) : '') +
-        (partnerEmail ? '&subject=' : '?subject=') + emailSubject + '&body=' + emailBody;
+        '?subject=' + emailSubject + '&body=' + emailBody;
     }, 800);
   }
 
@@ -3513,24 +2985,6 @@ async function submitCRA(stageKey) {
 // Stub functions to prevent reference errors
 function openAddPilot() {}
 function closeAddPilot() {}
-
-function openLicenseRequest() {
-  const leadName  = document.getElementById('d1-lead-name')?.value.trim() || '';
-  const leadEmail = document.getElementById('d1-lead-email')?.value.trim() || '';
-  const pilotName = document.getElementById('ci-pilot-name')?.value.trim() || '';
-  const subject   = encodeURIComponent('AI Tool License Request — ' + (pilotName || 'New Pilot'));
-  const body      = encodeURIComponent(
-    'Hi,\n\nI would like to request an AI tool license for the following pilot:\n\n' +
-    'Pilot: ' + (pilotName || '[Pilot Name]') + '\n' +
-    'Requested by: ' + (leadName || '[Your Name]') + '\n' +
-    'Email: ' + (leadEmail || '[Your Email]') + '\n\n' +
-    'Tool requested: [Tool Name]\n' +
-    'Reason: [Why this tool is needed for the pilot]\n\n' +
-    'Approval path: AI Champion → Team Leadership → IT\n\n' +
-    'Thank you'
-  );
-  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
-}
 
 /* ---- MAPPER ---- */
 // ═══════════════════════════════════════════════════════════════
@@ -4483,7 +3937,7 @@ function psMoveStepToLane(newLaneId) {
   const laneTag = document.getElementById('ps-dp-lane-tag');
   if (laneTag) {
     laneTag.textContent = getLaneLabelById(newLaneId).toUpperCase();
-    laneTag.style.background = getLaneColor(newLaneId);
+    laneTag.style.background = getLaneColors(newLaneId).bg;
     laneTag.style.color = 'white';
   }
   // Reset dropdown
@@ -5779,63 +5233,6 @@ function psExportSummary() {
 }
 
 async function saveMapper() { await saveProcessStudio(); }
-
-async function loadFromSmartsheet() {
-  const btn = document.getElementById('btn-load-sm');
-  const toast = document.getElementById('sm-load-toast');
-  btn.textContent = 'Loading...';
-  btn.disabled = true;
-  toast.style.display = 'block';
-  toast.style.background = '#E6F1FB';
-  toast.style.borderColor = '#B5D4F4';
-  toast.style.color = '#1C4C86';
-
-  const isElevated = state.user && (state.user.role === 'AI Champion');
-  const userEmail = state.user ? state.user.email.toLowerCase() : '';
-  toast.textContent = isElevated ? 'Loading all pilots...' : 'Loading your pilots...';
-
-  const rows = await loadPilotsFromSmartsheet();
-  btn.textContent = '↻ Load Pilots';
-  btn.disabled = false;
-
-  if (rows && rows.length > 0) {
-    // Filter by user unless elevated role
-    const filtered = isElevated
-      ? rows
-      : rows.filter(r => {
-          const lead    = (r['Lead Email'] || '').toLowerCase();
-          const partner = (r['Pilot Partner'] || '').toLowerCase();
-          const leadName = (r['Pilot Lead'] || '').toLowerCase();
-          return lead === userEmail || partner === userEmail || leadName.includes(userEmail.split('@')[0]);
-        });
-
-    filtered.forEach(row => {
-      const exists = state.pilots.find(p => p.name === row['Pilot Name']);
-      if (!exists && row['Pilot Name']) {
-        state.pilots.push({
-          name:      row['Pilot Name'] || '',
-          lead:      row['Pilot Lead'] || '',
-          partner:   row['Pilot Partner'] || '',
-          day:       parseInt(row['Current Day']) || 1,
-          status:    row['Health Status'] === 'Moving Forward' ? 'green' : row['Health Status'] === 'Needs Attention' ? 'amber' : 'red',
-          startDate: row['Start Date'] ? new Date(row['Start Date']) : new Date(),
-        });
-      }
-    });
-
-    toast.style.background = ''; toast.style.borderColor = ''; toast.style.color = '';
-    const label = isElevated ? `${filtered.length} pilot(s) loaded (all teams).` : `${filtered.length} pilot(s) loaded for ${state.user.name}.`;
-    toast.textContent = label;
-    renderDashboard();
-    renderHomePilots();
-  } else {
-    toast.style.background = '#FAEEDA';
-    toast.style.borderColor = '#FAC775';
-    toast.style.color = '#854F0B';
-    toast.textContent = 'No pilots found yet. Submit a Day 1 check-in to get started.';
-  }
-  setTimeout(() => { toast.style.display = 'none'; }, 4500);
-}
 
 async function psExportSOPDoc() {
   if (!psCanvasNodes.length) {
