@@ -2156,9 +2156,56 @@ const PHASE_GUIDANCE = {
 
 function renderPhaseGuidanceHTML(phase) {
   const g = PHASE_GUIDANCE[phase] || { lead: '', bullets: [] };
-  const leadHTML = g.lead ? `<p style="font-size:12px;color:var(--bts-dark);margin:10px 0 6px;font-weight:600;">${g.lead}</p>` : '';
-  const bulletsHTML = g.bullets.length ? `<ul style="font-size:12px;color:var(--bts-dark);line-height:1.7;padding-left:18px;margin:${g.lead ? '0' : '10px'} 0 0;">${g.bullets.map(q => `<li>${q}</li>`).join('')}</ul>` : '';
+  const leadHTML = g.lead ? `<p style="font-size:12px;color:var(--bts-dark);margin:0 0 6px;font-weight:600;">${g.lead}</p>` : '';
+  const bulletsHTML = g.bullets.length ? `<ul style="font-size:12px;color:var(--bts-dark);line-height:1.7;padding-left:18px;margin:0;">${g.bullets.map(q => `<li>${q}</li>`).join('')}</ul>` : '';
   return leadHTML + bulletsHTML;
+}
+
+// Colors for the numbered phase-step selector — teal/blue/magenta/amber, one per phase.
+const PHASE_COLORS = {
+  'Map Current State': { color: '#1D9E75', bg: '#E1F5EE' },
+  'Visualize':          { color: '#1C4C87', bg: '#E6F1FB' },
+  'Simplify':           { color: '#CA1C68', bg: '#FBEAF0' },
+  'Automate':           { color: '#BA7517', bg: '#FAEEDA' }
+};
+
+// Builds the full numbered step-row + connected guidance card, both in one HTML block
+// so a single re-render can update every step's color/checkmark state at once.
+function renderWFPhaseSelectorHTML(currentPhase) {
+  const activeIdx = PHASE_ORDER.indexOf(currentPhase);
+  const stepsHTML = PHASE_ORDER.map((p, i) => {
+    const isActive = i === activeIdx;
+    const isDone = i < activeIdx;
+    const c = PHASE_COLORS[p];
+    return `
+    <div style="display:flex;align-items:center;${i < PHASE_ORDER.length - 1 ? 'flex:1;' : ''}">
+      <button type="button" ${isActive ? 'id="wfc-phase-active-btn"' : ''} onclick="selectWFPhase('${p.replace(/'/g, "\\'")}')" style="
+        display:flex;align-items:center;gap:8px;font-family:inherit;cursor:pointer;
+        padding:8px 14px 8px 8px;border-radius:24px;white-space:nowrap;
+        border:2px solid ${isActive || isDone ? c.color : '#D1D5DB'};
+        background:${isActive ? c.color : 'white'};
+        box-shadow:${isActive ? '0 2px 6px rgba(0,0,0,0.15)' : 'none'};
+      ">
+        <span style="width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;
+          background:${isActive ? 'white' : (isDone ? c.color : '#F1F1F1')};
+          color:${isActive ? c.color : (isDone ? 'white' : '#999')};
+        ">${isDone ? '&#10003;' : i + 1}</span>
+        <span style="font-size:12px;font-weight:700;color:${isActive ? 'white' : (isDone ? c.color : '#888')};">${p}</span>
+      </button>
+      ${i < PHASE_ORDER.length - 1 ? `<div style="flex:1;height:2px;background:${isDone ? c.color : '#D1D5DB'};margin:0 2px;"></div>` : ''}
+    </div>`;
+  }).join('');
+
+  const active = PHASE_COLORS[currentPhase];
+  return `
+    <div id="wfc-phase-steps-row" style="display:flex;align-items:center;">${stepsHTML}</div>
+    <div style="position:relative;margin-top:14px;">
+      <div id="wfc-phase-notch" style="position:absolute;top:-7px;left:20px;width:12px;height:12px;background:${active.bg};border-left:2px solid ${active.color};border-top:2px solid ${active.color};transform:rotate(45deg);"></div>
+      <div style="background:${active.bg};border:2px solid ${active.color};border-radius:10px;padding:16px 18px;">
+        ${renderPhaseGuidanceHTML(currentPhase)}
+      </div>
+    </div>
+  `;
 }
 
 async function renderWFDashboard() {
@@ -2465,10 +2512,6 @@ async function openWFCheckinForm() {
   selector.style.display = 'none';
   form.style.display = '';
 
-  const phasePillsHTML = PHASE_ORDER.map(p => `
-    <div class="status-pill ${p === currentPhase ? 'selected' : ''}" data-phase="${p}" onclick="selectWFPhase(this,'${p}')" style="cursor:pointer;">${p}</div>
-  `).join('');
-
   form.innerHTML = `
     <button class="back-btn" onclick="backToWFCSelector()">&#8592; Back to Task Forces</button>
     <div class="form-card">
@@ -2488,8 +2531,7 @@ async function openWFCheckinForm() {
 
       <div class="field">
         <label>Which phase are you in?</label>
-        <div class="status-row" id="wfc-phase-row" style="display:flex;gap:8px;flex-wrap:wrap;">${phasePillsHTML}</div>
-        <div id="wfc-phase-guidance">${renderPhaseGuidanceHTML(currentPhase)}</div>
+        <div id="wfc-phase-selector" data-current-phase="${currentPhase}">${renderWFPhaseSelectorHTML(currentPhase)}</div>
       </div>
 
       <div class="field"><label>Status update</label><textarea id="wfc-status" rows="4" placeholder="Where are things at? What's been done since the last check-in?"></textarea></div>
@@ -2515,13 +2557,28 @@ async function openWFCheckinForm() {
       </div>
     </div>
   `;
+  positionPhaseNotch();
 }
 
-function selectWFPhase(el, phase) {
-  document.querySelectorAll('#wfc-phase-row .status-pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
-  const guidance = document.getElementById('wfc-phase-guidance');
-  if (guidance) guidance.innerHTML = renderPhaseGuidanceHTML(phase);
+// Positions the notch under whichever button is actually active — button widths vary
+// by phase name length, so this has to be measured live, not hardcoded to one spot.
+function positionPhaseNotch() {
+  const btn = document.getElementById('wfc-phase-active-btn');
+  const notch = document.getElementById('wfc-phase-notch');
+  const row = document.getElementById('wfc-phase-steps-row');
+  if (!btn || !notch || !row) return;
+  const center = btn.offsetLeft - row.offsetLeft + btn.offsetWidth / 2;
+  notch.style.left = (center - 6) + 'px';
+}
+
+// Re-renders the whole phase step-selector (all steps' colors/checkmarks plus the
+// connected guidance card) whenever a different phase is clicked.
+function selectWFPhase(phase) {
+  const container = document.getElementById('wfc-phase-selector');
+  if (!container) return;
+  container.setAttribute('data-current-phase', phase);
+  container.innerHTML = renderWFPhaseSelectorHTML(phase);
+  positionPhaseNotch();
 }
 
 // Toggles which momentum pill is selected. Generalized to work inside any status-row
@@ -2543,8 +2600,7 @@ async function submitWFCheckin(checkInNumber) {
   const teamLeaderEmail = document.getElementById('wfc-leader-email')?.value.trim() || '';
   const teamMembers = document.getElementById('wfc-team-members')?.value.trim() || '';
   const scribe = document.getElementById('wfc-scribe')?.value.trim() || '';
-  const phaseEl = formCard.querySelector('#wfc-phase-row .status-pill.selected');
-  const phase = phaseEl ? phaseEl.getAttribute('data-phase') : 'Map Current State';
+  const phase = document.getElementById('wfc-phase-selector')?.getAttribute('data-current-phase') || 'Map Current State';
   const statusUpdate = document.getElementById('wfc-status')?.value.trim() || '';
   // Issues/blockers and other-teams are no longer separate fields — they're prompts
   // inside the phase guidance list, folded into the single Status update box above.
