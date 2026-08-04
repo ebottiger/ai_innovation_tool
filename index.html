@@ -423,7 +423,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
   <div class="nav-bar">
     <div class="nav-item active" id="nav-home" onclick="showTab('home')">Home</div>
     <div class="nav-item" id="nav-mapper" onclick="showTab('mapper')">Process Studio</div>
-    <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Workflow Flywheels Check-In</div>
+    <div class="nav-item" id="nav-checkin" onclick="showTab('checkin')">Workflow Check-In</div>
     <div class="nav-item" id="nav-cra" onclick="showTab('cra')">Chain Reaction Accelerator</div>
   </div>
 
@@ -452,7 +452,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
       </div>
       <div class="action-card" onclick="showTab('checkin')">
         <div class="ac-icon ac-blue" style="font-size:17px">&#9989;</div>
-        <h3>Workflow Flywheels Check-In</h3>
+        <h3>Workflow Check-In</h3>
         <p>Track your task force through Map Current State, Visualize, Simplify, Automate</p>
         <div class="ac-hover-desc">
           <span class="ac-brene">"Showing up and telling the truth about where you are takes courage. This isn't a status report — it's a chance to say what's actually happening so the right people can support you."</span>
@@ -479,7 +479,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
 
   <!-- ======= CHECK-IN TAB ======= -->
   <div class="main" id="tab-checkin" style="display:none">
-    <div class="page-title">Workflow Flywheels Check-In</div>
+    <div class="page-title">Workflow Check-In</div>
     <p class="page-sub">Track your task force through mapping &mdash; Current State &rarr; Visualize &rarr; Simplify &rarr; Automate.</p>
 
     <div class="note-box" style="background:var(--bts-teal-light);border-left-color:var(--bts-teal);color:#0F5A5F;">
@@ -565,7 +565,7 @@ body { font-family: var(--font); background: #F0F2F5; color: var(--bts-dark); mi
         <p>Your flywheel already worked. This is how one win becomes the standard the whole team runs on.</p>
       </div>
       <div class="note-box" style="background:var(--bts-teal-light);border-left-color:var(--bts-teal);color:#0F5A5F;">
-        This tab is for once a flywheel already works &mdash; not for finding or simplifying one. If your team is still moving through Map Current State, Visualize, Simplify, Automate, that's what the <strong>Workflow Flywheels Check-In tab</strong> is for. Once a workflow has proven itself there, this is how one win becomes a chain reaction: not just a one-off improvement, but a new standard the whole team runs on. Five stages, five minutes each. Stages 1&ndash;2 are yours to run whenever you're ready. Stage 3 is a decision point. Stages 4&ndash;5 are for once Team Leadership has said yes.
+        This tab is for once a flywheel already works &mdash; not for finding or simplifying one. If your team is still moving through Map Current State, Visualize, Simplify, Automate, that's what the <strong>Workflow Check-In tab</strong> is for. Once a workflow has proven itself there, this is how one win becomes a chain reaction: not just a one-off improvement, but a new standard the whole team runs on. Five stages, five minutes each. Stages 1&ndash;2 are yours to run whenever you're ready. Stage 3 is a decision point. Stages 4&ndash;5 are for once Team Leadership has said yes.
       </div>
       <div class="note-box" style="background:var(--bts-purple-light);border-left-color:var(--bts-purple);color:var(--bts-purple);">
         <strong>Is your flywheel actually ready?</strong> Here's what the field guides say to look for:
@@ -1407,7 +1407,7 @@ const SM = {
     submittedAt:       149630052765572,
   },
 
-  // Workflow Flywheels Check-Ins column IDs (sheet: 1766162416226180)
+  // Workflow Check-In column IDs (sheet: 1766162416226180)
   WFC: {
     taskForceName:     4296195910700932,
     teamLeaderName:    8799795538071428,
@@ -2113,7 +2113,7 @@ function closeResearchModal() {
 }
 
 
-// ── Workflow Flywheels Check-In System ────────────────────────────────────
+// ── Workflow Check-In System ────────────────────────────────────
 
 const PHASE_ORDER = ['Map Current State', 'Visualize', 'Simplify', 'Automate'];
 
